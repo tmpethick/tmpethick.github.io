@@ -38,14 +38,15 @@ You can also find all the posts in chronological order in the [archive](/posts/)
   Allows one to import `.mht` files exported from OneNote into Anki.
 <!-- - Haskell Spanning Tree -->
 
-... and more on [Github][4] including [this site][5] which was originally build by <a href="http://jaspervdj.be/hakyll">Hakyll</a> with some added $\text{\LaTeX}$ goods. 
+... and more on [Github][4] including [this site][5] which was [originally][8] build by <a href="http://jaspervdj.be/hakyll">Hakyll</a> with some added $\text{\LaTeX}$ goods. 
 I have since moved to <a href="https://ebp.jupyterbook.org">the Executable Book Project</a> for a well-maintained codebase with many of the same features.
 
 [1]: https://github.com/tmpethick/simple-prover-pl
 [2]: http://pethick.dk/campusnet-electron/
 [3]: https://github.com/tmpethick/anki-onenote-importer
 [4]: https://github.com/tmpethick/
-[5]: https://github.com/tmpethick/tmpethick.github.io
+[5]: https://github.com/tmpethick/pethick-site
 [6]: https://github.com/tmpethick/ensembled-dngo
 [7]: https://arxiv.org/abs/1502.05700
+[8]: https://github.com/tmpethick/pethick-site-hakyll
 [master]: https://github.com/tmpethick/thesis-code

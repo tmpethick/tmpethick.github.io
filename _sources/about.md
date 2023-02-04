@@ -13,10 +13,14 @@ I have written on a variety of areas outside of this blog prior to the PhD:
 - A [summary][DEL] of dynamic epistemic logic and game theory.
 
 
-I have enjoyed being a teaching assistant in the following courses:
+I have had the joy of being a teaching assistant in the following courses:
 
-- [02405 Probability theory][02405]
-- [02180 Introduction to Artificial Intelligence][02180]
+- [02405 Probability theory][02405] (fall 2015)
+- [02180 Introduction to artificial intelligence][02180] (Spring 2018)
+- [MICRO-455 Applied machine learning][MICRO-455] (spring 2020)
+- [EE-559 Deep learning][EE-559] (spring 2021)
+- [EE-618 Theory and methods for reinforcement Learning][EE-618] (spring 2022)
+- [EE-556 Mathematics of data: from theory to computation][EE-556] (fall 2020, fall 2021, fall 2022)
 
 <!-- Before I went into academia I worked on [card linked loyalty][birdback]
 - app development in react
@@ -35,3 +39,7 @@ I have enjoyed being a teaching assistant in the following courses:
 [snoek2015]: https://arxiv.org/abs/1502.05700
 [master]: https://github.com/tmpethick/thesis-code
 [lions]: https://lions.epfl.ch/
+[MICRO-455]: https://edu.epfl.ch/coursebook/en/applied-machine-learning-MICRO-455
+[EE-559]: https://edu.epfl.ch/coursebook/en/deep-learning-EE-559
+[EE-618]: https://edu.epfl.ch/coursebook/en/theory-and-methods-for-reinforcement-learning-EE-618
+[EE-556]: https://edu.epfl.ch/coursebook/en/mathematics-of-data-from-theory-to-computation-EE-556

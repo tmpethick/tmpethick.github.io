@@ -98,7 +98,8 @@ $$\begin{aligned}
 \end{aligned}
 $$
 
-[^regret]: Be aware that this can be tightened to $\mathcal R_T^{\mathrm{FTRL}} \leq \sqrt{(T \ln N) / 2}$. See e.g. {cite:t}`cesa2006prediction`.
+[^regret]: Be aware that this can be tightened to $\mathcal R_T^{\mathrm{FTRL}} \leq \sqrt{(T \ln N) / 2}$. See e.g. [Prediction, Learning, and Games](https://www.ii.uni.wroc.pl/~lukstafi/pmwiki/uploads/AGT/Prediction_Learning_and_Games.pdf).
+<!-- {cite:t}`cesa2006prediction`. -->
 
 **Regret bound for samples**
 Say we are incurring loss $\ell_t(i_t)$ where $i_t \sim p_t$ instead of incurring the loss over the entire mixed strategy $\braket{\ell_t, p_t}$.
@@ -398,3 +399,8 @@ A good starting point for the curious reader is either [Haipeng's notes](https:/
 - Pseudo regret
 - Stocastic vs adverserial
 - Infinite arms -->
+
+---
+```{bibliography}
+:filter: docname in docnames
+```

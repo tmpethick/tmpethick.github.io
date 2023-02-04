@@ -459,7 +459,7 @@ A natural choice when the decision set is the simplex is to choose the (negative
 <p>Under the <span class="math notranslate nohighlight">\(\ell_1\)</span>-norm this reduces to the well-known Pinsker’s inequality which relates the total variation distance (or half the <span class="math notranslate nohighlight">\(\ell_1\)</span>-norm) with the KL-divergence<label for='sidenote-role-1' class='margin-toggle'><span id="id1">
 <sup>1</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>We need the derivatives of negative entropy: \partial \psi(p)/\partial p(i) = \ln p(i) + 1.</span>,</p>
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>We need the derivatives of negative entropy: <span class="math notranslate nohighlight">\(\partial \psi(p)/\partial p(i) = \ln p(i) + 1.\)</span></span>,</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 \frac{1}{2}\|p-q\|_{1}^{2} 
@@ -486,7 +486,7 @@ The negative entropy for these two distributions are <span class="math notransla
 Thus we obtain the following bound<label for='sidenote-role-2' class='margin-toggle'><span id="id2">
 <sup>2</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>Be aware that this can be tightened to \mathcal R_T^{\mathrm{FTRL}} \leq \sqrt{(T \ln N) / 2}. See e.g. cesa2006prediction.</span>,</p>
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>Be aware that this can be tightened to <span class="math notranslate nohighlight">\(\mathcal R_T^{\mathrm{FTRL}} \leq \sqrt{(T \ln N) / 2}\)</span>. See e.g. <a class="reference external" href="https://www.ii.uni.wroc.pl/~lukstafi/pmwiki/uploads/AGT/Prediction_Learning_and_Games.pdf">Prediction, Learning, and Games</a>.</span>,</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 \mathcal R_T^{\mathrm{FTRL}} 
@@ -494,6 +494,7 @@ Thus we obtain the following bound<label for='sidenote-role-2' class='margin-tog
 &amp;\leq 2 \sqrt{T \ln N}. &amp;&amp; \text{(optimizing $\eta$)}
 \end{aligned}
 \end{split}\]</div>
+<!-- {cite:t}`cesa2006prediction`. -->
 <p><strong>Regret bound for samples</strong>
 Say we are incurring loss <span class="math notranslate nohighlight">\(\ell_t(i_t)\)</span> where <span class="math notranslate nohighlight">\(i_t \sim p_t\)</span> instead of incurring the loss over the entire mixed strategy <span class="math notranslate nohighlight">\(\braket{\ell_t, p_t}\)</span>.
 In expectation these are obviously the same, <span class="math notranslate nohighlight">\(\mathbb E_{i_t \sim p_t}[\ell(i_t)]=\braket{\ell_t, p_t}\)</span>.
@@ -512,7 +513,7 @@ So the following regrets</p>
 <p>However, we might be interested in bounded the regret with high probability instead<label for='sidenote-role-3' class='margin-toggle'><span id="id3">
 <sup>3</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>There is a good discussion on high probability regret bounds mainly in the context of Bandits which we will cover promptly. The motivation is simple: even though we might be doing well in expectation the variance might be very high. So our algorithm is still very risky in the sense that it is likely that a concrete instantiation will have high regret.</span>.
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup><a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">There is a good discussion</a> on high probability regret bounds mainly in the context of Bandits which we will cover promptly. The motivation is simple: even though we might be doing well in expectation the variance might be very high. So our algorithm is still very risky in the sense that it is likely that a concrete instantiation will have high regret.</span>.
 This can naturally be reduced to a concentration argument where we make a statement about how far most of the random variables <span class="math notranslate nohighlight">\(\ell_{t}\left(i_{t}\right)\)</span> are from the expectation <span class="math notranslate nohighlight">\(\left\langle p_{t}, \ell_{t}\right\rangle\)</span>.</p>
 <p><strong>Oblivious adversary</strong>
 Subtlety: the history, that the environment may depend on, is thus now a random variable.
@@ -713,7 +714,7 @@ To see why, let’s look at the regret on our estimator</p>
 <sup>4</sup></span>
 
 </label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote"><sup>4</sup>The initial analysis bounded the regret by explicitly exploring uniformly based on a coin flip.
-This way p_t(i) was ensured to be sufficiently big for all i.</span>.</p>
+This way <span class="math notranslate nohighlight">\(p_t(i)\)</span> was ensured to be sufficiently big for all <span class="math notranslate nohighlight">\(i\)</span>.</span>.</p>
 <p>We can tighten the analysis, however, using some tricks almost exclusively reserved for the particular case of Exp3.</p>
 <div class="block--theorem">(Exp3 Regret bound)[^exp]
 <div class="math notranslate nohighlight">
@@ -735,10 +736,10 @@ We will only outline the proof here ([for a complete proof](https://banditalgs.c
 </div> -->
 <p><em>Remarks</em>:</p>
 <ul>
-<span class="sidenote"><sup>5</sup>See e.g. this proof.</span><li><p>The lower bound for adversarial regret is <span class="math notranslate nohighlight">\(\mathcal{O}(\sqrt{TK})\)</span><label for='sidenote-role-5' class='margin-toggle'><span id="id5">
+<span class="sidenote"><sup>5</sup>See e.g. <a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">this proof</a>.</span><li><p>The lower bound for adversarial regret is <span class="math notranslate nohighlight">\(\mathcal{O}(\sqrt{TK})\)</span><label for='sidenote-role-5' class='margin-toggle'><span id="id5">
 <sup>5</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote d-n"><sup>5</sup>See e.g. this proof.</span>.
+</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote d-n"><sup>5</sup>See e.g. <a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">this proof</a>.</span>.
 So we achieve minimax regret up to a <span class="math notranslate nohighlight">\(\sqrt{\ln K}\)</span> factor.</p></li>
 <li><p>Compared with the full information setting we are competitive up to a factor of <span class="math notranslate nohighlight">\(\sqrt{K}\)</span>.</p></li>
 <li><p><a class="reference external" href="https://parameterfree.com/2019/11/12/multi-armed-bandit-i/">Francesco Orabona</a> has a very different take on the proof coming from an Online Convex Optimization perspective that might be of interest.</p></li>
@@ -760,7 +761,8 @@ A good starting point for the curious reader is either <a class="reference exter
 - Pseudo regret
 - Stocastic vs adverserial
 - Infinite arms -->
-<hr class="footnotes docutils" />
+<hr class="docutils" />
+<span class="target" id="id7"></span><hr class="footnotes docutils" />
 </section>
 </section>
 

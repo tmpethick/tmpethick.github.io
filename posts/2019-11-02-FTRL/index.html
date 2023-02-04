@@ -456,7 +456,7 @@ Instead we compare ourselves with the best fixed strategy <span class="math notr
 </div><p>This is called the <em>regret</em> as it captures how badly we did in hindsight.<label for='sidenote-role-1' class='margin-toggle'><span id="id1">
 <sup>1</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>Ideally we want \mathcal R_T = o(T) since then lim_{T\rightarrow \infty} \mathcal R_T/T = 0.</span></p>
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>Ideally we want <span class="math notranslate nohighlight">\(\mathcal R_T = o(T)\)</span> since then <span class="math notranslate nohighlight">\(lim_{T\rightarrow \infty} \mathcal R_T/T = 0\)</span>.</span></p>
 </section>
 <section id="follow-the-leader-ftl">
 <h2>Follow the Leader (FTL)<a class="headerlink" href="#follow-the-leader-ftl" title="Permalink to this headline">#</a></h2>
@@ -542,7 +542,7 @@ $<span class="math notranslate nohighlight">\(\psi(\mathbf x)-\psi(\mathbf y) \l
 \[f_{t}\left(\mathbf x_{t}\right)-f_{t}\left(\mathbf x_{t+1}\right) \leqslant \eta\left\|\nabla f_{t}\left(\mathbf x_{t}\right)\right\|_{*}^{2}\]</div>
 <p>with <span class="math notranslate nohighlight">\(\|\cdot\|_*\)</span> is the dual norm of <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> defined as <span class="math notranslate nohighlight">\(\|\mathbf x\|_{*}=\sup _{\|\mathbf y\| \leqslant 1} \mathbf x^{\top} \mathbf y\)</span>.</p>
 </section>
-</div><span class="sidenote proof" id="proof"><sup>2</sup>This will ultimately let us bound f_t(\textbf x_t) - f_t(\textbf x_{t+1}).</span><span class="sidenote proof" id="proof"><sup>3</sup>First order characterization of convexity says f(\mathbf y) - f(\mathbf x) \leq \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x). So when f(\mathbf y) is minimum we have \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x) \geq 0.</span><div class="proof admonition" id="proof">
+</div><span class="sidenote proof" id="proof"><sup>2</sup>This will ultimately let us bound <span class="math notranslate nohighlight">\(f_t(\textbf x_t) - f_t(\textbf x_{t+1})\)</span>.</span><span class="sidenote proof" id="proof"><sup>3</sup><strong>First order characterization</strong> of convexity says <span class="math notranslate nohighlight">\(f(\mathbf y) - f(\mathbf x) \leq \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x)\)</span>. So when <span class="math notranslate nohighlight">\(f(\mathbf y)\)</span> is minimum we have <span class="math notranslate nohighlight">\(\nabla f(\mathbf y)^\top (\mathbf y - \mathbf x) \geq 0\)</span>.</span><div class="proof admonition" id="proof">
 <p>Proof. Let’s define the function we minimizes in the decision selection</p>
 <div class="math notranslate nohighlight">
 \[
@@ -551,13 +551,13 @@ F_{t}(\mathbf x)=\sum_{\tau=1}^{t} f_{\tau}(\mathbf x)+\frac{1}{\eta} \psi(\math
 <p>By strong convexity of <span class="math notranslate nohighlight">\(\psi\)</span> and convexity of <span class="math notranslate nohighlight">\(f_\tau\)</span> we have that <label for='sidenote-role-2' class='margin-toggle'><span id="id2">
 <sup>2</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote d-n"><sup>2</sup>This will ultimately let us bound f_t(\textbf x_t) - f_t(\textbf x_{t+1}).</span></p>
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote d-n"><sup>2</sup>This will ultimately let us bound <span class="math notranslate nohighlight">\(f_t(\textbf x_t) - f_t(\textbf x_{t+1})\)</span>.</span></p>
 <div class="math notranslate nohighlight" id="equation-eq-sum-bound">
 <span class="eqno">(1)<a class="headerlink" href="#equation-eq-sum-bound" title="Permalink to this equation">#</a></span>\[F_{t-1}\left(\mathbf x_{t}\right)-F_{t-1}\left(\mathbf x_{t+1}\right) \leqslant\left\langle\nabla F_{t-1}\left(\mathbf x_{t}\right), \mathbf x_{t}-\mathbf x_{t+1}\right\rangle-\frac{1}{2 \eta}\left\|\mathbf x_{t}-\mathbf x_{t+1}\right\|^{2} \quad \text{for any } \mathbf{x}_t, \mathbf{x}_{t+1} \in \mathcal X.\]</div>
 <p>FTRL defines <span class="math notranslate nohighlight">\(\mathbf x_{t}=\argmin_{\mathbf{x}} F_{t-1}(\mathbf x)\)</span> so <span class="math notranslate nohighlight">\(F_{t-1}(\mathbf x_t)\)</span> is the optimum and first order characterization<label for='sidenote-role-3' class='margin-toggle'><span id="id3">
 <sup>3</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote d-n"><sup>3</sup>First order characterization of convexity says f(\mathbf y) - f(\mathbf x) \leq \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x). So when f(\mathbf y) is minimum we have \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x) \geq 0.</span> becomes</p>
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote d-n"><sup>3</sup><strong>First order characterization</strong> of convexity says <span class="math notranslate nohighlight">\(f(\mathbf y) - f(\mathbf x) \leq \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x)\)</span>. So when <span class="math notranslate nohighlight">\(f(\mathbf y)\)</span> is minimum we have <span class="math notranslate nohighlight">\(\nabla f(\mathbf y)^\top (\mathbf y - \mathbf x) \geq 0\)</span>.</span> becomes</p>
 <div class="math notranslate nohighlight">
 \[
 \left\langle\nabla F_{t-1}\left(\mathbf x_{t}\right), \mathbf x_{t}-\mathbf x_{t+1}\right\rangle \leqslant 0.
@@ -599,14 +599,14 @@ f_{t}(\mathbf x_{t+1})-f_{t}(\mathbf x_{t}) \leqslant-\frac{1}{y}\|\mathbf x_{t}
 \[\mathcal R_{T}^{\mathrm{FTRL}} \leqslant \frac{D}{\eta}+\eta \sum_{t=1}^{T}\left\|\nabla f_{t}\left(\mathbf x_{t}\right)\right\|_{*}^{2}\]</div>
 <p>where <span class="math notranslate nohighlight">\(D=\max_{\mathbf x} \psi(\mathbf x)-m_{\mathbf x} n \varphi(\mathbf x)\)</span>.</p>
 </section>
-</div><span class="sidenote proof" id="proof"><sup>4</sup>Note that we additionally use f_0(\mathbf x^*) \geq f_0(\mathbf x_1) since BTL only applies to t=1,...,T.</span><span class="sidenote proof" id="proof"><sup>5</sup>We want to use stability so we need to move from \mathbf x^* to \mathbf x_{t+1}. We do this by getting it on a form on which we can apply the BTL lemma.</span><div class="proof admonition" id="proof">
+</div><span class="sidenote proof" id="proof"><sup>4</sup>Note that we additionally use <span class="math notranslate nohighlight">\(f_0(\mathbf x^*) \geq f_0(\mathbf x_1)\)</span> since BTL only applies to <span class="math notranslate nohighlight">\(t=1,...,T\)</span>.</span><span class="sidenote proof" id="proof"><sup>5</sup>We want to use stability so we need to move from <span class="math notranslate nohighlight">\(\mathbf x^*\)</span> to <span class="math notranslate nohighlight">\(\mathbf x_{t+1}\)</span>. We do this by getting it on a form on which we can apply the BTL lemma.</span><div class="proof admonition" id="proof">
 <p>Proof. By defining <span class="math notranslate nohighlight">\(f_0(\mathbf x) = \frac 1\eta \psi(\mathbf x)\)</span> we can write the regularized selection as</p>
 <div class="math notranslate nohighlight">
 \[\mathbf x_{t}=\argmin_{\mathbf x} \sum_{r=1}^{t-1} f_{\tau}(\mathbf x)+\frac{1}{\eta} \psi(\mathbf x)=\argmin_{\mathbf x} \sum_{\tau=0}^{t-1} f_{\tau}(\mathbf x)\]</div>
 <p>First note that by the BTL lemma we have<label for='sidenote-role-4' class='margin-toggle'><span id="id4">
 <sup>4</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote d-n"><sup>4</sup>Note that we additionally use f_0(\mathbf x^*) \geq f_0(\mathbf x_1) since BTL only applies to t=1,...,T.</span></p>
+</label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote d-n"><sup>4</sup>Note that we additionally use <span class="math notranslate nohighlight">\(f_0(\mathbf x^*) \geq f_0(\mathbf x_1)\)</span> since BTL only applies to <span class="math notranslate nohighlight">\(t=1,...,T\)</span>.</span></p>
 <div class="math notranslate nohighlight">
 \[\sum_{t=0}^{T} f_{t}\left(\mathbf x^{*}\right) \geqslant \sum_{t=0}^{T} f_{t}\left(\mathbf x_{t+1}\right)\]</div>
 <p>with</p>
@@ -617,7 +617,7 @@ w^{*}=\argmin_{\mathbf x} \sum_{t=1}^{T} f_{t}(\mathbf x) \quad \text{(best fixe
 <p>Now we can bound the FTRL regret as follows<label for='sidenote-role-5' class='margin-toggle'><span id="id5">
 <sup>5</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote d-n"><sup>5</sup>We want to use stability so we need to move from \mathbf x^* to \mathbf x_{t+1}. We do this by getting it on a form on which we can apply the BTL lemma.</span></p>
+</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote d-n"><sup>5</sup>We want to use stability so we need to move from <span class="math notranslate nohighlight">\(\mathbf x^*\)</span> to <span class="math notranslate nohighlight">\(\mathbf x_{t+1}\)</span>. We do this by getting it on a form on which we can apply the BTL lemma.</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned} \mathcal R_T^{\mathrm{FTRL}} &amp;=\sum_{t=1}^{T} f_{t}\left(\mathbf x_{t}\right)-\sum_{t=1}^{T} f_{t}\left(\mathbf x^{*}\right) \\ &amp;=\sum_{t=1}^{T} f_{t}\left(\mathbf x_{t}\right)-\sum_{t=1}^{t} f_{t}\left(\mathbf x^{*}\right)+f_{0}\left(\mathbf x^{*}\right) \\ &amp; \leqslant \sum_{t=1}^{T} f_{t}\left(\mathbf x_{t}\right)-\sum_{t=0}^{T} f_{t}\left(\mathbf x_{t+1})+f_{0}\left(\mathbf x^{*}\right) \right. &amp;&amp; \text{(using BTL lemma)}\\ &amp; \leqslant \eta \sum_{t=1}^{T} \| \nabla_{t} f\left(\mathbf x_{t}\right) \|_{*}^{2}+f_{0}\left(\mathbf x^{*}\right)-f_{0}\left(\mathbf x_{1}\right) &amp;&amp; (\text {using stability}) \\ &amp; \leqslant \eta \sum_{t=1}^{T}\left\|\nabla_{t} f\left(\mathbf x_{t}\right)\right\|_{*}^{2}+\frac{1}{\eta}(\underbrace{\max _{\mathbf x} \psi(\mathbf x) - \min_{\mathbf x} \psi(\mathbf x)}_{D})\end{aligned}\end{split}\]</div>
