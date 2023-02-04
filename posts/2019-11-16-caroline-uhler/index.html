@@ -1,0 +1,687 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>From causal inference to autoencoders and gene regulation by Caroline Uhler &#8212; Thomas Pethick</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Serif/cmun-serif.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Sans/cmun-sans.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="../../about/" />
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Posts" href="../" />
+    <link rel="prev" title="Provably beneficial artificial intelligence by Stuart Russell" href="../2019-11-03-russell-talk/" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+     
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../posts/atom.xml"
+  title="Thomas Pethick's blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Thomas Pethick</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../about/">
+   About
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../publications/">
+   Publications
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../online-learning/">
+   Online learning
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-02-FTRL/">
+     Online convex optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-06-hedge-and-bandit/">
+     Hedge and bandits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-07-gp-mw/">
+     Gaussian processes and Hedge for infinite armed bandits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../talks/">
+   Talks
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-03-russell-talk/">
+     Provably beneficial artificial intelligence by Stuart Russell
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     From causal inference to autoencoders and gene regulation by Caroline Uhler
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../">
+   Posts
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">
+     Acceleration convergence using a potential function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-perspectives/">
+     Various ways of writing Nesterov’s acceleration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-15-gradientboosting/">
+     Gradient boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">
+     Bayesian logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2018-05-22-io-model/">
+     The I/O Model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right"><label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interventional-data">
+   Interventional data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#markov-equivalent-classes-identifiability">
+     Markov equivalent classes (identifiability)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#learning-the-dag">
+     Learning the DAG
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#where-should-we-intervene">
+     Where should we intervene
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#auto-encoder-theory">
+   Auto-Encoder Theory
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#final-remarks">
+     Final Remarks
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>From causal inference to autoencoders and gene regulation by Caroline Uhler</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interventional-data">
+   Interventional data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#markov-equivalent-classes-identifiability">
+     Markov equivalent classes (identifiability)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#learning-the-dag">
+     Learning the DAG
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#where-should-we-intervene">
+     Where should we intervene
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#auto-encoder-theory">
+   Auto-Encoder Theory
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#final-remarks">
+     Final Remarks
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                 <section class="tex2jax_ignore mathjax_ignore" id="from-causal-inference-to-autoencoders-and-gene-regulation-by-caroline-uhler">
+<h1>From causal inference to autoencoders and gene regulation by Caroline Uhler<a class="headerlink" href="#from-causal-inference-to-autoencoders-and-gene-regulation-by-caroline-uhler" title="Permalink to this headline">#</a></h1>
+<div class="post-date">Posted on 2019-11-16</div>
+<!--  https://slideslive.com/38917596/from-predictive-to-caussal-modeling-bridging-the-gap -->
+<p><em>Disclaimer: These notes are based on my frantic scribbling from this one talk and will most certainly contains misunderstandings even though I’ve tried my best to stay true to the original content.</em></p>
+<p>Caroline Uhler gave a very interesting talk this Friday<label for='sidenote-role-2' class='margin-toggle'><span id="id1">
+<sup>2</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>For an almost identical talk see her talk at ICML 2019.</span> that went from the very practically motivated problem of studying genes all the way down to characterizing overparameterization of neural network theory.</p>
+<p>The talk was given in the backlit of the scientific opportunity which comes with having high-throughput observation and interventional single-cell gene expression<label for='sidenote-role-1' class='margin-toggle'><span id="id2">
+<sup>1</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>It is still unclear to me what exactly we observe as a gene expression.
+However, I imagine that the reason we model this as a causal network is because a particular gene could impact to what degree other genes are being read.
+So the genes do not have a causal relation directly by the expression of them does.</span> data available.
+Let us unpack that a little to appreciate it: we have roughly 20,000 genes in each cell.
+For one of those cells we can quickly obtain 100,000 to 1 mio. observations (see <a class="reference internal" href="#fig-data"><span class="std std-numref">Fig. 1</span></a>).
+Not only that, we can even knock out a particular gene thanks to the <a class="reference external" href="https://en.wikipedia.org/wiki/Perturb-seq">CRISPR-seq method</a>.
+These kinds of large-scale studies have previously not been possible – this would for instance be ethically problematic when testing medicine on human groups.
+So the problem of what can asymptotically be learned for different kinds of interventions has only recently become interesting practically.</p>
+<figure class="margin align-default" id="fig-data">
+<img alt="../../_images/data.png" src="../../_images/data.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text"><strong>Data matrix</strong>
+The observations can be represented by data matrix where each column consistent of 20,000 values – one for each gene.
+Most of the entries are zero entries because of the high level of noise in the measurements.</span><a class="headerlink" href="#fig-data" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<figure class="margin align-default" id="fig-grn">
+<img alt="../../_images/GRN.png" src="../../_images/GRN.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text"><strong>A Gene Regulatory Network</strong> of 4 genes represented by random variables in a Bayesian Network.
+Each random variable is a function of some noise and the other random variables dictated by network structure.
+The graphical model and structure equation model are equivalent.</span><a class="headerlink" href="#fig-grn" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>These gene expression observations can be viewed as a causal system – in this setting specifically referred to as a Gene Regulatory Network.
+Each observation column in the data matrix is a realization of a collection of random variable whose correlation structure can be captured by a directed acyclic graph (DAG) also known as a Bayesian Network. <!-- TODO: see figure... -->
+We are ultimately interested in finding the unique network which governs our data (see <a class="reference internal" href="#fig-trait-cause"><span class="std std-numref">Fig. 3</span></a>).
+It is well known that we would not be able to uniquely identify the network by observational data alone since correlation is a symmetric relation.
+So we need to interact with the system, i.e. perturb it.
+The question is how much we can narrow down the network structure.</p>
+<figure class="margin align-default" id="fig-trait-cause">
+<img alt="../../_images/trait_cause.png" src="../../_images/trait_cause.png" />
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text"><strong>Trait causes</strong>
+Note that this problem is different from learning the causes of traits.
+That problem is much simpler as the network reduces to the network structure illustrated below.</span><a class="headerlink" href="#fig-trait-cause" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<!-- Can sequence or observe (not in pairs) -->
+<section id="interventional-data">
+<h2>Interventional data<a class="headerlink" href="#interventional-data" title="Permalink to this headline">#</a></h2>
+<p>It is useful to consider two types of interventions (also known as perturbations):</p>
+<ul>
+<li><p><em>perfect</em> or <em>hard</em> intervention in which one of the random variable is made fixed,</p>
+<div class="math notranslate nohighlight">
+\[X_2 = c.\]</div>
+<p>This corresponds to deleting on incoming edges to <span class="math notranslate nohighlight">\(X_2\)</span>.</p>
+</li>
+<li><p><em>imperfect</em> intervention in which the random variable is modified,</p>
+<div class="math notranslate nohighlight">
+\[X_2 = \tilde{f}(X_1, \tilde{\epsilon}_2).\]</div>
+</li>
+</ul>
+<p>Studying the effect of these perturbations was divided into roughly three parts:</p>
+<ol class="simple">
+<li><p>What causal structures is it even possible to distinguish between with interventional data?</p></li>
+<li><p>How do we construct an algorithm for learning the class of graphs that can lead to the observed data?</p></li>
+<li><p>How do we optimaly pick the intervention to narrow down the graph? (<em>this is still an open question</em>.)</p></li>
+</ol>
+<section id="markov-equivalent-classes-identifiability">
+<h3>Markov equivalent classes (identifiability)<a class="headerlink" href="#markov-equivalent-classes-identifiability" title="Permalink to this headline">#</a></h3>
+<p>The so called <em>markov equivalence classes</em> have already been characterized for observational data.
+That is, the set of graphs that are indistinguishable by only using observational data (see <a class="reference internal" href="#fig-markov-eq-classes"><span class="std std-numref">Fig. 4</span></a> for an example).
+Obviously when additionally using interventional data we can still distinguish between graphs that where possible with observational data alone.
+But can we divide these sets further?
+It turns out that with interventions we can distinguish between:</p>
+<ul class="simple">
+<li><p>the same as for observational and</p></li>
+<li><p>adjacent to intervention nodes.</p></li>
+</ul>
+<p><em>This turns out to be true even for imperfect interventions</em> (but it comes at a computational cost).
+This is of high practical relevance since for cell perturbations a hard intervention would mean killing the cell.
+An imperfect intervention on the other hand would only kill off the cell with high probability after roughly 5 interventions.
+This allow us to distinguish between many more graph than if we could only perform one intervention.</p>
+<figure class="align-default" id="fig-markov-eq-classes">
+<img alt="../../_images/markov-eq-classes.gif" src="../../_images/markov-eq-classes.gif" />
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">The markov equivalence classes for a three node graphs when using observational data. (<a class="reference external" href="https://link.springer.com/article/10.1007/s41060-016-0038-6">source</a>)</span><a class="headerlink" href="#fig-markov-eq-classes" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="learning-the-dag">
+<h3>Learning the DAG<a class="headerlink" href="#learning-the-dag" title="Permalink to this headline">#</a></h3>
+<p>It is not too difficult to show that we can reduce the learning of this Directed Acyclic Graph (DAG) into two independent sub-problems:</p>
+<ol class="simple">
+<li><p>First we learn an ordering of nodes<a class="footnote-reference brackets" href="#id9" id="id3">1</a>.</p></li>
+<li><p>Then we learn the corresponding DAG.</p></li>
+</ol>
+<p>The second problem was already solve so this separation reduced the task to learning the right ordering.</p>
+<p><strong>Permutohedron</strong>
+The space of possible orderings can be captured by a <span class="math notranslate nohighlight">\((n-1)\)</span>-dimensional polytope where each node is a unique permutation (see <a class="reference internal" href="#fig-permutohedron"><span class="std std-numref">Fig. 5</span></a>).
+An edge exists between two nodes if you can get to one from another by a adjacent transposition leading to <span class="math notranslate nohighlight">\((n-1)\)</span> edges for each node.</p>
+<figure class="align-default" id="fig-permutohedron">
+<a class="reference internal image-reference" href="../../_images/permutohedron.png"><img alt="../../_images/permutohedron.png" src="../../_images/permutohedron.png" style="width: 50%;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 5 </span><span class="caption-text">The permutohedron (<a class="reference external" href="https://en.wikipedia.org/wiki/Permutohedron">source</a>).</span><a class="headerlink" href="#fig-permutohedron" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>It turns out that for <em>observational data</em> a simple greedy algorithm which traverses this polytope is sufficient for learning the ordering.
+Formally we need to show that our algorithm is <em>provably consistent</em>.
+That is, in the limit of infinite steps it converges to the right ordering <em>no matter the starting point in this polytope</em><label for='sidenote-role-3' class='margin-toggle'><span id="id4">
+<sup>3</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>To obtain an efficient algorithm they further showed that a sparse polytope is sufficient.</span>.</p>
+<p><strong>Learning for interventions</strong>
+Now for interventional data the story is different:</p>
+<ul class="simple">
+<li><p>For <em>perfect interventions</em> this correspond to pruning the polytope by cutting off edges to intervened targets. This is <em>not consistant</em> in general which is quite intuitive.</p></li>
+<li><p>For imperfect interventions_ on the other hand we can obtain consistancy which gives us hope even if the assymptotic convergence is slow.</p></li>
+</ul>
+</section>
+<section id="where-should-we-intervene">
+<h3>Where should we intervene<a class="headerlink" href="#where-should-we-intervene" title="Permalink to this headline">#</a></h3>
+<p>The last point concerning genetics was mostly a cry for help.
+We have so far only considered knocking out single genes and analysed what causal structure we can infer given a fixed interventional data set.
+Two exciting and big open problems concerns knocking out <em>multiple genes</em> and <em>how to choose the imperfect interventions</em>.</p>
+</section>
+</section>
+<section id="auto-encoder-theory">
+<h2>Auto-Encoder Theory<a class="headerlink" href="#auto-encoder-theory" title="Permalink to this headline">#</a></h2>
+<p>In the second part of her talk she left the genetics behind and instead talked about cancerous cells.
+Detecting cancers is an important problem where current attempt at automating the process relies on labeled data curated by practitioners.
+A naive approach would use this data set to at best replicate the performance of practitioners.
+Uhler on the other hand had the ambitious goal of detecting teh cancerous cells before it was humanly possible.</p>
+<p><strong>Going back in time</strong>
+She manages this by training and a Variational Auto-Encoder (VAE).
+Through that she obtains a low dimensional (probabilistic) embedding of each cell.
+Given a timeseries of pictures for a cell she then proceeds by learning the time-evolution in this lower dimensional space.
+Specifically, she learns the Optimal Transport map from one cell embedding to the next.
+Inverting this mapping (which is a <span class="math notranslate nohighlight">\(m\times m\)</span>-matrix where <span class="math notranslate nohighlight">\(m\)</span> is the dimensionality of the latent space).
+Not only did this provide a way to step back in time but she additionally use it to exterpolate <label for='sidenote-role-4' class='margin-toggle'><span id="id5">
+<sup>4</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote"><sup>4</sup>It was a little unclear to what extend they manage to distinguish cancerous cells before experts. Especially since it is not obvious how to evaluate your performance – after all no baseline exists that you can compare yourself against.</span><label for='sidenote-role-5' class='margin-toggle'><span id="id6">
+<sup>5</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote"><sup>5</sup>The details of the method can be found on bioRxiv. It seems to be an early draft with the mathematical details showing quite a bit into it in the supplementary material.</span>.</p>
+<p><strong>Auto-encoders</strong>
+What I found even more fascinating with this use of Auto-encoders (AE) here was that it motivated a theoretical study of AE which lead to very general results.
+In particular, her group showed that an overparameterized AE<label for='sidenote-role-6' class='margin-toggle'><span id="id7">
+<sup>6</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-6' name='sidenote-role-6' class='margin-toggle'><span class="sidenote"><sup>6</sup>Note that there is a slight discrepancy here: the study on overparameterization is done in the context of Auto-Encoders not Variational Auto-Encoders as used in the cancer application.
+Even though the difference might seem subtle at first sight my understanding is that they are treated as two very different mathematical objects.</span> network generalizes well <em>because it memorizes the training data and interpolate between the points</em>.</p>
+<p><strong>A contracting map</strong>
+In the process they even devised a procedure for extracting the training examples.
+This is done by simply re-applying the network repeatedly to the previous output of the network.
+Practically this procedure is possible since the input and output space is the same for an Auto-Encoder.
+In the terminology of dynamic system theory the AE is a <em>contracting map</em>.</p>
+<p>This has profound practical consequences and is both a blessing and a curse.
+On the one hand, this is exactly what makes Auto-Encoder work when overparameterized as is standard practise.
+On the flipside, this raises real privacy concerns: Medical application using AE are bound to leak confidential patient data to the people with access to the model.</p>
+<p><strong>A linear algebra perspective</strong>
+They approached the understanding of overparameterized AE very methodically.
+First they verified that it did not simply learn an identity map.
+In particular, they fed a trained network completely random noise and observed that the network produced images close to the training images<!--[^random] -->.
+This was the first proof that something curious was going on.
+That let them to theoretically study the problem.
+They first showed that when restricted to linear mappings the network learns the lowest dimensional projection and that the output will lie in the <em>span</em> of training data.
+They then managed to obtain analogies results to this for non-linear mapping<label for='sidenote-role-7' class='margin-toggle'><span id="id8">
+<sup>7</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-7' name='sidenote-role-7' class='margin-toggle'><span class="sidenote"><sup>7</sup>From what I understand they actually manage to understand the overparameterized setting for Autoencoder fully. I would like to understand the details however, since for neural networks as function approximators the interest is in the degree of overparameterization. I don’t know whether what they have obtain is in some way tight.</span>.
+This is <em>yet</em> another example of how useful it is to first reason about a problem under the simplifying assumption of linearity.</p>
+<!-- [^random]: Random... -->
+<p><strong>Practical advice</strong>
+These theoretical results explains the necessity for overparameterization of autoencoders – in some way the network becomes more regularized.
+For CNN they obtained results that this corresponds to adding depth since it can be shown that width does not give you so much more expressive power.</p>
+<section id="final-remarks">
+<h3>Final Remarks<a class="headerlink" href="#final-remarks" title="Permalink to this headline">#</a></h3>
+<p>It was incredible seeing this biological application driving results in two distinct theoretical fields: causal inference and neural network theory.
+The AE result is one of those results that in hindsight seems so obvious.</p>
+<hr class="footnotes docutils" />
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="../2019-11-03-russell-talk/">
+      <i class="fa fa-arrow-circle-left"></i> Provably beneficial artificial intelligence by Stuart Russell
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
+    <a href="../2020-01-06-hedge-and-bandit/">
+      Hedge and bandits <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../2019-11-03-russell-talk/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Provably beneficial artificial intelligence by Stuart Russell</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Posts</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Thomas Pethick<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

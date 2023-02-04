@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <id>https://pethick.dk/</id>
+  <title>Thomas Pethick's blog - Posts tagged talk</title>
+  <updated>2023-02-04T15:02:01.475584+00:00</updated>
+  <link href="https://pethick.dk/"/>
+  <link href="https://pethick.dk/posts/tag/talk/atom.xml" rel="self"/>
+  <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
+  <entry>
+    <id>https://pethick.dk/posts/2019-11-03-russell-talk/</id>
+    <title>Provably beneficial artificial intelligence by Stuart Russell</title>
+    <updated>2019-11-03T00:00:00+01:00</updated>
+    <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
+&lt;/div&gt;
+
+    &lt;script type="text/x-thebe-config"&gt;
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./posts/tag"
+        },
+        predefinedOutput: true
+    }
+    &lt;/script&gt;
+    &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
+    <link href="https://pethick.dk/posts/2019-11-03-russell-talk/" rel="alternate"/>
+    <category term="talk" label="talk"/>
+    <published>2019-11-03T00:00:00+01:00</published>
+  </entry>
+  <entry>
+    <id>https://pethick.dk/posts/2019-11-16-caroline-uhler/</id>
+    <title>From causal inference to autoencoders and gene regulation by Caroline Uhler</title>
+    <updated>2019-11-16T00:00:00+01:00</updated>
+    <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
+&lt;/div&gt;
+
+    &lt;script type="text/x-thebe-config"&gt;
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./posts/tag"
+        },
+        predefinedOutput: true
+    }
+    &lt;/script&gt;
+    &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
+    <link href="https://pethick.dk/posts/2019-11-16-caroline-uhler/" rel="alternate"/>
+    <category term="talk" label="talk"/>
+    <published>2019-11-16T00:00:00+01:00</published>
+  </entry>
+</feed>

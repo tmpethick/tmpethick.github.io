@@ -1,0 +1,609 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Provably beneficial artificial intelligence by Stuart Russell &#8212; Thomas Pethick</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Serif/cmun-serif.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Sans/cmun-sans.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="../../about/" />
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="From causal inference to autoencoders and gene regulation by Caroline Uhler" href="../2019-11-16-caroline-uhler/" />
+    <link rel="prev" title="Talks" href="../../talks/" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+     
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../posts/atom.xml"
+  title="Thomas Pethick's blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Thomas Pethick</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../about/">
+   About
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../publications/">
+   Publications
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../online-learning/">
+   Online learning
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-02-FTRL/">
+     Online convex optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-06-hedge-and-bandit/">
+     Hedge and bandits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-07-gp-mw/">
+     Gaussian processes and Hedge for infinite armed bandits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../talks/">
+   Talks
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Provably beneficial artificial intelligence by Stuart Russell
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-16-caroline-uhler/">
+     From causal inference to autoencoders and gene regulation by Caroline Uhler
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../">
+   Posts
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">
+     Acceleration convergence using a potential function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-perspectives/">
+     Various ways of writing Nesterov’s acceleration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-15-gradientboosting/">
+     Gradient boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">
+     Bayesian logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2018-05-22-io-model/">
+     The I/O Model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right"><label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#misspecified-objective">
+   Misspecified Objective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aggregating-utility">
+   Aggregating Utility
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#final-remarks">
+   Final remarks
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Provably beneficial artificial intelligence by Stuart Russell</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#misspecified-objective">
+   Misspecified Objective
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#aggregating-utility">
+   Aggregating Utility
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#final-remarks">
+   Final remarks
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                 <section class="tex2jax_ignore mathjax_ignore" id="provably-beneficial-artificial-intelligence-by-stuart-russell">
+<h1>Provably beneficial artificial intelligence by Stuart Russell<a class="headerlink" href="#provably-beneficial-artificial-intelligence-by-stuart-russell" title="Permalink to this headline">#</a></h1>
+<div class="post-date">Posted on 2019-11-03</div>
+<p>Stuart Russell came to EPFL last Friday to talk about his new book on <a class="reference external" href="https://www.amazon.com/Human-Compatible-Artificial-Intelligence-Problem/dp/0525558616">Human Compatible: Artificial Intelligence and the Problem of Control</a>.
+Broadly speaking there were two main messages: first we should avoid specifying fixed objectives and instead learn them in a dynamic environment where the agent adhere to the human.
+His second main talking point was on the problem of how we aggregate utility – a similar problem to what the Effective Altruism movement face.
+I will expand on these in a bit but let’s first look at how he opened.</p>
+<p><strong>A confused kicker</strong>
+He had a catchy opening illustrating the lack of robustness in modern RL methods.
+It showed two adversary player’s: one a goal keeper and the other the kicker.
+He showed that a seemingly useless (but hilarious) strategy of the goal keeper could completely confuse the kickers ability to score.
+What we end up looking at is a goal keeper who simply lies down and wiggle’s it’s leg.
+This is apparently sufficient to render the kicker utterly incapable – the agent will indecisively dance around the ball.
+With a well-behaved opponent the kicker motorics and strategy is very human, but this lack of robustness in an adversarial setting shows that something very different is going on under the hood.
+As Stuart Russell puts it: the two agents are intertwine in some intricate dance of tango.
+Now, of course in this zero-sum game dependency is inherent.
+The problem is that most of the training signal of the kicker seems to depend on the actions of the opponent instead of treating it as noise.
+What I could imagine is happening is the following: by actively not having the goal keeper search for an optimal strategy we make it harder to converged to a stable strategy.</p>
+<p><strong>Sample efficiency</strong>
+In effect it boils down to being much less sample efficient when the opponent act adversarially.
+That is, it requires many more samples from the environment before convergence to a stable solution.
+Here he drew a comparison with humans who are masters at few-shot learning<label for='sidenote-role-1' class='margin-toggle'><span id="id1">
+<sup>1</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>He had a nice picture of this: children don’t scroll through a book with thousands of picture of giraffe’s to understand the concept of a giraffe.</span> – they learn classification tasks and master complicated decision processes with only a few training examples.
+He never connected the two but my interpretation is that robustness is essential to achieve this human level ability.
+This is simply because robustness will give you sample efficiency which corresponds to few-shot learning.</p>
+<p><strong>Motivation</strong>
+This picturesque introduction showed how brittle these systems are and how that can lead to unwanted behavior.
+He then switched gears to argue that a system, which on the contrary is <em>not</em> stupid<label for='sidenote-role-2' class='margin-toggle'><span id="id2">
+<sup>2</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>He had one casual remark I found very provocative.
+When arguing for how great a personal assistant could get he said something along the lines of:
+“It will know what you want from listening in on your conversation and from reading your emails”.
+He said this seemingly seriously optimistic about what could turn into an uncontrolled surveillance system.</span>, could still exhibit undesired behavior.
+Assuming we could build capable systems, why would we have to control them?<label for='sidenote-role-3' class='margin-toggle'><span id="id3">
+<sup>3</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>To me this seems almost unnecessary arguing for.</span>
+The strongest and most interesting<label for='sidenote-role-4' class='margin-toggle'><span id="id4">
+<sup>4</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote"><sup>4</sup>This is interesting in its own right:
+it shows that AI systems and existing complex decision making processes could be treated similarly.
+We’ll touch on this further down the post.</span> argument for me was the parallel to nuclear power: ensuring that machines with a super human level of intelligence are safe is not so different from ensuring safety of existing powerful complex systems – in particular nuclear power plans.
+He continued by saying that the power of the system is not problematic in itself: it is only a problem if the objective of the system is misaligned with us.</p>
+<section id="misspecified-objective">
+<h2>Misspecified Objective<a class="headerlink" href="#misspecified-objective" title="Permalink to this headline">#</a></h2>
+<p>This is often referred to as the <em>alignment problem</em> in AI.
+To clarify how difficult it is to define the right objective he took a particular view on what he referred to as <em>the social media catastrophe</em>.
+As I understand it, this is the problem of social media advocating extreme polarized opinions and misinformation.
+He explained this by first pointing out that the system benevolently were optimizing for good recommendation<label for='sidenote-role-5' class='margin-toggle'><span id="id5">
+<sup>5</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote"><sup>5</sup>He later did point out that what they truly optimize for is profit.
+But this benevolent view makes it clearer that even with a well-intended objective it can go wrong.</span>.
+However, it turned out that it was an easier optimization problem to modify people’s behavior to be more predictable instead of learning their original objective.
+Thus polarizing peoples opinion gave a stable solution that could be gamed.
+Whether this is truly what happened is not entire clear, but it does show why optimizing in a dynamic environment is hard.</p>
+<p><strong>Cooperation as complex agents</strong>
+At this point he took an interesting take on the corporations involved in this catastophe.
+He viewed the whole corporation as a big complex decision making algorithm – which crucially couldn’t be switched off.
+Through that, he motivated why any intelligent system should allow itself to be switched off.
+However, he only used the view to make this one argument, but failed to comment on the importance of the connection in itself.
+On a high level, AI and the complex decision making systems we already have can be treated the same and studied under the same umbrella.
+It suggest that studying safety in AI can help us regulate existing systems such as social economic structures.
+Conversely maybe we could use existing studies to guide safety research in AI.</p>
+<p><strong>Solutions</strong>
+Broadly speaking the social media example captures the two main problems: 1) we need to be able to switch the system off; and 2) we cannot assume that the objective can be specified completely and correctly a priori<label for='sidenote-role-6' class='margin-toggle'><span id="id6">
+<sup>6</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-6' name='sidenote-role-6' class='margin-toggle'><span class="sidenote"><sup>6</sup>As an aside, he also mentioned how systems should be minimally invasive.
+That is, don’t for example destroy the town to bring coffee to the human.
+But this does not really provide many guarantees.
+In addition, this property is to a certain extend already taken care of in most algorithms since they usually have a level of greediness.
+The cheapest solution to compute will often also be the less involved.</span>.
+We will now touch on how he modelled this.</p>
+<p><strong>Assistance Games</strong>
+He modelled the problem as a two-player game with a human and a robot.
+The human has an objective <span class="math notranslate nohighlight">\(\mathbf \theta\)</span> which can only be observed by the robot through play.
+The robot starts with some prior <span class="math notranslate nohighlight">\(p(\mathbf \theta)\)</span> over this unknown objective and then tries to both learn and optimize the true objective<label for='sidenote-role-7' class='margin-toggle'><span id="id7">
+<sup>7</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-7' name='sidenote-role-7' class='margin-toggle'><span class="sidenote"><sup>7</sup>To me this seems very closely related to inverse reinforcement learning in which the reward function is unobservable but trajectories from a teacher with an optimal policy are accessible.</span>.</p>
+<p><strong>Image classification</strong>
+Even for static tasks he argued that a dynamically learned loss is needed.
+Current models assumes uniform loss even though this is clearly not the case.
+To make his point clear he picked the example of Google wrongly classifying a human as a gorilla.
+The cost of patching up their brand after this mistake was clearly out of proportions with any other misclassification they could have made.
+As a research direction he proposed finding the underlying structure in these losses (since they clearly exists) and doing this through active learning.
+In generally he suggested develop dynamic, or dynamically learned, losses in all current applications.</p>
+<p><strong>Online Convex Optimization</strong>
+At the moment I’m instantly seeing everything as an Online Convex Optimization problem.
+In this setting we exactly avoid specifying a fixed objective – on the contrary the environment gets to choose the stream of losses adversarially.
+In the case of an unknown objective the loss is not really changing adversarially.
+Rather, it is our <em>estimate</em> of the loss which changes over time and the challenge seems to be that we have <em>limited access</em> to the loss, which is something considered in the Multi-armed Bandit setting.
+So it does not seem to be the usual online setting but some of the tools might still be useful in the analysis of Assistance Games – at least the notion of regularization and robustness.</p>
+</section>
+<section id="aggregating-utility">
+<h2>Aggregating Utility<a class="headerlink" href="#aggregating-utility" title="Permalink to this headline">#</a></h2>
+<p>The second main topic he touched on was the problem of aggregating utility.
+There were three rather disjoint comments on this.</p>
+<p><strong>Pareto paper</strong>
+Imagine an agent optimizing for a group of principals who have different utility functions.
+Usually we are interested in a Pareto optimal policy.
+That is, a policy where no principal can improve without making sacrifices for one of the others.
+Harsanyi’s theorem shows that when the principals share a common prior of the environment dynamics then the Pareto optimal strategy for the agent is a fixed linear combination of all the principals utilities.
+What Russell and his colleges shows in <span id="id8">Desai <em>et al.</em> [<a class="reference internal" href="#id21" title="Nishant Desai, Andrew Critch, and Stuart J Russell. Negotiable Reinforcement Learning for Pareto Optimal Sequential Decision-Making. In S. Bengio, H. Wallach, H. Larochelle, K. Grauman, N. Cesa-Bianchi, and R. Garnett, editors, Advances in Neural Information Processing Systems 31, pages 4712–4720. Curran Associates, Inc., 2018. URL: http://papers.nips.cc/paper/7721-negotiable-reinforcement-learning-for-pareto-optimal-sequential-decision-making.pdf (visited on 2019-11-03).">2018</a>]</span> is that in the more general setting more weight should be given to the principle that turns out to be right.
+Exactly what to make of this theoretical result is a little unsure.</p>
+<p><strong>Sadism</strong>
+Assume that Alice’s utility can be described by a linear combination of her own satisfaction <span class="math notranslate nohighlight">\(w_A\)</span> and her friends, Bob’s, satisfaction <span class="math notranslate nohighlight">\(w_B\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[u_A = w_A + C_{AB} w_B.\]</div>
+<p>If <span class="math notranslate nohighlight">\(C_{AB}\)</span> is negative Ali is sadistic since she obtain pleasure from the dissatisfaction of Bob.
+This raises the question of what we should optimize for.
+A simple solution would be to completely disregard the preference of sadistic people.
+However, sadistic people are not so uncommon when we realise that Pride and Rivalry would have the exact same mathematical description<label for='sidenote-role-8' class='margin-toggle'><span id="id9">
+<sup>8</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-8' name='sidenote-role-8' class='margin-toggle'><span class="sidenote"><sup>8</sup>I am not too sure I see how this complicates matters since we could simply ignore any negative coefficient C_{AB}.
+I realise that in a simplified static world this is suboptimal.
+But we have to acknowledge that peoples preferences will update and ethically I think we can agree that we want to stir away from pride and rivalry.
+If we do not support this kind of utility in our reward system there a higher chance it will diminish.</span>.</p>
+<p><strong>Optimizing jointly</strong>
+As a final example on problems with optimizing a global utility he gave a comical image: picture a kitchen robot denying its owner food because its decided that there are more urgent matters in some third-world country.
+This capture more of an engineering challenge and to me seem very flawed.
+It is misleading since the optimization process would be jointly but the <em>action space</em> considered would be for each robot individually.
+So it does not seem like a real issues: neither theoretical nor practically.</p>
+</section>
+<section id="final-remarks">
+<h2>Final remarks<a class="headerlink" href="#final-remarks" title="Permalink to this headline">#</a></h2>
+<p>Being careful with what we are optimizing for definitely seems crucial.
+This is both in terms of learning or adjusting to a changing objective and understanding what we implicitly assume when aggregating the utility.
+Further, I don’t see why these questions are only relevant within AI safety.
+Effective Altruism is about optimizing the optimization process and here a proper definition of utility is even more important.
+Even more broadly these concerns apply just as much to any far-reaching decision making body – be it a state, a multinational company or the scientific enterprise.</p>
+<hr class="docutils" />
+<div class="docutils container" id="id10">
+<dl class="citation">
+<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id8">DCR18</a></span></dt>
+<dd><p>Nishant Desai, Andrew Critch, and Stuart J Russell. Negotiable Reinforcement Learning for Pareto Optimal Sequential Decision-Making. In S. Bengio, H. Wallach, H. Larochelle, K. Grauman, N. Cesa-Bianchi, and R. Garnett, editors, <em>Advances in Neural Information Processing Systems 31</em>, pages 4712–4720. Curran Associates, Inc., 2018. URL: <a class="reference external" href="http://papers.nips.cc/paper/7721-negotiable-reinforcement-learning-for-pareto-optimal-sequential-decision-making.pdf">http://papers.nips.cc/paper/7721-negotiable-reinforcement-learning-for-pareto-optimal-sequential-decision-making.pdf</a> (visited on 2019-11-03).</p>
+</dd>
+</dl>
+</div>
+<hr class="footnotes docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="../2019-11-02-FTRL/">
+      <i class="fa fa-arrow-circle-left"></i> Online convex optimization
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
+    <a href="../2019-11-16-caroline-uhler/">
+      From causal inference to autoencoders and gene regulation by Caroline Uhler <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../../talks/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Talks</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../2019-11-16-caroline-uhler/" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">From causal inference to autoencoders and gene regulation by Caroline Uhler</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Thomas Pethick<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

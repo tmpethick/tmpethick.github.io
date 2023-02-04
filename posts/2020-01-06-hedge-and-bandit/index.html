@@ -1,0 +1,857 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Hedge and bandits &#8212; Thomas Pethick</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Serif/cmun-serif.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Sans/cmun-sans.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="../../about/" />
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Gaussian processes and Hedge for infinite armed bandits" href="../2020-01-07-gp-mw/" />
+    <link rel="prev" title="Online convex optimization" href="../2019-11-02-FTRL/" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+     
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../posts/atom.xml"
+  title="Thomas Pethick's blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Thomas Pethick</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../about/">
+   About
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../publications/">
+   Publications
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../online-learning/">
+   Online learning
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-02-FTRL/">
+     Online convex optimization
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Hedge and bandits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-07-gp-mw/">
+     Gaussian processes and Hedge for infinite armed bandits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../talks/">
+   Talks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-03-russell-talk/">
+     Provably beneficial artificial intelligence by Stuart Russell
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-16-caroline-uhler/">
+     From causal inference to autoencoders and gene regulation by Caroline Uhler
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../">
+   Posts
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">
+     Acceleration convergence using a potential function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-perspectives/">
+     Various ways of writing Nesterov’s acceleration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-15-gradientboosting/">
+     Gradient boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">
+     Bayesian logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2018-05-22-io-model/">
+     The I/O Model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right"><label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#expert-problem-and-hedge">
+   Expert problem and Hedge
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ftrl">
+     FTRL
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regret-bounds">
+     Regret Bounds
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reducing-the-algorithm-to-softmax">
+     Reducing the algorithm to softmax
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#final-remarks">
+     Final Remarks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multi-armed-bandit">
+   Multi-Armed Bandit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   Final Remarks
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Hedge and bandits</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#expert-problem-and-hedge">
+   Expert problem and Hedge
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ftrl">
+     FTRL
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#regret-bounds">
+     Regret Bounds
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reducing-the-algorithm-to-softmax">
+     Reducing the algorithm to softmax
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#final-remarks">
+     Final Remarks
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multi-armed-bandit">
+   Multi-Armed Bandit
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id6">
+   Final Remarks
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                 <section class="tex2jax_ignore mathjax_ignore" id="hedge-and-bandits">
+<h1>Hedge and bandits<a class="headerlink" href="#hedge-and-bandits" title="Permalink to this headline">#</a></h1>
+<!-- 
+- Regret bound for Bandit (make overview)
+- Explain Hedge argument precisely (the lifting trick to probability dist) 
+-->
+<p>We will prepare ourselves for a non-convex setting that uses results for OCO.</p>
+<ul class="simple">
+<li><p>First derive Hedge as a particular case of FTRL.</p></li>
+<li><p>Introduce the Bandit setting for which Hedge can almost be immediately applied.</p></li>
+</ul>
+<section id="expert-problem-and-hedge">
+<h2>Expert problem and Hedge<a class="headerlink" href="#expert-problem-and-hedge" title="Permalink to this headline">#</a></h2>
+<p><strong>Problem formulation</strong>
+In the expert problem we are to select a weighing of experts which minimize a loss that is simply the sum of losses associated with each expert.
+An example of this setting could be <em>portfolio selection</em> where each stock is an expert and the loss is the negative return.
+Formalized in our OCO framework this corresponds to a decision space being the finite dimensional simplex <span class="math notranslate nohighlight">\(\Omega = \Delta_N\)</span> and the loss linear <span class="math notranslate nohighlight">\(f_t(p) = \braket{p,\ell_t}\)</span> for which we will further assume boundedness <span class="math notranslate nohighlight">\(\ell_t \in [0,1]\)</span>.</p>
+<ol class="simple">
+<li><p>Player picks <span class="math notranslate nohighlight">\(p_t \in \Delta_N\)</span>.</p></li>
+<li><p>Player observed <span class="math notranslate nohighlight">\(\ell_t\)</span> and suffers <span class="math notranslate nohighlight">\(\braket{p_t, \ell_t}\)</span>.</p></li>
+</ol>
+<p>We are thus interested in minimizes the following loss,</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{R}_{T}=\sum_{t=1}^{T}\left\langle p_{t}, \ell_{t}\right\rangle-\min _{p \in \Delta_N} \sum_{t=1}^{T}\left\langle p, \ell_{t}\right\rangle=\sum_{t=1}^{T}\left\langle p_{t}, \ell_{t}\right\rangle-\sum_{t=1}^{T} \ell_{t}\left(i^{\star}\right)\]</div>
+<p>with <span class="math notranslate nohighlight">\(i^{\star} \in \operatorname{argmin}_{i} \sum_{t=1}^{T} \ell_{t}(i)\)</span>.</p>
+<section id="ftrl">
+<h3>FTRL<a class="headerlink" href="#ftrl" title="Permalink to this headline">#</a></h3>
+<p>If we want to apply FTRL on this we need to choose the regularizer.
+A natural choice when the decision set is the simplex is to choose the (negative) entropy</p>
+<div class="math notranslate nohighlight">
+\[\psi(p) = \sum_{i=1}^{N} p(i) \ln p(i).\]</div>
+<p>Our proposed solution is thus,</p>
+<div class="proof algorithm admonition" id="algorithm-0">
+<p class="admonition-title"><span class="caption-number">Algorithm 2 </span> (FTRL with negative entropic regularization)</p>
+<section class="algorithm-content" id="proof-content">
+<div class="math notranslate nohighlight">
+\[p_{t}=\underset{p \in \Delta(N)}{\operatorname{argmin}}\left\langle p, \sum_{\tau=1}^{t-1} \ell_{t}\right\rangle+\frac{1}{\eta} \sum_{i=1}^{N} p(i) \ln p(i).\]</div>
+</section>
+</div></section>
+<section id="regret-bounds">
+<h3>Regret Bounds<a class="headerlink" href="#regret-bounds" title="Permalink to this headline">#</a></h3>
+<p>For the regret bound to go through we need to prove that the negative entropy function is strongly convex w.r.t. the <span class="math notranslate nohighlight">\(\ell_1\)</span>-norm,</p>
+<!-- TODO: explain choice of L1-norm -->
+<div class="math notranslate nohighlight">
+\[\psi(p)-\psi(q) \leq\langle\nabla \psi(p), p-q\rangle-\frac{1}{2}\|p-q\|_{1}^{2}.\]</div>
+<p>Under the <span class="math notranslate nohighlight">\(\ell_1\)</span>-norm this reduces to the well-known Pinsker’s inequality which relates the total variation distance (or half the <span class="math notranslate nohighlight">\(\ell_1\)</span>-norm) with the KL-divergence<label for='sidenote-role-1' class='margin-toggle'><span id="id1">
+<sup>1</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>We need the derivatives of negative entropy: \partial \psi(p)/\partial p(i) = \ln p(i) + 1.</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{1}{2}\|p-q\|_{1}^{2} 
+&amp; \geq \langle\nabla \psi(p), p-q\rangle - \psi(p) + \psi(q) &amp;&amp; \text{(rearranging)} \\
+&amp; = \sum_i q(i) \ln \frac{q(i)}{p(i)} &amp;&amp; \text{(by expanding and seeing terms cancel)} \\
+&amp; = \operatorname{KL}(p,q).
+\end{aligned}\end{split}\]</div>
+<p>Knowing that our assumptions holds we can move on to simplifying the general regret bound obtained with FTRL for our particular case.
+Recall the bound,</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned} 
+\mathcal R_T^{\mathrm{FTRL}} \leqslant \eta \sum_{t=1}^{T}\left\|\nabla_{t} f\left(\mathbf x_{t}\right)\right\|_{*}^{2}+\frac{1}{\eta}(\max _{\mathbf x} \psi(\mathbf x) - \min_{\mathbf x} \psi(\mathbf x)).
+\end{aligned}\]</div>
+<p>We need to bound the dual norm of gradient and the term depending on the negative entropy.
+For the former term we can bound it through the loss,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned} \left\|\nabla_{t} f\left(\mathbf x_{t}\right)\right\|_{*}
+&amp; = \left\|\nabla_{t} f\left(\mathbf x_{t}\right)\right\|_{\infty} &amp;&amp; \text{(dual for $\ell_1$)} \\
+&amp;= \left\|\ell_t \right\|_{\infty} &amp;&amp; \text{(gradient of linear loss)} \\
+&amp;\leq 1 &amp;&amp; \text{(assumed boundedness of loss)}\end{aligned}\end{split}\]</div>
+<p>The sum of squares of these terms are thus trivially bounded by <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<p>Concerning the negative entropy: the discrete distribution which maximizes the negative entropy is a distribution with point mass while the minimum is a uniform distribution.
+The negative entropy for these two distributions are <span class="math notranslate nohighlight">\(\max_p \psi(p) = 0\)</span> and <span class="math notranslate nohighlight">\(\min_p \psi(p) = -\ln N\)</span> respectively.
+Thus we obtain the following bound<label for='sidenote-role-2' class='margin-toggle'><span id="id2">
+<sup>2</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>Be aware that this can be tightened to \mathcal R_T^{\mathrm{FTRL}} \leq \sqrt{(T \ln N) / 2}. See e.g. cesa2006prediction.</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathcal R_T^{\mathrm{FTRL}} 
+&amp;\leq T \eta + \frac{\ln N}{\eta}\\
+&amp;\leq 2 \sqrt{T \ln N}. &amp;&amp; \text{(optimizing $\eta$)}
+\end{aligned}
+\end{split}\]</div>
+<p><strong>Regret bound for samples</strong>
+Say we are incurring loss <span class="math notranslate nohighlight">\(\ell_t(i_t)\)</span> where <span class="math notranslate nohighlight">\(i_t \sim p_t\)</span> instead of incurring the loss over the entire mixed strategy <span class="math notranslate nohighlight">\(\braket{\ell_t, p_t}\)</span>.
+In expectation these are obviously the same, <span class="math notranslate nohighlight">\(\mathbb E_{i_t \sim p_t}[\ell(i_t)]=\braket{\ell_t, p_t}\)</span>.
+So the following regrets</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\tilde{\mathcal R}_T &amp;= \sum_{t=1}^{T}\left\langle p_{t}, \ell_{t}\right\rangle
+  - \sum_{t=1}^{T} \ell_{t}\left(i^{\star}\right) \\
+\mathcal R_T &amp;= \sum_{t=1}^T \ell_t(i_t) 
+  - \sum_{t=1}^{T} \ell_{t}\left(i^{\star}\right),
+\end{aligned}\end{split}\]</div>
+<p>are equivalent in expectation,</p>
+<div class="math notranslate nohighlight">
+\[\mathbb E[\mathcal R_T] = \tilde{\mathcal R}_T.
+\]</div>
+<p>However, we might be interested in bounded the regret with high probability instead<label for='sidenote-role-3' class='margin-toggle'><span id="id3">
+<sup>3</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>There is a good discussion on high probability regret bounds mainly in the context of Bandits which we will cover promptly. The motivation is simple: even though we might be doing well in expectation the variance might be very high. So our algorithm is still very risky in the sense that it is likely that a concrete instantiation will have high regret.</span>.
+This can naturally be reduced to a concentration argument where we make a statement about how far most of the random variables <span class="math notranslate nohighlight">\(\ell_{t}\left(i_{t}\right)\)</span> are from the expectation <span class="math notranslate nohighlight">\(\left\langle p_{t}, \ell_{t}\right\rangle\)</span>.</p>
+<p><strong>Oblivious adversary</strong>
+Subtlety: the history, that the environment may depend on, is thus now a random variable.
+We call the adversary <em>oblivious</em> if it chooses the stream of losses prior to the game, i.e. the randomness of our algorithm does not effect what environment we are compared against.
+This is the setting we will be considering.</p>
+<p>Even in this simplifying setting be can still ask to bound the regret with high probability instead of the expectation.
+We will use a general concentration inequality which relies on a martingale difference sequences.</p>
+<div class="proof definition admonition" id="definition-1">
+<p class="admonition-title"><span class="caption-number">Definition 2 </span> (Martingale difference sequence)</p>
+<section class="definition-content" id="proof-content">
+<p>The random variables <span class="math notranslate nohighlight">\((Z_t)_{t\in \mathbb N}\)</span> is a martingale sequence if</p>
+<div class="math notranslate nohighlight">
+\[\mathbb E[Z_t | \mathcal H_{t-1}] = 0
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal H_{i}\)</span> is the filtration.</p>
+</section>
+</div><div class="proof lemma admonition" id="lemma-2">
+<p class="admonition-title"><span class="caption-number">Lemma 2 </span> (Azuma-Hoeffding inequality)</p>
+<section class="lemma-content" id="proof-content">
+<p>If <span class="math notranslate nohighlight">\(Z_t\)</span> is martingale difference sequence then</p>
+<div class="math notranslate nohighlight">
+\[P\left[\sum_{t=1}^T Z_t \leq \sqrt{2 \ln (1/\delta) \sum_{t=1}^T \alpha_t^2}\right] \geq 1-\delta
+\]</div>
+<p>with <span class="math notranslate nohighlight">\(|Z_t| \leq \alpha_t\)</span>.</p>
+</section>
+</div><p>This readily lets us bound the regret.
+Pick <span class="math notranslate nohighlight">\(Z_t = \ell_{t}\left(i_{t}\right) - \braket{p_{t}, \ell_{t}}\)</span>.
+We then know that</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Z_t\)</span> form a martingale difference sequence since
+<span class="math notranslate nohighlight">\(\mathbb E[\ell_{t}\left(i_{t}\right) - \braket{p_{t}, \ell_{t}} | \mathcal H_{t-1}] = 0\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(|Z_t| \leq 2\)</span> by boundedness assumption on the loss.</p></li>
+</ul>
+<p>So we can apply the Azuma-Hoeffding inequality.
+With probability <span class="math notranslate nohighlight">\(1-\delta\)</span> we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\sum_{t=1}^{T} Z_{t} 
+&amp;= \mathcal R_T - \tilde{\mathcal R}_T
+\leq \sqrt{8 \ln (1 / \delta) T} \Leftrightarrow\\
+\mathcal R_T
+&amp;\leq \tilde{\mathcal R}_T + \sqrt{8 \ln (1 / \delta) T}\\
+&amp;\leq 2 \sqrt{T \ln N} + \sqrt{8 \ln (1 / \delta) T} &amp;&amp; \text{(Using Hedge bound)}
+\end{aligned}\end{split}\]</div>
+<p>This gives us a high probability regret bound.</p>
+<div class="proof corollary admonition" id="corollary-3">
+<p class="admonition-title"><span class="caption-number">Corollary 2 </span> (High probability regret bound)</p>
+<section class="corollary-content" id="proof-content">
+<p>With probability at least <span class="math notranslate nohighlight">\(1-\delta\)</span> and <span class="math notranslate nohighlight">\(\eta = \mathcal O \left(\sqrt{\ln K / T}\right)\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\mathcal R_T = \mathcal{O} \left(\sqrt{T \ln N}+\sqrt{T \ln \frac{1}{\delta}}\right).
+\]</div>
+</section>
+</div></section>
+<section id="reducing-the-algorithm-to-softmax">
+<h3>Reducing the algorithm to softmax<a class="headerlink" href="#reducing-the-algorithm-to-softmax" title="Permalink to this headline">#</a></h3>
+<p>At each step we need to solve the constraint minimization problem,</p>
+<div class="math notranslate nohighlight">
+\[p_{t}=\underset{p \in \Delta(N)}{\operatorname{argmin}}\left\langle p, \sum_{\tau=1}^{t-1} \ell_{t}\right\rangle+\frac{1}{\eta} \sum_{i=1}^{N} p(i) \ln p(i).\]</div>
+<p>This turns out to have a closed form solution for our choice of regularization.</p>
+<p>To obtain this, notice that the constraint is an equality constraint,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\min_p&amp; \overbrace{\left\langle p, \sum_{\tau=1}^{t-1} \ell_{t}\right\rangle+\frac{1}{\eta} \sum_{i=1}^{N} p(i) \ln p(i)}^{=f(p)},\\
+\text{s.t.}&amp; \underbrace{\sum_{i=1}^N p_i - 1}_{=g(p)} = 0.
+\end{aligned}
+\end{split}\]</div>
+<p>So we can obtain the exact solution by instead considering the Langrange function,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathcal L(p, \lambda) 
+  &amp;= f(p) + \lambda g(p)\\
+  &amp;= \left\langle p, \sum_{\tau=1}^{t-1} \ell_{t}\right\rangle+\frac{1}{\eta} \sum_{i=1}^{N} p(i) \ln p(i) + \lambda\left(\sum_i p_i - 1\right).
+\end{aligned}
+\end{split}\]</div>
+<p>Setting the derivatives to zero</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{\partial \mathcal L(p, \lambda)}{\partial p(i)}
+&amp;= \sum_{\tau=1}^{t-1} \ell_{t}(i) + \frac 1\eta (1 + \ln p(i)) - \lambda = 0\\
+\Leftrightarrow\ p(i) &amp;= \exp{\left(-\eta \sum_{\tau=1}^{t-1} \ell_{t}(i) - (1-\eta \lambda)\right)}\\
+&amp; = \exp{\left(-\eta \sum_{\tau=1}^{t-1} \ell_{t}(i)\right)} \Big/ \exp{\left(1-\eta \lambda\right)}.
+\end{aligned}\end{split}\]</div>
+<p>To specify the remaining unknown, <span class="math notranslate nohighlight">\(\lambda\)</span>, we use its associated first order condition and plug-in our derived expressions for the <span class="math notranslate nohighlight">\(p(i)\)</span>’s,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{\partial \mathcal L(p, \lambda)}{\partial \lambda}=1-\sum_{i=1}^{N} p(i) = 0 \\
+\Leftrightarrow 1 - \sum_{i=1}^N \exp{\left(-\eta \sum_{\tau=1}^{t-1} \ell_{t}(i)\right)} / \exp{\left(1-\eta \lambda)\right)} = 0 \\
+\Leftrightarrow \frac{1}{\exp{\left(1-\eta \lambda)\right)}} = \sum_{i=1}^N \exp{\left(-\eta \sum_{\tau=1}^{t-1} \ell_{t}(i)\right)}.
+\end{aligned}
+\end{split}\]</div>
+<p>This gives us an update rule as follows:</p>
+<div class="proof algorithm admonition" id="algorithm-4">
+<p class="admonition-title"><span class="caption-number">Algorithm 3 </span> (Hedge)</p>
+<section class="algorithm-content" id="proof-content">
+<p>It updates <span class="math notranslate nohighlight">\(p\)</span> element-wise as follows,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+&amp;w_t(i) = -\eta \sum_{\tau=1}^{t-1} \ell_{t}(i) &amp;&amp; \text{(Compute weights)}\\
+&amp;p_t(i) = \exp{\left(w_t(i)\right)} / \sum_{j=1}^N \exp{\left(w_t(i)\right)}. &amp;&amp; \text{(Turn into prob. dist.)}
+\end{aligned}\end{split}\]</div>
+</section>
+</div><p><strong>Re-reformulation: multiplicative weight update</strong>
+Alternatively we can rewrite this to save recomputation by reusing the previously computed weights.</p>
+<div class="proof algorithm admonition" id="algorithm-5">
+<p class="admonition-title"><span class="caption-number">Algorithm 4 </span> (Multiplicative Weight Update variant of Hedge)</p>
+<section class="algorithm-content" id="proof-content">
+<p>It updates <span class="math notranslate nohighlight">\(p\)</span> element-wise as follows,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+&amp;w_t(i) =w_{t-1}(i) -\eta \ell_{t-1}(i) &amp;&amp; \text{(Compute weights)}\\
+&amp;p_t(i) = \exp{\left(w_t(i)\right)} / \sum_{j=1}^N \exp{\left(w_t(i)\right)}. &amp;&amp; \text{(Turn into prob. dist.)}
+\end{aligned}\end{split}\]</div>
+</section>
+</div><!-- TODO: make into a one-liner -->
+</section>
+<section id="final-remarks">
+<h3>Final Remarks<a class="headerlink" href="#final-remarks" title="Permalink to this headline">#</a></h3>
+<p>So to summarize: for the simplex introducing the entropy as regularizer simply reduces to replacing the max (if we were to use <em>Follow The Leader</em>) with a softmax.</p>
+<p>This method goes by many other names in the literature apart from Hedge: Exponentiated Gradient Descent, Weighted Majority and Multiplicative Weight Update to mention the most common.</p>
+<p><strong>Exercises</strong></p>
+<ul class="simple">
+<li><p>What happens if we choose a different norm than <span class="math notranslate nohighlight">\(\ell_1\)</span>?</p></li>
+<li><p>What about a different regularizer than negative entropy?</p></li>
+</ul>
+<!-- 
+https://haipeng-luo.net/courses/CSCI699/lecture3.pdf
+https://people.cs.umass.edu/~akshay/courses/cs690m/files/lec15.pdf
+https://haipeng-luo.net/courses/CSCI699/lecture2.pdf
+- Duality https://www.cs.huji.ac.il/~shais/papers/OLsurvey.pdf -->
+</section>
+</section>
+<section id="multi-armed-bandit">
+<h2>Multi-Armed Bandit<a class="headerlink" href="#multi-armed-bandit" title="Permalink to this headline">#</a></h2>
+<p>In multi-armed bandit we consider a slight modification to the setting for which we applied Hedge.
+The difference lies in considering <em>limited feedback</em>.
+That is, we only observe the loss <span class="math notranslate nohighlight">\(\ell_t(i_t)\)</span> which we incur instead of the entire function <span class="math notranslate nohighlight">\(\ell_t\)</span>.</p>
+<div class="block--def">(Bandit setting)
+The player is given a fixed decision set $\mathcal K$.
+At each round $t=1,...,T$:
+<ol class="simple">
+<li><p>Player pick <span class="math notranslate nohighlight">\(i_t \in \mathcal K\)</span>.</p></li>
+<li><p>The environment picks a convex loss vector <span class="math notranslate nohighlight">\(\ell_t\)</span>.</p></li>
+<li><p>The player then observes and suffers loss <span class="math notranslate nohighlight">\(\ell_t(i_t)\)</span>.</p></li>
+</ol>
+</div>
+<p><strong>Exploration/Exploitation</strong>
+Central to this setting is the <em>exploration-exploitation tradeoff</em>: we want to learn the best arm to pull (explore) but also pull the right arm (exploit).
+It is a tradeoff since learning something about a particular arm now requires us to choose it and incur the associated loss.</p>
+<p><strong>Finite arms</strong>
+Much of the notation will allow a continuos <span class="math notranslate nohighlight">\(\mathcal K\)</span> (i.e. <em>infinite arms</em>) but we will only consider <em>finite arm</em> bandits in this post, i.e. when <span class="math notranslate nohighlight">\(|\mathcal K| = K\)</span>.</p>
+<p><strong>Applying Hedge</strong>
+We cannot naively apply Hedge as it would require full information of the previous losses <span class="math notranslate nohighlight">\(f_t\)</span>.
+What we <em>can</em> do is construct an unbiased estimator of the gradient on which we then apply Hedge.</p>
+<div class="block--lemma">(Importance-Weighted Estimator)
+Say you sample $I_t \sim p_t$ and construct
+<div class="math notranslate nohighlight">
+\[\begin{split}\tilde{\ell}_{t}(i)=\begin{cases} 
+      \ell_{t}(i) / p_t(i) &amp; i = I_t \\
+      0 &amp; \mathrm{otherwise.}
+   \end{cases}\end{split}\]</div>
+<p>then this estimator is unbiased</p>
+<div class="math notranslate nohighlight">
+\[\mathbb E_{I_t \sim p_t}\left[\tilde{\ell}_{t}(i)\right]=\left(1-p_{t}(i)\right) \cdot 0+p_{t}(i) \cdot \frac{\ell_{t}(i)}{p_{t}(i)}=\ell_{t}(i).\]</div>
+</div>
+<p>Combining importance-weighting with Hedge leads to what has been called Exp3.</p>
+<div class="block--algorithm">(Exp3)<br>
+Initialize uniformly:<br>
+$w_0(i) = 0\ \forall i$<br>
+Then for $t=1..T$
+$$\begin{aligned}
+&p_t(i) = \exp{\left(w_{t-1}(i)\right)} / \sum_{j=1}^N \exp{\left(w_{t-1}(j)\right)} && \text{(Turn into prob. dist.)}\\
+&I_t \sim p_t && \text{(sample arm)}\\
+&\tilde{\ell}_{t}(i)=\begin{cases} 
+      \ell_{t}(i) / p_t(i) & i = I_t \\
+      0 & \mathrm{otherwise}
+   \end{cases} && \text{(Construct estimator)}\\
+&w_t(i) =w_{t-1}(i) -\eta \tilde{\ell}_{t-1}(i). && \text{(Compute weights)}
+\end{aligned}$$
+</div>
+<p><strong>Regret analysis</strong></p>
+<p>The standard FTRL analysis would fail.
+To see why, let’s look at the regret on our estimator</p>
+<div class="math notranslate nohighlight">
+\[\tilde{\mathcal R}_T 
+:= 
+\leq \frac{\ln K}{\eta}+\eta \sum_{t=1}^{T}\left\|\tilde{\ell}_{t}\right\|_{\infty}^{2}.
+\]</div>
+<p>In order to say anything on the actual regret we need to take the expectation,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb E[\mathcal R_T]
+&amp;= \mathbb E[\tilde{\mathcal R}_T] \\
+&amp;\leq \frac{\ln K}{\eta}+\eta \sum_{t=1}^{T}\mathbb E\left[\left\|\tilde{\ell}_{t}\right\|_{\infty}^{2}\right] \\
+&amp;\leq \frac{\ln K}{\eta}+\eta \sum_{t=1}^{T}\sum_{i\in \mathcal K}\frac{\ell_{t}(i)^2}{p_t(i)}.
+\end{aligned}\end{split}\]</div>
+<p>Notice how it will blow up if <span class="math notranslate nohighlight">\(p_t(i)\)</span> is very small for <em>some</em> <span class="math notranslate nohighlight">\(i\)</span> <label for='sidenote-role-4' class='margin-toggle'><span id="id4">
+<sup>4</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote"><sup>4</sup>The initial analysis bounded the regret by explicitly exploring uniformly based on a coin flip.
+This way p_t(i) was ensured to be sufficiently big for all i.</span>.</p>
+<p>We can tighten the analysis, however, using some tricks almost exclusively reserved for the particular case of Exp3.</p>
+<div class="block--theorem">(Exp3 Regret bound)[^exp]
+<div class="math notranslate nohighlight">
+\[\mathcal R_T = \mathcal O (\sqrt{T K \log (K)).}
+\]</div>
+</div>
+<!-- <div class="proof">
+We will only outline the proof here ([for a complete proof](https://banditalgs.com/2016/10/01/adversarial-bandits/)).
+
+- Develop a bound on the exponentiated difference
+  $\exp \left(\eta\left(\hat{S}_{n i}-\hat{S}_{n}\right)\right)$
+- $\exp \left(\eta \hat{S}_{n i}\right) \leq \sum_{j} \exp \left(\eta\left(\hat{S}_{n j}\right)\right)=W_{n}=W_{0} \frac{W_{1}}{W_{0}} \ldots \frac{W_{n}}{W_{n-1}}$
+- So study $\frac{W_{t}}{W_{t-1}}=\sum_{j} P_{t j} \exp \left(\eta \hat{X}_{t j}\right)$.
+- $\exp (x) \leq 1+x+x^{2} \text { holds for any } x \leq 1$ 
+- $1+x \leq \exp (x)$
+- Take log on both sides.
+
+- Note that variance would blow up (so dangerous to analyse expectation only)
+</div> -->
+<p><em>Remarks</em>:</p>
+<ul>
+<span class="sidenote"><sup>5</sup>See e.g. this proof.</span><li><p>The lower bound for adversarial regret is <span class="math notranslate nohighlight">\(\mathcal{O}(\sqrt{TK})\)</span><label for='sidenote-role-5' class='margin-toggle'><span id="id5">
+<sup>5</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote d-n"><sup>5</sup>See e.g. this proof.</span>.
+So we achieve minimax regret up to a <span class="math notranslate nohighlight">\(\sqrt{\ln K}\)</span> factor.</p></li>
+<li><p>Compared with the full information setting we are competitive up to a factor of <span class="math notranslate nohighlight">\(\sqrt{K}\)</span>.</p></li>
+<li><p><a class="reference external" href="https://parameterfree.com/2019/11/12/multi-armed-bandit-i/">Francesco Orabona</a> has a very different take on the proof coming from an Online Convex Optimization perspective that might be of interest.</p></li>
+</ul>
+<!-- $$\mathbb{E}\left[\mathcal{R}_{T}\right]=\mathbb{E}\left[\sum_{t=1}^{T} \ell_{t}\left(a_{t}\right)\right]-\min _{a \in[K]} \sum_{t=1}^{T} \ell_{t}(a)$$ -->
+</section>
+<section id="id6">
+<h2>Final Remarks<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<p>This presentation primarily pulls from the following sources:</p>
+<ul class="simple">
+<li><p>The Hedge part heavily relies on Haipeng’s <a class="reference external" href="https://haipeng-luo.net/courses/CSCI699/lecture3.pdf">lecture note 3</a> except for the (standard) derivation with Langrange multiplier which I weirdly enough didn’t come across anywhere.</p></li>
+<li><p>The Bandit part is loosly based on Haipeng’s <a class="reference external" href="https://haipeng-luo.net/courses/CSCI699/lecture12.pdf">lecture note 12</a> and <a class="reference external" href="https://haipeng-luo.net/courses/CSCI699_2019/lecture8.pdf">lecture note 8</a> but fundamentally altered to prepare us for <em>Gaussian Processes with Multiplicative Weights</em> which we will cover next.</p></li>
+</ul>
+<p>I’ve skipped through some standard results in the Bandit literature: Explore-then-exploit and Upper Confidence Bound (UCB) to not get us too afar astray from the analysis we have seen so far in OCO.
+A good starting point for the curious reader is either <a class="reference external" href="https://haipeng-luo.net/courses/CSCI699/">Haipeng’s notes</a> or <a class="reference external" href="https://arxiv.org/pdf/1904.07272.pdf">one</a> of the  <a class="reference external" href="https://tor-lattimore.com/downloads/book/book.pdf">many</a> books on Bandits (the literature is vast!).</p>
+<!-- # Terminology
+
+- Oblivious (_Interestingly, any forecaster that is guaranteed to work well against an oblivious opponent also works well in the general model against any strategy of a nonoblivious opponent, in a certain sense._)
+- Pseudo regret
+- Stocastic vs adverserial
+- Infinite arms -->
+<hr class="footnotes docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="../2019-11-16-caroline-uhler/">
+      <i class="fa fa-arrow-circle-left"></i> From causal inference to autoencoders and gene regulation by Caroline Uhler
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
+    <a href="../2020-01-07-gp-mw/">
+      Gaussian processes and Hedge for infinite armed bandits <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../2019-11-02-FTRL/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Online convex optimization</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../2020-01-07-gp-mw/" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Gaussian processes and Hedge for infinite armed bandits</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Thomas Pethick<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

@@ -1,0 +1,603 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Bayesian logistic regression &#8212; Thomas Pethick</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Serif/cmun-serif.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Sans/cmun-sans.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="../../about/" />
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="The I/O Model" href="../2018-05-22-io-model/" />
+    <link rel="prev" title="Gradient boosting" href="../2020-05-15-gradientboosting/" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+     
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../posts/atom.xml"
+  title="Thomas Pethick's blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Thomas Pethick</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../about/">
+   About
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../publications/">
+   Publications
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../online-learning/">
+   Online learning
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-02-FTRL/">
+     Online convex optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-06-hedge-and-bandit/">
+     Hedge and bandits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-07-gp-mw/">
+     Gaussian processes and Hedge for infinite armed bandits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../talks/">
+   Talks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-03-russell-talk/">
+     Provably beneficial artificial intelligence by Stuart Russell
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-16-caroline-uhler/">
+     From causal inference to autoencoders and gene regulation by Caroline Uhler
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../">
+   Posts
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">
+     Acceleration convergence using a potential function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-perspectives/">
+     Various ways of writing Nesterov’s acceleration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-15-gradientboosting/">
+     Gradient boosting
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Bayesian logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2018-05-22-io-model/">
+     The I/O Model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right"><label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#derivatives-of-log-likelihood">
+   Derivatives of log-likelihood
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-practice">
+   In practice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connection-with-optimization">
+   Connection with optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#alternatives">
+   Alternatives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Bayesian logistic regression</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#derivatives-of-log-likelihood">
+   Derivatives of log-likelihood
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#in-practice">
+   In practice
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#connection-with-optimization">
+   Connection with optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#alternatives">
+   Alternatives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#resources">
+   Resources
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exercises">
+   Exercises
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                 <section class="tex2jax_ignore mathjax_ignore" id="bayesian-logistic-regression">
+<h1>Bayesian logistic regression<a class="headerlink" href="#bayesian-logistic-regression" title="Permalink to this headline">#</a></h1>
+<p><em>I recently had to run an experiment with Bayesian logistic regression but didn’t find a place that contained both a satisfying explanation for the motivation and derivation of the gradient.</em></p>
+<p>We assume that the class label <span class="math notranslate nohighlight">\(y_i\in{0,1}\)</span> can be predicted from the input <span class="math notranslate nohighlight">\(x_i\)</span> and some shared latent variable <span class="math notranslate nohighlight">\(\beta\)</span> through the logistic function <span class="math notranslate nohighlight">\(\sigma(\cdot)\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{split}
+P(y=1|x,\beta) &amp;= \sigma(\beta^\top x) \quad \text{with} \quad \sigma(a)=\frac{\exp (a)}{1+\exp (a)}.
+\end{split}
+\]</div>
+<p>This allows us to predict new points by marginalizing out the inferred distribution over <span class="math notranslate nohighlight">\(\beta\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+p(y_* | x_*, Y,X) = \int p(y_* |x_*,\beta)p(\beta|X,Y)\ \mathrm{d}\beta.
+\]</div>
+<p>We don’t know the posterior <span class="math notranslate nohighlight">\(p(\beta|X,Y)\)</span> though.
+How can we learn this distribution?
+By Bayes rule we obtain,</p>
+<div class="math notranslate nohighlight">
+\[
+p(\beta|Y,X) \propto p(Y|X,\beta)p(\beta).
+\]</div>
+<p><strong>MLE</strong>
+A common way to estimate <span class="math notranslate nohighlight">\(p(\beta|Y,X)\)</span> is by a point estimate through <em>maximum likelihood estimation</em> (MLE).
+This is simply using the mode of the log-likelihood (effectively assuming uniform prior on <span class="math notranslate nohighlight">\(p(\beta)\)</span>),</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\beta} = \max_\beta p(Y|X,\beta).
+\]</div>
+<p>For logistic regression there is no close form solution for the above but the negative log-likelihood is convex and positive definite so standard optimization techniques applies to find <span class="math notranslate nohighlight">\(\hat{\beta}\)</span>.
+But what if we wanted to get the <em>distribution</em> over <span class="math notranslate nohighlight">\(\beta\)</span>?</p>
+<p><strong>Approximation</strong>
+<span class="math notranslate nohighlight">\(P(\beta|Y,X)\)</span> has no nice parametric form that we know.
+Usually two approaches are considered:</p>
+<ul class="simple">
+<li><p>Decide on a deterministic method to obtain an approximation.
+If this lives within some chosen parametric family it is called <em>variational inference</em>.
+the <em>Laplace approximation</em> which construct a Gaussian around the mode of <span class="math notranslate nohighlight">\(P(\beta|Y,X)\)</span> can also be considered such a method.</p></li>
+<li><p>Use <em>MCMC</em> to draw samples from <span class="math notranslate nohighlight">\(P(\beta|Y,X)\)</span> to construct a linear combination of point estimates as the approximation.</p></li>
+</ul>
+<p>For either approaches the gradient is usually required.</p>
+<section id="derivatives-of-log-likelihood">
+<h2>Derivatives of log-likelihood<a class="headerlink" href="#derivatives-of-log-likelihood" title="Permalink to this headline">#</a></h2>
+<p>In all the approaches we needed to work with the log-likelihood.
+Specifically, we require the gradient.
+Assuming i.i.d. samples we can write the likelihood as,</p>
+<div class="math notranslate nohighlight">
+\[
+L(\beta ; Y, X)=\prod_{i=1}^{N}\left[\sigma\left(x_{i} \beta\right)\right]^{y_i}\left[1-\sigma\left(x_{i} \beta\right)\right]^{1-y_{i}}.
+\]</div>
+<p>This correctly “activates” either of <span class="math notranslate nohighlight">\(P(Y_i=1|X_i,\beta)\)</span> and <span class="math notranslate nohighlight">\(P(Y_i=0|X_i,\beta)=1-P(Y_i=1|X_i,\beta)\)</span> depending on the value of <span class="math notranslate nohighlight">\(y_i\)</span>.</p>
+<p>The log-likelihood is trivially,</p>
+<div class="math notranslate nohighlight">
+\[
+l(\beta ; Y, X)=\sum_{i=1}^{N}\left[-\ln \left(1+\exp \left(x_{i} \beta\right)\right)+y_{i} x_{i} \beta\right].
+\]</div>
+<p>The derivative of the log-likelihood (sometimes called the score) can then be shown to be,</p>
+<div class="math notranslate nohighlight" id="equation-eq-grad-log-likelihood">
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-grad-log-likelihood" title="Permalink to this equation">#</a></span>\[\nabla_{\beta} l(\beta ; Y, X)=\sum_{i=1}^{N}\left[y_{i}-\sigma\left(x_{i} \beta\right)\right] x_{i}.\]</div>
+</section>
+<section id="in-practice">
+<h2>In practice<a class="headerlink" href="#in-practice" title="Permalink to this headline">#</a></h2>
+<p>The way we have defined the log-likelihood we need <span class="math notranslate nohighlight">\(y_i\in \{0,1\}\)</span> for things to work out nicely.</p>
+</section>
+<section id="connection-with-optimization">
+<h2>Connection with optimization<a class="headerlink" href="#connection-with-optimization" title="Permalink to this headline">#</a></h2>
+<p>There is a nice connection with regularization if we instead of MLE did maximum a posteriori (MAP) which simply maximizes,</p>
+<div class="math notranslate nohighlight">
+\[
+p(\beta|X,Y) \propto p(\beta|X,Y)p(\beta).
+\]</div>
+<p>Working with the potential functions instead (i.e. the log probability),</p>
+<div class="math notranslate nohighlight">
+\[
+\log p(\beta|X,Y) \propto \nabla_{\beta} l(\beta ; y, X) + \log p(\beta).
+\]</div>
+<p>If we choose a Gaussian prior <span class="math notranslate nohighlight">\(p(\beta) = \mathcal N(0, \lambda I)\)</span> this is,</p>
+<div class="math notranslate nohighlight" id="equation-eq-gauss-reg">
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-gauss-reg" title="Permalink to this equation">#</a></span>\[\log p(\beta|X,Y) \propto \nabla_{\beta} l(\beta ; y, X) + \lambda \|\beta\|_2,\]</div>
+<p>Which is simply the negative log-likelihood with <span class="math notranslate nohighlight">\(L_2\)</span>-regularization!</p>
+</section>
+<section id="alternatives">
+<h2>Alternatives<a class="headerlink" href="#alternatives" title="Permalink to this headline">#</a></h2>
+<p>The two assumptions we made in the beginning can be altered:</p>
+<ul class="simple">
+<li><p>The logistic function can we exchange with another sigmoid function, e.g. the standard normal cumulative distribution.</p></li>
+<li><p>We could choose a different prior than Gaussian.
+However, it is particularly nice computationally since it makes the optimization objective strongly convex.
+Even if we try to sample the posterior <span class="math notranslate nohighlight">\(p(\beta|XY)\)</span> instead of optimizing with MAP this is desirable.
+This is because gradient based sampling techniques such as Unadjusted Langevin Dynamics (ULA) similarly benefits from the strong convexity (see e.g. <span id="id1">Durmus and Majewski [<a class="reference internal" href="#id17" title="Alain Durmus and Szymon Majewski. Analysis of langevin monte carlo via convex optimization. Journal of Machine Learning Research, 20(73):1–46, 2019.">2019</a>]</span>).</p></li>
+</ul>
+</section>
+<section id="resources">
+<h2>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">#</a></h2>
+<p>A resource I found useful was <a class="reference external" href="https://www.cse.wustl.edu/~garnett/cse515t/fall_2019/files/lecture_notes/8.pdf">Roman Garnett lecture notes</a>.</p>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>Derive the gradient of the log-likelihood in <a class="reference internal" href="#equation-eq-grad-log-likelihood">(5)</a>.</p></li>
+<li><p>Verify that Gaussian is equivalent to <span class="math notranslate nohighlight">\(L_2\)</span>-regularization in <a class="reference internal" href="#equation-eq-gauss-reg">(6)</a>.</p></li>
+</ol>
+<hr class="docutils" />
+<div class="docutils container" id="id2">
+<dl class="citation">
+<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id1">DM19</a></span></dt>
+<dd><p>Alain Durmus and Szymon Majewski. Analysis of langevin monte carlo via convex optimization. <em>Journal of Machine Learning Research</em>, 20(73):1–46, 2019.</p>
+</dd>
+</dl>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="../2020-01-07-gp-mw/">
+      <i class="fa fa-arrow-circle-left"></i> Gaussian processes and Hedge for infinite armed bandits
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
+    <a href="../2020-05-15-gradientboosting/">
+      Gradient boosting <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../2020-05-15-gradientboosting/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Gradient boosting</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../2018-05-22-io-model/" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">The I/O Model</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Thomas Pethick<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

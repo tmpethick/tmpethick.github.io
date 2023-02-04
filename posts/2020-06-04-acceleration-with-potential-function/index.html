@@ -1,0 +1,614 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Acceleration convergence using a potential function &#8212; Thomas Pethick</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Serif/cmun-serif.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Sans/cmun-sans.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="../../about/" />
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Various ways of writing Nesterov’s acceleration" href="../2020-06-04-acceleration-perspectives/" />
+    <link rel="prev" title="Posts" href="../" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+     
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../posts/atom.xml"
+  title="Thomas Pethick's blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Thomas Pethick</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../about/">
+   About
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../publications/">
+   Publications
+  </a>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../online-learning/">
+   Online learning
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-02-FTRL/">
+     Online convex optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-06-hedge-and-bandit/">
+     Hedge and bandits
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-07-gp-mw/">
+     Gaussian processes and Hedge for infinite armed bandits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../talks/">
+   Talks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-03-russell-talk/">
+     Provably beneficial artificial intelligence by Stuart Russell
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-16-caroline-uhler/">
+     From causal inference to autoencoders and gene regulation by Caroline Uhler
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../">
+   Posts
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Acceleration convergence using a potential function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-perspectives/">
+     Various ways of writing Nesterov’s acceleration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-15-gradientboosting/">
+     Gradient boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">
+     Bayesian logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2018-05-22-io-model/">
+     The I/O Model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right"><label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rewriting-in-terms-of-mirror-descent">
+   Rewriting in terms of mirror descent
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convergence">
+   Convergence
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acceleration">
+     Acceleration
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Acceleration convergence using a potential function</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rewriting-in-terms-of-mirror-descent">
+   Rewriting in terms of mirror descent
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#convergence">
+   Convergence
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#acceleration">
+     Acceleration
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                 <section class="tex2jax_ignore mathjax_ignore" id="acceleration-convergence-using-a-potential-function">
+<h1>Acceleration convergence using a potential function<a class="headerlink" href="#acceleration-convergence-using-a-potential-function" title="Permalink to this headline">#</a></h1>
+<p>We cover the analysis of acceleration from <a class="reference external" href="https://arxiv.org/pdf/1712.04581.pdf">this paper</a>.
+The main motivation is to fill in some of the details that has been left out most likely for clarity.</p>
+<!-- (motivation for the potential function, the rewriting of the update into mirr+grad, an explanation of where we use the slow moving process $z_{t}$). -->
+<section id="rewriting-in-terms-of-mirror-descent">
+<h2>Rewriting in terms of mirror descent<a class="headerlink" href="#rewriting-in-terms-of-mirror-descent" title="Permalink to this headline">#</a></h2>
+<p>We can write NAG:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{array}{l}
+{x}_{k+1}={y}_{k}-\alpha \nabla f\left({y}_{k}\right) \\
+{y}_{k+1}=\left(1-\gamma_{k}\right) {x}_{k+1}+\gamma_{k} {x}_{k}
+\end{array}\end{split}\]</div>
+<p>as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+y_{t+1}&amp;= x_{t}-\frac{1}{\beta} \nabla f\left(x_{t}\right) \\
+z_{t+1}&amp;= z_{t}-\eta_{t} \nabla f\left(x_{t}\right) \\
+x_{t+1}&amp;=\left(1-\tau_{t+1}\right) y_{t+1}+\tau_{t+1} z_{t+1}
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(\beta\)</span>-smooth, <span class="math notranslate nohighlight">\(\eta_{t}=\frac{t+1}{2 \beta}\)</span> and <span class="math notranslate nohighlight">\(\tau_{t}=\frac{2}{t+2}\)</span> (See e.g. <a class="reference external" href="https://arxiv.org/pdf/1407.1537.pdf">this paper</a>).
+This is the scheme we will be analysing.</p>
+</section>
+<section id="convergence">
+<h2>Convergence<a class="headerlink" href="#convergence" title="Permalink to this headline">#</a></h2>
+<p>the general strategy is using potential function goes like this:</p>
+<ol>
+<li><p>Define a potential function</p>
+<div class="math notranslate nohighlight">
+\[
+   \Phi_{t}=a_{t} \cdot\left(f\left(x_{t}\right)-f\left(x^{*}\right)\right)+b_{t}.
+   \]</div>
+</li>
+<li><p>Find bound for <span class="math notranslate nohighlight">\(\Phi_{t+1}-\Phi_t \leq B_t\)</span>.</p></li>
+<li><p>Get convergence by telescoping the difference,</p>
+<div class="math notranslate nohighlight" id="equation-eq-phi-sum">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-phi-sum" title="Permalink to this equation">#</a></span>\[\sum_{t=0}^{T-1} \Phi_{t+1}-\Phi_{t} \leq \sum_{t=0}^{T-1} B_t \Rightarrow f\left(x_{T}\right)-f\left(x^{*}\right) \leq \frac{\Phi_{0}+\sum_{t=1}^{T-1} B_{t}}{a_{T}}.\]</div>
+</li>
+</ol>
+<section id="acceleration">
+<h3>Acceleration<a class="headerlink" href="#acceleration" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><p>For acceleration we start with the potential <span class="math notranslate nohighlight">\(a_t=t(t+1)\)</span> and <span class="math notranslate nohighlight">\(b_t={2} {\beta} \cdot\left\|{z}_{t}-{x}^{*}\right\|^{2}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+    \Phi_t=t(t+1) \cdot\left(f\left(y_{t}\right)-f\left(x^{*}\right)\right)+2 \beta \cdot\left\|z_{t}-x^{*}\right\|^{2}.
+    \]</div>
+<p>This suggests that we will apply primal analysis to <span class="math notranslate nohighlight">\(y_t\)</span> and dual to <span class="math notranslate nohighlight">\(z_t\)</span>.</p>
+</li>
+<li><p>We want to bound the difference <span class="math notranslate nohighlight">\(\Phi_{t+1}-\Phi_{t}\)</span> which we can expand as</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \Phi_{t+1}-\Phi_{t} = 
+    &amp;t(t+1) \cdot\left(f\left(y_{t+1}\right)-f\left(y_{t}\right)\right)\\
+    &amp;+2(t+1) \cdot\left(f\left(y_{t+1}\right)-f\left(x^{*}\right)\right)\\
+    &amp;+ 2 \beta (\left\|z_{t+1}-x^{*}\right\|^{2} - \left\|z_{t}-x^{*}\right\|^{2}).
+    \end{aligned}\end{split}\]</div>
+</li>
+<li><p>Using <span class="math notranslate nohighlight">\(\|a+b\|^{2}-\|a\|^{2}=2\langle a, b\rangle+\|b\|^{2}\)</span> (for euclidean norm) and the update for <span class="math notranslate nohighlight">\(z_t\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+    \frac{1}{2}\left(\left\|z_{t+1}-x^{*}\right\|^{2}-\left\|z_{t}-x^{*}\right\|^{2}\right)=\frac{\eta_{t}^{2}}{2}\left\|\nabla_{t}\right\|^{2}+\eta_{t}\left\langle\nabla_{t}, x^{*}-z_{t}\right\rangle\]</div>
+<p>we rewrite</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \Phi_{t+1}-\Phi_{t} \leq &amp; t(t+1) \cdot\left(f\left(y_{t+1}\right)-f\left(y_{t}\right)\right)\\
+    &amp;+2(t+1) \cdot\left(f\left(y_{t+1}\right)
+    -f\left(x^{*}\right)\right)\\
+    &amp;+4 \beta\left(\textcolor{blue}{\frac{\eta_{t}^{2}}{2}\left\|\nabla_{t}\right\|^{2}+\eta_{t}\left\langle\nabla_{t}, x^{*}-z_{t}\right\rangle}\right)
+    \end{aligned}\end{split}\]</div>
+<p><em>Interpretation: we want <span class="math notranslate nohighlight">\(\|\nabla_t\|\)</span> to be small for <span class="math notranslate nohighlight">\(x_t\)</span> to improve the most.</em></p>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span>-smooth and the update rule for <span class="math notranslate nohighlight">\(y_{t+1}\)</span> gives us</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    f(y_{t+1}) - f(x_t) 
+    &amp;\leq \langle\nabla_t, y_{t+1}-x_t\rangle+\frac{\beta}{2}\|y_{t+1}-x_t\|^{2} &amp;&amp; \text{(smoothness)}\\
+    &amp; \leq \langle\nabla_t, -\frac{1}{\beta}\nabla_t\rangle+\frac{1}{\beta 2}\|\nabla_t\|^{2} &amp;&amp; \text{(update rule)}\\
+    &amp; \leq -\frac{1}{\beta 2}\|\nabla_t\|^{2}.
+    \end{aligned}\end{split}\]</div>
+<p><em>Interpretation: we want <span class="math notranslate nohighlight">\(\|\nabla_t\|\)</span> to be large for <span class="math notranslate nohighlight">\(y_t\)</span> to improve the most.</em></p>
+<p>This lets us bound</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \Phi_{t+1}-\Phi_{t} \leq &amp;
+      t(t+1) \cdot\left(f\left(\textcolor{blue}{x_{t}}\right)-f\left(y_{t}\right)\right)\\
+      &amp;+2(t+1) \cdot\left(f\left(\textcolor{blue}{x_{t}}\right)-f\left(x^{*}\right)\right)\\
+      &amp; +4 \beta\left(\frac{\eta_{t}^{2}}{2}\left\|\nabla_{t}\right\|^{2}+\eta_{t}\left\langle\nabla_{t}, x^{*}-z_{t}\right\rangle\right)\\
+      &amp;- \textcolor{blue}{(t+2)(t+1) \frac{1}{2 \beta}\left\|\nabla_{t}\right\|^{2}} \\
+      \leq &amp;
+      t(t+1) \cdot\left(f\left(\textcolor{blue}{x_{t}}\right)-f\left(y_{t}\right)\right)\\
+      &amp;+2(t+1) \cdot\left(f\left(\textcolor{blue}{x_{t}}\right)-f\left(x^{*}\right)\right)\\
+      &amp; +4 \beta\left(
+          \eta_{t}\left\langle\nabla_{t}, x^{*}-z_{t}\right\rangle
+          \right)\\
+      &amp; + \left(4 \beta\frac{\eta_{t}^{2}}{2} - \textcolor{blue}{(t+2)(t+1) \frac{1}{2 \beta}}\right)\left\|\nabla_{t}\right\|^{2} \\
+    \end{aligned}\end{split}\]</div>
+<p>By picking the slow step size to be <span class="math notranslate nohighlight">\(\eta_{t}=\frac{t+1}{2 \beta}\)</span> such that the last term disappears this reduces to</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{aligned}
+    \Phi_{t+1}-\Phi_{t} 
+      \leq &amp;
+      t(t+1) \cdot\left(f\left(x_{t}\right)-f\left(y_{t}\right)\right)\\
+      &amp;+2(t+1) \cdot\left(f\left(x_{t}\right)-f\left(x^{*}\right)\right)\\
+      &amp; + 2(t+1)\cdot\left\langle\nabla_{t}, x^{*}-z_{t}\right\rangle
+          \\
+      &amp; - \cancel{\textcolor{blue}{\frac{t+1}{2 \beta}\left\|\nabla_{t}\right\|^{2}}}
+      \end{aligned}
+    \end{split}\]</div>
+</li>
+<li><p>By convexity</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{aligned}
+    \Phi_{t+1}-\Phi_{t} \leq t &amp;(t+1) \textcolor{blue}{\cdot\left\langle\nabla_{t}, x_{t}-y_{t}\right\rangle} \\
+    &amp;+2(t+1) \cdot \textcolor{blue}{\left\langle\nabla_{t}, x_t-x^{*}\right\rangle} \\
+    &amp;+2(t+1) \cdot\left\langle\nabla_{t}, x^{*}-z_{t}\right\rangle\\ 
+    \leq &amp; (t+1) \cdot\left\langle\nabla_{t},(t+2) x_{t}-t y_{t}-2 z_{t}\right\rangle
+    \end{aligned}
+    \end{split}\]</div>
+</li>
+<li><p>Using that the update is <span class="math notranslate nohighlight">\(x_t=\left(1-\tau_{t}\right) y_{t}+\tau_{t} z_{t}\)</span> we choose the step size <span class="math notranslate nohighlight">\(\tau_t\)</span> such that the terms cancels</p>
+<div class="math notranslate nohighlight">
+\[
+    (t+2)\tau_t z_t -2 z_t = 0 \Rightarrow
+    \tau_{t}=\frac{2}{t+2}
+    \]</div>
+<p>The RHS of the inner product cancels,</p>
+<div class="math notranslate nohighlight">
+\[
+    \Phi_{t+1}-\Phi_{t} \leq 0 \equiv B_t.
+    \]</div>
+</li>
+<li><p>Now we have a bound for <span class="math notranslate nohighlight">\(\Phi_{t+1}-\Phi_{t}\)</span>.
+We directly get from <a class="reference internal" href="#equation-eq-phi-sum">(3)</a></p>
+<div class="math notranslate nohighlight">
+\[
+    f\left(y_{T}\right)-f\left(x^{*}\right) \leq \frac{\Phi_{0}+\sum_{T} B_{t}}{a_{T}} \leq \frac{\Phi_{0}}{a_{T}} \leq 2 \beta \frac{\left\|z_{0}-x^{*}\right\|^{2}}{T(T+1)} \leq \epsilon
+    \]</div>
+</li>
+</ul>
+<p>So to be less than <span class="math notranslate nohighlight">\(\epsilon\)</span> we have to run for at least <span class="math notranslate nohighlight">\(\mathcal O (\frac{1}{\sqrt{\epsilon}})\)</span> iterations.
+This is a quadratic speed up over vanilla gradient descent on smooth functions which requires <span class="math notranslate nohighlight">\(\mathcal O(\frac{1}{\epsilon})\)</span> steps.</p>
+<p>The crucial observation is that we bound <span class="math notranslate nohighlight">\(z_t\)</span> in terms of the norm and <span class="math notranslate nohighlight">\(y_t\)</span> in terms of the gradient.
+This technique is further exploited in <a class="reference external" href="https://arxiv.org/pdf/1407.1537.pdf">Mirr+Grad paper</a> for general Mirror maps in the aggressive update, <span class="math notranslate nohighlight">\(z_t\)</span>.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="../2020-05-15-gradientboosting/">
+      <i class="fa fa-arrow-circle-left"></i> Gradient boosting
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
+    <a href="../2020-06-04-acceleration-perspectives/">
+      Various ways of writing Nesterov’s acceleration <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Posts</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../2020-06-04-acceleration-perspectives/" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Various ways of writing Nesterov’s acceleration</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Thomas Pethick<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

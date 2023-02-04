@@ -1,0 +1,764 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Gaussian processes and Hedge for infinite armed bandits &#8212; Thomas Pethick</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Serif/cmun-serif.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Sans/cmun-sans.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="author" title="About these documents" href="../../about/" />
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Talks" href="../../talks/" />
+    <link rel="prev" title="Hedge and bandits" href="../2020-01-06-hedge-and-bandit/" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en">
+    
+
+    <!-- Google Analytics -->
+     
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../posts/atom.xml"
+  title="Thomas Pethick's blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Thomas Pethick</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search/" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search..." aria-label="Search..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../about/">
+   About
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../../publications/">
+   Publications
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="../../online-learning/">
+   Online learning
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-02-FTRL/">
+     Online convex optimization
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-01-06-hedge-and-bandit/">
+     Hedge and bandits
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Gaussian processes and Hedge for infinite armed bandits
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../../talks/">
+   Talks
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-03-russell-talk/">
+     Provably beneficial artificial intelligence by Stuart Russell
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2019-11-16-caroline-uhler/">
+     From causal inference to autoencoders and gene regulation by Caroline Uhler
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="../">
+   Posts
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
+  <label for="toctree-checkbox-3">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">
+     Acceleration convergence using a potential function
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-06-04-acceleration-perspectives/">
+     Various ways of writing Nesterov’s acceleration
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-15-gradientboosting/">
+     Gradient boosting
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">
+     Bayesian logistic regression
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../2018-05-22-io-model/">
+     The I/O Model
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right"><label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bayesian-optimization">
+   Bayesian optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gp-ucb">
+   GP-UCB
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gp-mw">
+   GP-MW
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regret-analysis">
+   Regret analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#split-into-two-terms">
+     Split into two terms
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bounding-with-hedge">
+       Bounding with Hedge
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bounding-the-variance-term">
+       Bounding the variance term
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#final-regret-bound">
+       Final regret bound
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discretization">
+     Discretization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#final-remarks">
+     Final remarks
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Gaussian processes and Hedge for infinite armed bandits</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bayesian-optimization">
+   Bayesian optimization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gp-ucb">
+   GP-UCB
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#gp-mw">
+   GP-MW
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#regret-analysis">
+   Regret analysis
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#split-into-two-terms">
+     Split into two terms
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bounding-with-hedge">
+       Bounding with Hedge
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bounding-the-variance-term">
+       Bounding the variance term
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#final-regret-bound">
+       Final regret bound
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#discretization">
+     Discretization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#final-remarks">
+     Final remarks
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                 <div class="math notranslate nohighlight">
+\[\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}\]</div>
+<section class="tex2jax_ignore mathjax_ignore" id="gaussian-processes-and-hedge-for-infinite-armed-bandits">
+<h1>Gaussian processes and Hedge for infinite armed bandits<a class="headerlink" href="#gaussian-processes-and-hedge-for-infinite-armed-bandits" title="Permalink to this headline">#</a></h1>
+<div class="warning admonition">
+<p class="admonition-title">Warning</p>
+<p>This post is under construction.</p>
+</div>
+<ul class="simple">
+<li><p>Today we will cover a “non-convex” setting.</p></li>
+<li><p>The setting is that of adversarial BO.</p></li>
+<li><p>We will get results for infinite arm Bandits. Crucially we will introduce known adversarial actions.</p></li>
+</ul>
+<!-- - The lifting trick (to convert non-convex to convex) -->
+<section id="bayesian-optimization">
+<h2>Bayesian optimization<a class="headerlink" href="#bayesian-optimization" title="Permalink to this headline">#</a></h2>
+<p>Bayesian optimization (BO) is a variant of the Multi-Armed Bandit setting from the <a class="reference internal" href="../2020-01-06-hedge-and-bandit/"><span class="doc std std-doc">previous post</span></a>.
+In particular, it considers:</p>
+<ul class="simple">
+<li><p><em>Infinite arms</em>: That is, the decision set is now some subset of the euclidean space <span class="math notranslate nohighlight">\(\mathcal K \subset \mathbb R^N\)</span>.</p></li>
+<li><p><em>Stochastic arms</em>: The function is not changing between iterations but instead observed through some noisy observation, <span class="math notranslate nohighlight">\(f_t(a) = f(a) + \epsilon(a) \ \forall t\)</span>.
+The noise <span class="math notranslate nohighlight">\(\epsilon(\cdot)\)</span> is usually assumed to be homogeneously Gaussian, i.e. <span class="math notranslate nohighlight">\(\epsilon(\cdot) \sim \mathcal N(0, \sigma)\)</span>.</p></li>
+</ul>
+<p>It tightens the assumption in MAB slightly by also assuming that the function is expensive to evaluate.
+This motivates use of methods for the point selection which has high computational budget such as Gaussian processes.</p>
+<p>A popular example of BO is hyperparameter optimization, e.g.:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathcal K\)</span> is the hyperparameters of a neural network such as depth, width, activation function etc.</p></li>
+<li><p><span class="math notranslate nohighlight">\(f(a) + \epsilon(a)\)</span> is the measured test accuracy of the neural network after training with the added noisy due to the randomness of the initialization.
+Notice that the evaluation is indeed very expensive.</p></li>
+</ul>
+<p><strong>Regret</strong>
+A small complication notation-wise is that BO usually considers maximization of a function instead of minimization.
+We are thus usually interested in the cumulative regret defined as</p>
+<div class="math notranslate nohighlight">
+\[\mathcal R_T = \max_a \sum_{t=1}^T f(a) - \sum_{t=1}^T f(a_t)\]</div>
+<p>where our algorithm selects <span class="math notranslate nohighlight">\(a_t\)</span>.</p>
+<p>This setting is well-studied but we will now complicate the setup by considering an adversarial setting instead of stochastic arms.</p>
+</section>
+<section id="gp-ucb">
+<h2>GP-UCB<a class="headerlink" href="#gp-ucb" title="Permalink to this headline">#</a></h2>
+<div class="proof algorithm admonition" id="algorithm-0">
+<p class="admonition-title"><span class="caption-number">Algorithm 5 </span> (GP-UCB)</p>
+<section class="algorithm-content" id="proof-content">
+<p>Select the next point as</p>
+<div class="math notranslate nohighlight">
+\[a_t = \argmax_a \operatorname{UCB}_t(a)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\operatorname{UCB}_t(a) = \mu_t(a) + \beta_t\sigma_t(a).\)</span></p>
+</section>
+</div><!-- - Introduce GP
+- Information gain -->
+</section>
+<section id="gp-mw">
+<h2>GP-MW<a class="headerlink" href="#gp-mw" title="Permalink to this headline">#</a></h2>
+<p><strong>Setting</strong>
+In the context of OCO we are thus considering an infinite armed limited information setting with adversarially picked functions.
+<em>Note that we have mentioned no assumption of convexity of the functions</em>.</p>
+<!-- TODO: oblivious adversary: show regret -->
+<div class="math notranslate nohighlight">
+\[\mathcal R^{i}_T=\max _{a \in \mathcal{A}^{i}} \sum_{t=1}^{T} r^{i}\left(a, a_{t}^{-i}\right)-\sum_{t=1}^{T} r^{i}\left(a_{t}^{i}, a_{t}^{-i}\right)
+\]</div>
+<p>In the work of <span id="id1">Sessa <em>et al.</em> [<a class="reference internal" href="#id20" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span> they crucially assume known adversarial actions.
+This is intuitively reasonable, since we need to exploit correlation between our actions in the infinite arm setting.
+Without known adversarial actions this correlation would be unknown.</p>
+<p>This assumption allows us to formulate a rather simple algorithm:</p>
+<ol class="simple">
+<li><p>At each time <span class="math notranslate nohighlight">\(t\)</span> construct the acquisition function <span class="math notranslate nohighlight">\(\operatorname{UCB}_t(a, a^{-i}_t)\)</span> using all previous observations.</p></li>
+<li><p>Notice that <span class="math notranslate nohighlight">\(\set{\operatorname{UCB}_t(a, a^{-i}_t)}_t\)</span> is known on the full space in contrast to the loss <span class="math notranslate nohighlight">\(\ell(a, a^{-i}_t)\)</span>. Thus the Hedge algorithm from the <a class="reference internal" href="../2020-01-06-hedge-and-bandit/"><span class="doc std std-doc">previous post</span></a> can be applied directly.
+This is made precise below.</p></li>
+</ol>
+<div class="proof algorithm admonition" id="algorithm-1">
+<p class="admonition-title"><span class="caption-number">Algorithm 6 </span> (GP-MW)</p>
+<section class="algorithm-content" id="proof-content">
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+&amp; [\hat \ell_t]_a = \min\set{1, \operatorname{UCB}_t(a, a_t^{-i})} &amp;&amp; \text{(Compute optimistic estimate)} \\
+&amp; [w_{t+1}]_a = [w_{t}]_a \exp{(- \eta [\hat \ell_t]_a)} / Z. &amp;&amp; \text{(Update mixed strategy)}
+\end{aligned}\end{split}\]</div>
+</section>
+</div><!-- TODO: State that min is considered instead of standard max in BO (for simplicity) -->
+<p>To understand exactly why this works, let us dig into the analysis.</p>
+</section>
+<section id="regret-analysis">
+<h2>Regret analysis<a class="headerlink" href="#regret-analysis" title="Permalink to this headline">#</a></h2>
+<p>The main ingredient will be characterizing the function by the posterior GP.</p>
+<div class="proof lemma admonition" id="lemma-2">
+<p class="admonition-title"><span class="caption-number">Lemma 3 </span> (Confidence lemma)</p>
+<section class="lemma-content" id="proof-content">
+<p>Let</p>
+<ul class="simple">
+<li><p>unknown <span class="math notranslate nohighlight">\(f\)</span> have bounded RKHS norm <span class="math notranslate nohighlight">\(||f||_k \leq B\)</span>.</p></li>
+<li><p>the noise <span class="math notranslate nohighlight">\(\epsilon_t\)</span> be <span class="math notranslate nohighlight">\(\sigma\)</span>-sub-Gaussian in our observation <span class="math notranslate nohighlight">\(y_t=f_t(x_t) + \epsilon_t\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_{t}=B+\sqrt{2\left(\gamma_{t-1}+\log (1 / \delta)\right)}\)</span>.</p></li>
+</ul>
+<p>Then with at least <span class="math notranslate nohighlight">\(1-\delta\)</span> the following holds</p>
+<div class="math notranslate nohighlight">
+\[
+\left|\mu_{t-1}(\mathbf{a})-f(\mathbf{a})\right| \leq \beta_{t} \sigma_{t-1}(\mathbf{a}), \quad \forall \mathbf{a} \in \mathcal{K}, \quad \forall t \geq 1.
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu_t\)</span> and <span class="math notranslate nohighlight">\(\sigma_t\)</span> is the posterior mean and variance of our GP model conditioned on all observations up till time <span class="math notranslate nohighlight">\(t\)</span>.</p>
+</section>
+</div><p>In other words we can say that the true function lies within some confidence bound computed by our Gaussian Process model with high probability.</p>
+<!-- TODO: illustrate -->
+<section id="split-into-two-terms">
+<h3>Split into two terms<a class="headerlink" href="#split-into-two-terms" title="Permalink to this headline">#</a></h3>
+<p>Our main problem in the analysis is treating the limited information setting.
+Using the Confidence Lemma we will see how we can instead treat a full information setting.</p>
+<p><strong>Using the confidence lemma</strong>
+With this we can upper and lower bound the loss with high probability<label for='sidenote-role-1' class='margin-toggle'><span id="id2">
+<sup>1</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>This section is almost entirely lifted from the original paper.</span></p>
+<div class="math notranslate nohighlight">
+\[U C B_{t}(\mathbf{a})-2 \beta_{t} \sigma_{t-1}(\mathbf{a}) \leq \ell^{i}(\mathbf{a}) \leq \min \left\{1, U C B_{t}(\mathbf{a})\right\}.\]</div>
+<p>This particular way of writing the bounds allows us to split the regret into two parts,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathcal R^{i}_T
+&amp;=\sum_{t=1}^{T} \ell^{i}\left(\bar{a}, a_{t}^{-i}\right)-\sum_{t=1}^{T} \ell^{i}\left(a_{t}^{i}, a_{t}^{-i}\right)\\
+&amp;\leq \sum_{t=1}^{T} \min \left\{1, U C B_{t}\left(\bar{a}, a_{t}^{-i}\right)\right\}-\sum_{t=1}^{T}\left[U C B_{t}\left(a_{t}^{i}, a_{t}^{-i}\right)-2 \beta_{t} \sigma_{t-1}\left(a_{t}^{i}, a_{t}^{-i}\right)\right]\\
+&amp;\leq 
+  \underbrace{\sum_{t=1}^{T} \min \left\{1, U C B_{t}\left(\bar{a}, a_{t}^{-i}\right)\right\}-\sum_{t=1}^{T} \min \left\{1, U C B_{t}\left(a_{t}^{i}, a_{t}^{-i}\right)\right\}}_{{\text{($*$)}}}
+  + \underbrace{2 \beta_{T} \sum_{t=1}^{T} \sigma_{t-1}\left(a_{t}^{i}, a_{t}^{-i}\right)}_{{\text{($**$)}}}.
+\end{aligned}\end{split}\]</div>
+<p>The first term (<span class="math notranslate nohighlight">\(*\)</span>) can now be treated as a full information setting where the function is <span class="math notranslate nohighlight">\(\hat \ell_t(a) = \min \set{1, \operatorname{UCB}_t(a, a^{-i}_t)}\)</span> while the second part (<span class="math notranslate nohighlight">\(**\)</span>) can be analysed independent of the algorithm<label for='sidenote-role-2' class='margin-toggle'><span id="id3">
+<sup>2</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>This trick is in fact more general and has also been applied to reinforcement learning cheng2019reduction.</span>.</p>
+<section id="bounding-with-hedge">
+<h4>Bounding with Hedge<a class="headerlink" href="#bounding-with-hedge" title="Permalink to this headline">#</a></h4>
+<p>We cannot apply our tools from OCO directly to <span class="math notranslate nohighlight">\(\hat \ell_t(a) = \min \set{1, \operatorname{UCB}_t(a, a^{-i}_t)}\)</span> since it is non-convex in general.
+However, we can linearize the problem by optimizing a probability distribution instead.</p>
+<div class="proof lemma admonition" id="lemma-3">
+<p class="admonition-title"><span class="caption-number">Lemma 4 </span></p>
+<section class="lemma-content" id="proof-content">
+<p>Given an Online Optimization problem with decisions <span class="math notranslate nohighlight">\(a_t \in \mathcal K\)</span> and <span class="math notranslate nohighlight">\(\ell_t(\cdot)\)</span> loss we can lift it into a linear problem in <span class="math notranslate nohighlight">\(p_t \in \delta(\mathcal K)\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbb E[\mathcal R_T] 
+&amp; = \sum_{t=1}^T \mathbb E[\ell_t(a_t)] - \min_a \sum_{t=1}^T \ell_t(a) \\
+&amp; = \sum_{t=1}^T \braket{\ell_t, p_t} - \min_p \sum_{t=1}^T \braket{\ell_t, p}.
+\end{aligned}\end{split}\]</div>
+<p>where expectation is taken w.r.t. the randomness of the algorithm.</p>
+</section>
+</div><p>Applying this to <span class="math notranslate nohighlight">\(\hat \ell_t(a)\)</span> allows us to bound (<span class="math notranslate nohighlight">\(*\)</span>) in the regret using Hedge from the <a class="reference internal" href="../2020-01-06-hedge-and-bandit/"><span class="doc std std-doc">previous post</span></a> <span class="sidenote"><sup>3</sup>Notice that even though we recast it in terms of a mixed strategy p_t the loss we incur is still w.r.t. to a single arm selection a_t.
+This can seem slightly confusing.
+However, this slight modification of Hedge has no effect on the regret, since p_t is still constructed based on full information.
+Thus, the expectation of the loss over the randomness of the algorithm is equivalent to the linear loss on the mixed strategy, E_{a_t \sim p_t}[\ell(a_t)]=\braket{\ell_t, p_t}.</span><em>even though <span class="math notranslate nohighlight">\(\ell_t(\cdot)\)</span> is non-convex<label for='sidenote-role-3' class='margin-toggle'><span id="id4">
+<sup>3</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote d-n"><sup>3</sup>Notice that even though we recast it in terms of a mixed strategy p_t the loss we incur is still w.r.t. to a single arm selection a_t.
+This can seem slightly confusing.
+However, this slight modification of Hedge has no effect on the regret, since p_t is still constructed based on full information.
+Thus, the expectation of the loss over the randomness of the algorithm is equivalent to the linear loss on the mixed strategy, E_{a_t \sim p_t}[\ell(a_t)]=\braket{\ell_t, p_t}.</span></em>.</p>
+<p>Using the high probability bound relying on Azume-Hoeffding inequility from the <a class="reference internal" href="../2020-01-06-hedge-and-bandit/"><span class="doc std std-doc">previous post</span></a> we get with probability <span class="math notranslate nohighlight">\(1-\delta\)</span> that</p>
+<div class="math notranslate nohighlight">
+\[(*) = \mathcal{O}(\sqrt{T \log K_{i}}+\sqrt{T \log (2 / \delta)}).
+\]</div>
+</section>
+<section id="bounding-the-variance-term">
+<h4>Bounding the variance term<a class="headerlink" href="#bounding-the-variance-term" title="Permalink to this headline">#</a></h4>
+<p>What remains is to bound (<span class="math notranslate nohighlight">\(**\)</span>).
+This part is what requires us to have known adversarial actions.
+Otherwise we can intuitively not ensure that the variance will decrease.</p>
+<!-- TODO: Apply information gain -->
+</section>
+<section id="final-regret-bound">
+<h4>Final regret bound<a class="headerlink" href="#final-regret-bound" title="Permalink to this headline">#</a></h4>
+<div class="proof theorem admonition" id="theorem-4">
+<p class="admonition-title"><span class="caption-number">Theorem 2 </span> (GP-MW finite arms regret bounds)</p>
+<section class="theorem-content" id="proof-content">
+<p>Let</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\beta_{t}=B+\sqrt{2\left(\gamma_{t-1}+\log (2 / \delta)\right)}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\eta=\sqrt{\left(8 \log K_{i}\right) / T}\)</span></p></li>
+</ul>
+<p>then</p>
+<div class="math notranslate nohighlight">
+\[
+R^{i}(T)=\mathcal{O}(\sqrt{T \log K_{i}}+\sqrt{T \log (2 / \delta)}+B \sqrt{T \gamma_{T}}+\sqrt{T \gamma_{T}\left(\gamma_{T}+\log (2 / \delta)\right)})\]</div>
+</section>
+</div></section>
+</section>
+<section id="discretization">
+<h3>Discretization<a class="headerlink" href="#discretization" title="Permalink to this headline">#</a></h3>
+<p>So far the algorithm has been defined in terms of a finite number of arms (even if the <span class="math notranslate nohighlight">\(\operatorname{UCB}_t(\cdot)\)</span> on which the mixed strategy is computed is in fact continuous).
+This does not help solve the non-convex infinite arm setting which we set out for originally.
+One trivial solution to this taken in <span id="id5">Sessa <em>et al.</em> [<a class="reference internal" href="#id20" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span> is to discretize the space.</p>
+<p>For this we just have to be careful to cover our space densely enough so that the regret will not suffer.
+The Lipschitz assumption on <span class="math notranslate nohighlight">\(\ell_t(\cdot)\)</span> will ensure this, i.e. if points are close to the discretization their loss will also be close.</p>
+<p>To make this precise:</p>
+<div class="proof corollary admonition" id="corollary-5">
+<p class="admonition-title"><span class="caption-number">Corollary 3 </span> (GP-MW infinite arms regret bounds)</p>
+<section class="corollary-content" id="proof-content">
+<p>Discretize <span class="math notranslate nohighlight">\(\mathcal K_i \subset \mathbb R^d_i\)</span> with <span class="math notranslate nohighlight">\([\mathcal K_i]_T\)</span> where
+<span class="math notranslate nohighlight">\(\left|\left[\mathcal{A}^{i}\right]_{T}\right|=(L b \sqrt{d_{i} T})^{d}\)</span>
+so that <span class="math notranslate nohighlight">\(\left\|a-[a]_{T}\right\|_{1} \leq \sqrt{d_{i} / T} / L\)</span>.</p>
+</section>
+</div></section>
+<section id="final-remarks">
+<h3>Final remarks<a class="headerlink" href="#final-remarks" title="Permalink to this headline">#</a></h3>
+<p>In the OCO framing we have thus treated non-convex function in the bandit setting when the decision set is a simplex (finite or infinite).</p>
+<p>For more general non-convex problems for online optimization we face slightly different problems.
+First, how do we even define regret? After all we can do arbitrarily bad since in the non-convex setting we are only promised to converge to a local minimum.
+Two recent papers deals with these questions .</p>
+<!-- TODO: add papers -->
+<p>I have intentionally left out some details of the canonical BO/GP part to keep distractions to a minimum – but with the obvious danger of being imprecise.
+For precisely specified assumptions of each lemma and statement please see <span id="id6">Sessa <em>et al.</em> [<a class="reference internal" href="#id20" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span>.</p>
+<!-- Make summary table of settings -->
+<hr class="docutils" />
+<div class="docutils container" id="id7">
+<dl class="citation">
+<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id26">CdCBG19</a></span></dt>
+<dd><p>Ching-An Cheng, Remi Tachet des Combes, Byron Boots, and Geoff Gordon. A reduction from reinforcement learning to no-regret online learning. 2019. <a class="reference external" href="https://arxiv.org/abs/1911.05873">arXiv:1911.05873</a>.</p>
+</dd>
+<dt class="label" id="id20"><span class="brackets">SBKK19</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id5">2</a>,<a href="#id6">3</a>)</span></dt>
+<dd><p>Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, <em>Advances in Neural Information Processing Systems 32</em>, pages 13602–13611. Curran Associates, Inc., 2019. URL: <a class="reference external" href="http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf">http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf</a>.</p>
+</dd>
+</dl>
+</div>
+<hr class="footnotes docutils" />
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+    
+
+<div class="section">
+  <span style="float: left">
+     
+    <a href="../2020-01-06-hedge-and-bandit/">
+      <i class="fa fa-arrow-circle-left"></i> Hedge and bandits
+    </a>
+    
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right">
+     
+    <a href="../2020-05-26-bayesian-logistic-regression/">
+      Bayesian logistic regression <i
+        class="fa fa-arrow-circle-right"
+      ></i
+      >
+    </a>
+    
+  </span>
+</div>
+  
+</div>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../2020-01-06-hedge-and-bandit/" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Hedge and bandits</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../../talks/" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Talks</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Thomas Pethick<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
