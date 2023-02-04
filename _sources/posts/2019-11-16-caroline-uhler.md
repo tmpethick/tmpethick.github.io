@@ -1,10 +1,15 @@
+---
+substitutions:
+  date: 2019-11-16
+---
 ```{post} 2019-11-16
 :tags: talk
 :excerpt: 0
 ```
 
 # From causal inference to autoencoders and gene regulation by Caroline Uhler
-<div class="post-date">Posted on 2019-11-16</div>
+_Posted on {{ date.strftime("%b %d, %Y") }}_
+
 
 <!--  https://slideslive.com/38917596/from-predictive-to-caussal-modeling-bridging-the-gap -->
 
@@ -105,10 +110,10 @@ The markov equivalence classes for a three node graphs when using observational 
 
 It is not too difficult to show that we can reduce the learning of this Directed Acyclic Graph (DAG) into two independent sub-problems:
 
-1. First we learn an ordering of nodes[^1].
+1. First we learn an ordering of nodes[^2].
 2. Then we learn the corresponding DAG.
 
-[^1]: Notice that the nodes in every DAG can be ordered such that all edges points in one particular direction. Intuitively learning the order reduces the space of possible DAGs to search.
+[^2]: Notice that the nodes in every DAG can be ordered such that all edges points in one particular direction. Intuitively learning the order reduces the space of possible DAGs to search.
 
 The second problem was already solve so this separation reduced the task to learning the right ordering.
 

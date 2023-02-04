@@ -406,13 +406,13 @@ title="Toggle navigation"
               <div>
                  <section class="tex2jax_ignore mathjax_ignore" id="from-causal-inference-to-autoencoders-and-gene-regulation-by-caroline-uhler">
 <h1>From causal inference to autoencoders and gene regulation by Caroline Uhler<a class="headerlink" href="#from-causal-inference-to-autoencoders-and-gene-regulation-by-caroline-uhler" title="Permalink to this headline">#</a></h1>
-<div class="post-date">Posted on 2019-11-16</div>
+<p><em>Posted on Nov 16, 2019</em></p>
 <!--  https://slideslive.com/38917596/from-predictive-to-caussal-modeling-bridging-the-gap -->
 <p><em>Disclaimer: These notes are based on my frantic scribbling from this one talk and will most certainly contains misunderstandings even though I’ve tried my best to stay true to the original content.</em></p>
-<p>Caroline Uhler gave a very interesting talk this Friday<label for='sidenote-role-2' class='margin-toggle'><span id="id1">
-<sup>2</sup></span>
+<p>Caroline Uhler gave a very interesting talk this Friday<label for='sidenote-role-3' class='margin-toggle'><span id="id1">
+<sup>3</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>For an almost identical talk see her talk at ICML 2019.</span> that went from the very practically motivated problem of studying genes all the way down to characterizing overparameterization of neural network theory.</p>
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>For an almost identical talk see her talk at ICML 2019.</span> that went from the very practically motivated problem of studying genes all the way down to characterizing overparameterization of neural network theory.</p>
 <p>The talk was given in the backlit of the scientific opportunity which comes with having high-throughput observation and interventional single-cell gene expression<label for='sidenote-role-1' class='margin-toggle'><span id="id2">
 <sup>1</sup></span>
 
@@ -500,8 +500,11 @@ This allow us to distinguish between many more graph than if we could only perfo
 <section id="learning-the-dag">
 <h3>Learning the DAG<a class="headerlink" href="#learning-the-dag" title="Permalink to this headline">#</a></h3>
 <p>It is not too difficult to show that we can reduce the learning of this Directed Acyclic Graph (DAG) into two independent sub-problems:</p>
-<ol class="simple">
-<li><p>First we learn an ordering of nodes<a class="footnote-reference brackets" href="#id9" id="id3">1</a>.</p></li>
+<ol>
+<span class="sidenote"><sup>2</sup>Notice that the nodes in every DAG can be ordered such that all edges points in one particular direction. Intuitively learning the order reduces the space of possible DAGs to search.</span><li><p>First we learn an ordering of nodes<label for='sidenote-role-2' class='margin-toggle'><span id="id3">
+<sup>2</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote d-n"><sup>2</sup>Notice that the nodes in every DAG can be ordered such that all edges points in one particular direction. Intuitively learning the order reduces the space of possible DAGs to search.</span>.</p></li>
 <li><p>Then we learn the corresponding DAG.</p></li>
 </ol>
 <p>The second problem was already solve so this separation reduced the task to learning the right ordering.</p>
@@ -516,10 +519,10 @@ An edge exists between two nodes if you can get to one from another by a adjacen
 </figure>
 <p>It turns out that for <em>observational data</em> a simple greedy algorithm which traverses this polytope is sufficient for learning the ordering.
 Formally we need to show that our algorithm is <em>provably consistent</em>.
-That is, in the limit of infinite steps it converges to the right ordering <em>no matter the starting point in this polytope</em><label for='sidenote-role-3' class='margin-toggle'><span id="id4">
-<sup>3</sup></span>
+That is, in the limit of infinite steps it converges to the right ordering <em>no matter the starting point in this polytope</em><label for='sidenote-role-4' class='margin-toggle'><span id="id4">
+<sup>4</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>To obtain an efficient algorithm they further showed that a sparse polytope is sufficient.</span>.</p>
+</label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote"><sup>4</sup>To obtain an efficient algorithm they further showed that a sparse polytope is sufficient.</span>.</p>
 <p><strong>Learning for interventions</strong>
 Now for interventional data the story is different:</p>
 <ul class="simple">
@@ -546,19 +549,19 @@ Through that she obtains a low dimensional (probabilistic) embedding of each cel
 Given a timeseries of pictures for a cell she then proceeds by learning the time-evolution in this lower dimensional space.
 Specifically, she learns the Optimal Transport map from one cell embedding to the next.
 Inverting this mapping (which is a <span class="math notranslate nohighlight">\(m\times m\)</span>-matrix where <span class="math notranslate nohighlight">\(m\)</span> is the dimensionality of the latent space).
-Not only did this provide a way to step back in time but she additionally use it to exterpolate <label for='sidenote-role-4' class='margin-toggle'><span id="id5">
-<sup>4</sup></span>
-
-</label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote"><sup>4</sup>It was a little unclear to what extend they manage to distinguish cancerous cells before experts. Especially since it is not obvious how to evaluate your performance – after all no baseline exists that you can compare yourself against.</span><label for='sidenote-role-5' class='margin-toggle'><span id="id6">
+Not only did this provide a way to step back in time but she additionally use it to exterpolate <label for='sidenote-role-5' class='margin-toggle'><span id="id5">
 <sup>5</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote"><sup>5</sup>The details of the method can be found on bioRxiv. It seems to be an early draft with the mathematical details showing quite a bit into it in the supplementary material.</span>.</p>
-<p><strong>Auto-encoders</strong>
-What I found even more fascinating with this use of Auto-encoders (AE) here was that it motivated a theoretical study of AE which lead to very general results.
-In particular, her group showed that an overparameterized AE<label for='sidenote-role-6' class='margin-toggle'><span id="id7">
+</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote"><sup>5</sup>It was a little unclear to what extend they manage to distinguish cancerous cells before experts. Especially since it is not obvious how to evaluate your performance – after all no baseline exists that you can compare yourself against.</span><label for='sidenote-role-6' class='margin-toggle'><span id="id6">
 <sup>6</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-6' name='sidenote-role-6' class='margin-toggle'><span class="sidenote"><sup>6</sup>Note that there is a slight discrepancy here: the study on overparameterization is done in the context of Auto-Encoders not Variational Auto-Encoders as used in the cancer application.
+</label><input type='checkbox' id='sidenote-role-6' name='sidenote-role-6' class='margin-toggle'><span class="sidenote"><sup>6</sup>The details of the method can be found on bioRxiv. It seems to be an early draft with the mathematical details showing quite a bit into it in the supplementary material.</span>.</p>
+<p><strong>Auto-encoders</strong>
+What I found even more fascinating with this use of Auto-encoders (AE) here was that it motivated a theoretical study of AE which lead to very general results.
+In particular, her group showed that an overparameterized AE<label for='sidenote-role-7' class='margin-toggle'><span id="id7">
+<sup>7</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-7' name='sidenote-role-7' class='margin-toggle'><span class="sidenote"><sup>7</sup>Note that there is a slight discrepancy here: the study on overparameterization is done in the context of Auto-Encoders not Variational Auto-Encoders as used in the cancer application.
 Even though the difference might seem subtle at first sight my understanding is that they are treated as two very different mathematical objects.</span> network generalizes well <em>because it memorizes the training data and interpolate between the points</em>.</p>
 <p><strong>A contracting map</strong>
 In the process they even devised a procedure for extracting the training examples.
@@ -575,10 +578,10 @@ In particular, they fed a trained network completely random noise and observed t
 This was the first proof that something curious was going on.
 That let them to theoretically study the problem.
 They first showed that when restricted to linear mappings the network learns the lowest dimensional projection and that the output will lie in the <em>span</em> of training data.
-They then managed to obtain analogies results to this for non-linear mapping<label for='sidenote-role-7' class='margin-toggle'><span id="id8">
-<sup>7</sup></span>
+They then managed to obtain analogies results to this for non-linear mapping<label for='sidenote-role-8' class='margin-toggle'><span id="id8">
+<sup>8</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-7' name='sidenote-role-7' class='margin-toggle'><span class="sidenote"><sup>7</sup>From what I understand they actually manage to understand the overparameterized setting for Autoencoder fully. I would like to understand the details however, since for neural networks as function approximators the interest is in the degree of overparameterization. I don’t know whether what they have obtain is in some way tight.</span>.
+</label><input type='checkbox' id='sidenote-role-8' name='sidenote-role-8' class='margin-toggle'><span class="sidenote"><sup>8</sup>From what I understand they actually manage to understand the overparameterized setting for Autoencoder fully. I would like to understand the details however, since for neural networks as function approximators the interest is in the degree of overparameterization. I don’t know whether what they have obtain is in some way tight.</span>.
 This is <em>yet</em> another example of how useful it is to first reason about a problem under the simplifying assumption of linearity.</p>
 <!-- [^random]: Random... -->
 <p><strong>Practical advice</strong>

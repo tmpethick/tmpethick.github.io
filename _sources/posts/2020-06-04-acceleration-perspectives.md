@@ -1,9 +1,15 @@
+---
+substitutions:
+  date: 2020-06-04
+---
 ```{post} 2020-06-04
 :tags: acceleration
 :excerpt: 0
 ```
 
 # Various ways of writing Nesterov's acceleration
+_Posted on {{ date.strftime("%b %d, %Y") }}_
+
 
 Nestorov's acceleration is usually presented in the following form (AGM1)
 
@@ -90,7 +96,8 @@ $$
 
 So we are weirdly enough off by one since it should be $\eta_t$...
 
-Source: [potential function paper][2], [p. 468][1].
+Source: {cite:t}`bansal2017potential` and 
+p. 468 of {cite:t}`drori2014performance`.
 
 ## As momentum
 
@@ -140,7 +147,7 @@ v_{t+1} &= \alpha_tv_t-\frac{1}{\beta} \nabla f\left(y_t + \alpha_tv_t\right)\\
 y_{t+1} &= y_t + v_{k+1}
 \end{aligned}$$
 
-Source: [acceleration as momentum][3] (appendix).
+Source: {cite:p}`sutskever2013importance`.
 
 <!-- ## For sampling
 
@@ -175,6 +182,7 @@ With the exposition above taken from [(Dalalyan et al. 2018)][dalalyanSamplingLo
 
 For non-log-concave (eq 20) uses a very similar Lyapunov function: https://arxiv.org/pdf/1805.01648v1.pdf -->
 
-[1]: https://link.springer.com/content/pdf/10.1007/s10107-013-0653-0.pdf
-[2]: https://arxiv.org/pdf/1712.04581.pdf
-[3]: http://proceedings.mlr.press/v28/sutskever13.pdf
+---
+```{bibliography}
+:filter: docname in docnames
+```

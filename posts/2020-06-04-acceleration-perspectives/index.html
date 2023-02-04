@@ -358,6 +358,7 @@ title="Toggle navigation"
               <div>
                  <section class="tex2jax_ignore mathjax_ignore" id="various-ways-of-writing-nesterov-s-acceleration">
 <h1>Various ways of writing Nesterov’s acceleration<a class="headerlink" href="#various-ways-of-writing-nesterov-s-acceleration" title="Permalink to this headline">#</a></h1>
+<p><em>Posted on Jun 04, 2020</em></p>
 <p>Nestorov’s acceleration is usually presented in the following form (AGM1)</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -426,7 +427,8 @@ z_{t+1}-z_{t} = \lambda_{t} y_{t+1}-\lambda_{t} x_{t}.
 \frac{\lambda_t}{\beta} = \frac{1}{\tau_t\beta} = \frac{t+2}{2\beta} = \eta_{t+1}
 \]</div>
 <p>So we are weirdly enough off by one since it should be <span class="math notranslate nohighlight">\(\eta_t\)</span>…</p>
-<p>Source: <a class="reference external" href="https://arxiv.org/pdf/1712.04581.pdf">potential function paper</a>, <a class="reference external" href="https://link.springer.com/content/pdf/10.1007/s10107-013-0653-0.pdf">p. 468</a>.</p>
+<p>Source: <span id="id1">Bansal and Gupta [<a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/#id25" title="Nikhil Bansal and Anupam Gupta. Potential-function proofs for first-order methods. arXiv preprint arXiv:1712.04581, 2017. URL: https://arxiv.org/pdf/1712.04581.pdf.">2017</a>]</span> and
+p. 468 of <span id="id2">Drori and Teboulle [<a class="reference internal" href="#id24" title="Yoel Drori and Marc Teboulle. Performance of first-order methods for smooth convex minimization: a novel approach. Mathematical Programming, 145(1-2):451–482, 2014. URL: https://link.springer.com/content/pdf/10.1007/s10107-013-0653-0.pdf.">2014</a>]</span>.</p>
 </section>
 <section id="as-momentum">
 <h2>As momentum<a class="headerlink" href="#as-momentum" title="Permalink to this headline">#</a></h2>
@@ -470,7 +472,7 @@ v_{t+1} = y_{t+1} - y_t
 v_{t+1} &amp;= \alpha_tv_t-\frac{1}{\beta} \nabla f\left(y_t + \alpha_tv_t\right)\\
 y_{t+1} &amp;= y_t + v_{k+1}
 \end{aligned}\end{split}\]</div>
-<p>Source: <a class="reference external" href="http://proceedings.mlr.press/v28/sutskever13.pdf">acceleration as momentum</a> (appendix).</p>
+<p>Source: <span id="id3">[<a class="reference internal" href="#id26" title="Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton. On the importance of initialization and momentum in deep learning. In International conference on machine learning, 1139–1147. PMLR, 2013. URL: http://proceedings.mlr.press/v28/sutskever13.pdf.">Sutskever <em>et al.</em>, 2013</a>]</span>.</p>
 <!-- ## For sampling
 
 Underdamped LD has a momentum interpretation.
@@ -503,6 +505,20 @@ With the exposition above taken from [(Dalalyan et al. 2018)][dalalyanSamplingLo
 
 
 For non-log-concave (eq 20) uses a very similar Lyapunov function: https://arxiv.org/pdf/1805.01648v1.pdf -->
+<hr class="docutils" />
+<div class="docutils container" id="id4">
+<dl class="citation">
+<dt class="label" id="id25"><span class="brackets"><a class="fn-backref" href="#id1">BG17</a></span></dt>
+<dd><p>Nikhil Bansal and Anupam Gupta. Potential-function proofs for first-order methods. <em>arXiv preprint arXiv:1712.04581</em>, 2017. URL: <a class="reference external" href="https://arxiv.org/pdf/1712.04581.pdf">https://arxiv.org/pdf/1712.04581.pdf</a>.</p>
+</dd>
+<dt class="label" id="id24"><span class="brackets"><a class="fn-backref" href="#id2">DT14</a></span></dt>
+<dd><p>Yoel Drori and Marc Teboulle. Performance of first-order methods for smooth convex minimization: a novel approach. <em>Mathematical Programming</em>, 145(1-2):451–482, 2014. URL: <a class="reference external" href="https://link.springer.com/content/pdf/10.1007/s10107-013-0653-0.pdf">https://link.springer.com/content/pdf/10.1007/s10107-013-0653-0.pdf</a>.</p>
+</dd>
+<dt class="label" id="id26"><span class="brackets"><a class="fn-backref" href="#id3">SMDH13</a></span></dt>
+<dd><p>Ilya Sutskever, James Martens, George Dahl, and Geoffrey Hinton. On the importance of initialization and momentum in deep learning. In <em>International conference on machine learning</em>, 1139–1147. PMLR, 2013. URL: <a class="reference external" href="http://proceedings.mlr.press/v28/sutskever13.pdf">http://proceedings.mlr.press/v28/sutskever13.pdf</a>.</p>
+</dd>
+</dl>
+</div>
 </section>
 </section>
 

@@ -1,10 +1,15 @@
+---
+substitutions:
+  date: 2019-11-03
+---
 ```{post} 2019-11-03
 :tags: talk
 :excerpt: 0
 ```
 
 # Provably beneficial artificial intelligence by Stuart Russell
-<div class="post-date">Posted on 2019-11-03</div>
+_Posted on {{ date.strftime("%b %d, %Y") }}_
+
 
 Stuart Russell came to EPFL last Friday to talk about his new book on [Human Compatible: Artificial Intelligence and the Problem of Control][book].
 Broadly speaking there were two main messages: first we should avoid specifying fixed objectives and instead learn them in a dynamic environment where the agent adhere to the human.

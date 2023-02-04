@@ -1,3 +1,7 @@
+---
+substitutions:
+  date: 2020-01-06
+---
 ```{post} 2020-01-06
 :tags: online-learning
 :excerpt: 0
@@ -5,6 +9,8 @@
 
 
 # Hedge and bandits
+_Posted on {{ date.strftime("%b %d, %Y") }}_
+
 
 <!-- 
 - Regret bound for Bandit (make overview)

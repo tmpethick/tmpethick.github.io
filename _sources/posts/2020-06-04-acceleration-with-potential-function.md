@@ -1,11 +1,17 @@
+---
+substitutions:
+  date: 2020-06-04
+---
 ```{post} 2020-06-04
 :tags: acceleration
 :excerpt: 0
 ```
 
 # Acceleration convergence using a potential function
+_Posted on {{ date.strftime("%b %d, %Y") }}_
 
-We cover the analysis of acceleration from [this paper][1].
+
+We cover the analysis of acceleration from {cite:t}`bansal2017potential`.
 The main motivation is to fill in some of the details that has been left out most likely for clarity.
 <!-- (motivation for the potential function, the rewriting of the update into mirr+grad, an explanation of where we use the slow moving process $z_{t}$). -->
 
@@ -26,7 +32,7 @@ z_{t+1}&= z_{t}-\eta_{t} \nabla f\left(x_{t}\right) \\
 x_{t+1}&=\left(1-\tau_{t+1}\right) y_{t+1}+\tau_{t+1} z_{t+1}
 \end{aligned}$$
 
-where $f$ is $\beta$-smooth, $\eta_{t}=\frac{t+1}{2 \beta}$ and $\tau_{t}=\frac{2}{t+2}$ (See e.g. [this paper][2]).
+where $f$ is $\beta$-smooth, $\eta_{t}=\frac{t+1}{2 \beta}$ and $\tau_{t}=\frac{2}{t+2}$ (See e.g. {cite:t}`allen2014linear`).
 This is the scheme we will be analysing.
 
 ## Convergence 
@@ -48,7 +54,7 @@ the general strategy is using potential function goes like this:
     ```
 
 
-#### Acceleration
+### Acceleration
 - For acceleration we start with the potential $a_t=t(t+1)$ and $b_t={2} {\beta} \cdot\left\|{z}_{t}-{x}^{*}\right\|^{2}$,
 
     $$
@@ -159,7 +165,10 @@ So to be less than $\epsilon$ we have to run for at least $\mathcal O (\frac{1}{
 This is a quadratic speed up over vanilla gradient descent on smooth functions which requires $\mathcal O(\frac{1}{\epsilon})$ steps.
 
 The crucial observation is that we bound $z_t$ in terms of the norm and $y_t$ in terms of the gradient.
-This technique is further exploited in [Mirr+Grad paper][2] for general Mirror maps in the aggressive update, $z_t$.
+This technique is further exploited in {cite:t}`allen2014linear` for general Mirror maps in the aggressive update, $z_t$.
 
-[1]: https://arxiv.org/pdf/1712.04581.pdf
-[2]: https://arxiv.org/pdf/1407.1537.pdf
+
+---
+```{bibliography}
+:filter: docname in docnames
+```

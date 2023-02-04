@@ -307,65 +307,34 @@ title="Toggle navigation"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   The I/O Model
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#computations-models">
    Computations Models
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sorting">
    Sorting
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#merge">
      Merge
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#correctness">
-       Correctness
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#i-o-complexity">
-       I/O Complexity
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#sort">
      Sort
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id2">
-       I/O Complexity
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#mergesort">
      Mergesort
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#complexity">
-       Complexity
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#conclusion">
    Conclusion
   </a>
@@ -389,65 +358,34 @@ title="Toggle navigation"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   The I/O Model
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#computations-models">
    Computations Models
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#sorting">
    Sorting
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#merge">
      Merge
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#correctness">
-       Correctness
-      </a>
-     </li>
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#i-o-complexity">
-       I/O Complexity
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#sort">
      Sort
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id2">
-       I/O Complexity
-      </a>
-     </li>
-    </ul>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#mergesort">
      Mergesort
     </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#complexity">
-       Complexity
-      </a>
-     </li>
-    </ul>
    </li>
   </ul>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#conclusion">
    Conclusion
   </a>
@@ -463,6 +401,7 @@ title="Toggle navigation"
               <div>
                  <section class="tex2jax_ignore mathjax_ignore" id="the-i-o-model">
 <h1>The I/O Model<a class="headerlink" href="#the-i-o-model" title="Permalink to this headline">#</a></h1>
+<p><em>Posted on May 22, 2018</em></p>
 <p>Usually when we analyse the running time of algorithm we consider the number of CPU cycles it requires.
 However, this assumes that the reading and writing to memory is as cheap as some computation performed by the CPU.
 In reality accessing memory <em>is</em> cheap, but if the problem size (or the generated data) is so massive that it cannot fit into memory, we will have to write to external storage.
@@ -471,9 +410,8 @@ So if we are counting both external storage accesses and CPU cycles, the CPU cyc
 Thus for very big problem it makes sense to analyse them in terms of the number of external storage accesses it does and completely disregard CPU cycles. <!-- % TODO: have not defined "big problem" -->
 This is what is called the I/O model and we will see how this different way of counting influences our algorithmic design.</p>
 <!-- TODO: overview over the agenda -->
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="computations-models">
-<h1>Computations Models<a class="headerlink" href="#computations-models" title="Permalink to this headline">#</a></h1>
+<section id="computations-models">
+<h2>Computations Models<a class="headerlink" href="#computations-models" title="Permalink to this headline">#</a></h2>
 <p>To define more formally these different ways of analyzing an algorithm, let us consider first how a simplified computer is structured.
 The general structure is shown in <a class="reference internal" href="#fig-real-model"><span class="std std-numref">Fig. 6</span></a> having two caches close to the CPU followed by a Random Access Memory (RAM) and furthest away the disk storage.
 RAM is much faster than disk storage but expensive which is why it is limited in size.
@@ -514,12 +452,12 @@ The first model we considered, called the RAM model, assumes that everything can
 </div><p>Even though the I/O model is still an oversimplification of the actual architecture it has shown to predict the asymptotic running time accurately in many cases. <!-- % TODO: ref experimental work --></p>
 <p>We will consider how to obtain efficient sorting in the I/O model.</p>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="sorting">
-<h1>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">#</a></h1>
+<section id="sorting">
+<h2>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">#</a></h2>
 <!-- % TODO: Motivate sorting -->
 <p>One merge algorithm that can be adjusted to be efficient for the I/O model is the mergesort algorithm, specifically a <span class="math notranslate nohighlight">\((M/B)\)</span>-way mergesorting <span id="id1">[<a class="reference internal" href="#id10" title="Alok Aggarwal and S. Vitter, Jeffrey. The input/output complexity of sorting and related problems. Commun. ACM, 31(9):1116–1127, September 1988. URL: http://doi.acm.org/10.1145/48529.48535, doi:10.1145/48529.48535.">Aggarwal and Vitter, 1988</a>]</span>.</p>
 <section id="merge">
-<span id="sec-merge"></span><h2>Merge<a class="headerlink" href="#merge" title="Permalink to this headline">#</a></h2>
+<span id="sec-merge"></span><h3>Merge<a class="headerlink" href="#merge" title="Permalink to this headline">#</a></h3>
 <p>The objective is to merge a number of sorted arrays together.
 Say we want to keep one block for each array in memory at every given time then we can only merge <span class="math notranslate nohighlight">\(M/B\)</span> sorted arrays if using a multi-array merge.</p>
 <p>The <span class="math notranslate nohighlight">\((M/B)\)</span>-way merge proceed as follows.
@@ -527,14 +465,11 @@ We merge the usual way by maintaining a pointer for each array starting at the f
 We then take the minimum value of the pointers and increment the pointer at the minimum value.
 The different is that if the pointer overflows the currently loaded block for the given array the next block in the array is loaded instead.
 Additionally, when the output in memory reaches a size of <span class="math notranslate nohighlight">\(B\)</span> it is written to disk and removed from memory.</p>
-<section id="correctness">
-<h3>Correctness<a class="headerlink" href="#correctness" title="Permalink to this headline">#</a></h3>
-<p>The argument for correctness is similar to normal <span class="math notranslate nohighlight">\(k\)</span>-way merge but we also have to consider whether enough memory is available.
+<p><strong>Correctness</strong>
+The argument for correctness is similar to normal <span class="math notranslate nohighlight">\(k\)</span>-way merge but we also have to consider whether enough memory is available.
 Fortunately, we can keep all <span class="math notranslate nohighlight">\(M/B\)</span> array of size <span class="math notranslate nohighlight">\(B\)</span> in memory since they take up <span class="math notranslate nohighlight">\(O(M/B)O(B)=O(M)\)</span> in total.</p>
-</section>
-<section id="i-o-complexity">
-<h3>I/O Complexity<a class="headerlink" href="#i-o-complexity" title="Permalink to this headline">#</a></h3>
-<p>Here we use that we have divided the input arrays and output array into chunks of size <span class="math notranslate nohighlight">\(B\)</span>.
+<p><strong>I/O Complexity</strong>
+Here we use that we have divided the input arrays and output array into chunks of size <span class="math notranslate nohighlight">\(B\)</span>.
 The arrays are divided into <span class="math notranslate nohighlight">\(N/B\)</span> blocks and the output is written using <span class="math notranslate nohighlight">\(N/B\)</span> blocks.
 So <span class="math notranslate nohighlight">\(O(N/B)\)</span> I/O operations are spent.</p>
 <figure class="align-default" id="fig-merge">
@@ -550,28 +485,24 @@ denotes the current pointer for the array.</span><a class="headerlink" href="#fi
 </figcaption>
 </figure>
 </section>
-</section>
 <section id="sort">
-<span id="sec-sort"></span><h2>Sort<a class="headerlink" href="#sort" title="Permalink to this headline">#</a></h2>
+<span id="sec-sort"></span><h3>Sort<a class="headerlink" href="#sort" title="Permalink to this headline">#</a></h3>
 <p>The merging step requires already sorted arrays.
 Observe that we can sort <span class="math notranslate nohighlight">\(M\)</span> cells at a time efficiently since computations are free when the cells fit in memory.</p>
 <p>So to turn an unsorted array of length <span class="math notranslate nohighlight">\(N\)</span> into <span class="math notranslate nohighlight">\(N/M\)</span> sorted arrays (each of length <span class="math notranslate nohighlight">\(M\)</span>)
 first load in <span class="math notranslate nohighlight">\(M\)</span> cells using <span class="math notranslate nohighlight">\(M/B\)</span> blocks and sort them using some sorting algorithm.
 Do this for all <span class="math notranslate nohighlight">\(N/M\)</span> sub arrays.</p>
-<section id="id2">
-<h3>I/O Complexity<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
-<p>Each sub array takes <span class="math notranslate nohighlight">\(M/B\)</span> I/O reads and writes, and there are <span class="math notranslate nohighlight">\(N/M\)</span> block so number of I/O operations is <span class="math notranslate nohighlight">\(O((M/B)(N/M)) = O(N/B)\)</span>.</p>
-</section>
+<p><strong>I/O Complexity</strong>
+Each sub array takes <span class="math notranslate nohighlight">\(M/B\)</span> I/O reads and writes, and there are <span class="math notranslate nohighlight">\(N/M\)</span> block so number of I/O operations is <span class="math notranslate nohighlight">\(O((M/B)(N/M)) = O(N/B)\)</span>.</p>
 </section>
 <section id="mergesort">
-<h2>Mergesort<a class="headerlink" href="#mergesort" title="Permalink to this headline">#</a></h2>
+<h3>Mergesort<a class="headerlink" href="#mergesort" title="Permalink to this headline">#</a></h3>
 <!-- % TODO: describe it recursively instead -->
 <p>Now, the idea is that we can combine the sorting and merging step to get an efficient mergesort in the I/O model.</p>
 <p>Apply <a class="reference internal" href="#sec-sort"><span class="std std-ref">Sort</span></a> to get <span class="math notranslate nohighlight">\(N/M\)</span> sorted arrays of length <span class="math notranslate nohighlight">\(M\)</span>.
 Now, iteratively merge bundles of <span class="math notranslate nohighlight">\(M/B\)</span> arrays so that the number of arrays at each level is reduced by <span class="math notranslate nohighlight">\(M/B\)</span>.</p>
-<section id="complexity">
-<h3>Complexity<a class="headerlink" href="#complexity" title="Permalink to this headline">#</a></h3>
-<p>To figure out the complexity for the entire computational tree (illustrated in <a class="reference internal" href="#fig-mergesort"><span class="std std-numref">Fig. 8</span></a>) we analyse how much each layer uses and how many layers we have.</p>
+<p><strong>Complexity</strong>
+To figure out the complexity for the entire computational tree (illustrated in <a class="reference internal" href="#fig-mergesort"><span class="std std-numref">Fig. 8</span></a>) we analyse how much each layer uses and how many layers we have.</p>
 <p><em>How many I/O operations are used on each level?</em>
 We count the level index from above.
 There are <span class="math notranslate nohighlight">\((M/B)^i\)</span> arrays in total at level <span class="math notranslate nohighlight">\(i\)</span> each having size <span class="math notranslate nohighlight">\(N/(M/B)^i\)</span> thus taking <span class="math notranslate nohighlight">\(\frac{N/(M/B)^i}{B}\)</span> operations to sort using <a class="reference internal" href="#sec-merge"><span class="std std-ref">Merge</span></a>.
@@ -595,22 +526,22 @@ Number of I/O is thus</p>
 </figure>
 </section>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="conclusion">
-<h1>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">#</a></h1>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">#</a></h2>
 <p>We have introduced the I/O model and shown an efficient mergesort algorithm when <span class="math notranslate nohighlight">\(N \gg M\)</span>.
 It has very similar running time as the standard mergesort with <span class="math notranslate nohighlight">\(O(n \log n)\)</span> but it differs by depending on <span class="math notranslate nohighlight">\(B\)</span> and <span class="math notranslate nohighlight">\(M\)</span>.
 Specifically it makes <span class="math notranslate nohighlight">\(O(N/B \log_{M/B}(N/M))\)</span> I/O operations.</p>
 <p>Next we will explore what we can do if we do not know <span class="math notranslate nohighlight">\(M\)</span> and <span class="math notranslate nohighlight">\(B\)</span>.</p>
 <!-- % TODO: Called cache oblivious. -->
 <hr class="docutils" />
-<div class="docutils container" id="id3">
+<div class="docutils container" id="id2">
 <dl class="citation">
 <dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id1">AV88</a></span></dt>
 <dd><p>Alok Aggarwal and S. Vitter, Jeffrey. The input/output complexity of sorting and related problems. <em>Commun. ACM</em>, 31(9):1116–1127, September 1988. URL: <a class="reference external" href="http://doi.acm.org/10.1145/48529.48535">http://doi.acm.org/10.1145/48529.48535</a>, <a class="reference external" href="https://doi.org/10.1145/48529.48535">doi:10.1145/48529.48535</a>.</p>
 </dd>
 </dl>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">

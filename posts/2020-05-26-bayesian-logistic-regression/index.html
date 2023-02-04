@@ -398,6 +398,7 @@ title="Toggle navigation"
               <div>
                  <section class="tex2jax_ignore mathjax_ignore" id="bayesian-logistic-regression">
 <h1>Bayesian logistic regression<a class="headerlink" href="#bayesian-logistic-regression" title="Permalink to this headline">#</a></h1>
+<p><em>Posted on May 15, 2020</em></p>
 <p><em>I recently had to run an experiment with Bayesian logistic regression but didn’t find a place that contained both a satisfying explanation for the motivation and derivation of the gradient.</em></p>
 <p>We assume that the class label <span class="math notranslate nohighlight">\(y_i\in{0,1}\)</span> can be predicted from the input <span class="math notranslate nohighlight">\(x_i\)</span> and some shared latent variable <span class="math notranslate nohighlight">\(\beta\)</span> through the logistic function <span class="math notranslate nohighlight">\(\sigma(\cdot)\)</span>,</p>
 <div class="math notranslate nohighlight">
@@ -485,7 +486,7 @@ p(\beta|X,Y) \propto p(\beta|X,Y)p(\beta).
 <li><p>We could choose a different prior than Gaussian.
 However, it is particularly nice computationally since it makes the optimization objective strongly convex.
 Even if we try to sample the posterior <span class="math notranslate nohighlight">\(p(\beta|XY)\)</span> instead of optimizing with MAP this is desirable.
-This is because gradient based sampling techniques such as Unadjusted Langevin Dynamics (ULA) similarly benefits from the strong convexity (see e.g. <span id="id1">Durmus and Majewski [<a class="reference internal" href="#id17" title="Alain Durmus and Szymon Majewski. Analysis of langevin monte carlo via convex optimization. Journal of Machine Learning Research, 20(73):1–46, 2019.">2019</a>]</span>).</p></li>
+This is because gradient based sampling techniques such as Unadjusted Langevin Dynamics (ULA) similarly benefits from the strong convexity (see e.g. <span id="id1">Durmus and Majewski [<a class="reference internal" href="#id18" title="Alain Durmus and Szymon Majewski. Analysis of langevin monte carlo via convex optimization. Journal of Machine Learning Research, 20(73):1–46, 2019.">2019</a>]</span>).</p></li>
 </ul>
 </section>
 <section id="resources">
@@ -501,7 +502,7 @@ This is because gradient based sampling techniques such as Unadjusted Langevin D
 <hr class="docutils" />
 <div class="docutils container" id="id2">
 <dl class="citation">
-<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id1">DM19</a></span></dt>
+<dt class="label" id="id18"><span class="brackets"><a class="fn-backref" href="#id1">DM19</a></span></dt>
 <dd><p>Alain Durmus and Szymon Majewski. Analysis of langevin monte carlo via convex optimization. <em>Journal of Machine Learning Research</em>, 20(73):1–46, 2019.</p>
 </dd>
 </dl>

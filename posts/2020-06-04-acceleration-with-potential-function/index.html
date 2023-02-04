@@ -372,7 +372,8 @@ title="Toggle navigation"
               <div>
                  <section class="tex2jax_ignore mathjax_ignore" id="acceleration-convergence-using-a-potential-function">
 <h1>Acceleration convergence using a potential function<a class="headerlink" href="#acceleration-convergence-using-a-potential-function" title="Permalink to this headline">#</a></h1>
-<p>We cover the analysis of acceleration from <a class="reference external" href="https://arxiv.org/pdf/1712.04581.pdf">this paper</a>.
+<p><em>Posted on Jun 04, 2020</em></p>
+<p>We cover the analysis of acceleration from <span id="id1">Bansal and Gupta [<a class="reference internal" href="#id25" title="Nikhil Bansal and Anupam Gupta. Potential-function proofs for first-order methods. arXiv preprint arXiv:1712.04581, 2017. URL: https://arxiv.org/pdf/1712.04581.pdf.">2017</a>]</span>.
 The main motivation is to fill in some of the details that has been left out most likely for clarity.</p>
 <!-- (motivation for the potential function, the rewriting of the update into mirr+grad, an explanation of where we use the slow moving process $z_{t}$). -->
 <section id="rewriting-in-terms-of-mirror-descent">
@@ -390,7 +391,7 @@ y_{t+1}&amp;= x_{t}-\frac{1}{\beta} \nabla f\left(x_{t}\right) \\
 z_{t+1}&amp;= z_{t}-\eta_{t} \nabla f\left(x_{t}\right) \\
 x_{t+1}&amp;=\left(1-\tau_{t+1}\right) y_{t+1}+\tau_{t+1} z_{t+1}
 \end{aligned}\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(\beta\)</span>-smooth, <span class="math notranslate nohighlight">\(\eta_{t}=\frac{t+1}{2 \beta}\)</span> and <span class="math notranslate nohighlight">\(\tau_{t}=\frac{2}{t+2}\)</span> (See e.g. <a class="reference external" href="https://arxiv.org/pdf/1407.1537.pdf">this paper</a>).
+<p>where <span class="math notranslate nohighlight">\(f\)</span> is <span class="math notranslate nohighlight">\(\beta\)</span>-smooth, <span class="math notranslate nohighlight">\(\eta_{t}=\frac{t+1}{2 \beta}\)</span> and <span class="math notranslate nohighlight">\(\tau_{t}=\frac{2}{t+2}\)</span> (See e.g. <span id="id2">Allen-Zhu and Orecchia [<a class="reference internal" href="#id11" title="Zeyuan Allen-Zhu and Lorenzo Orecchia. Linear coupling: an ultimate unification of gradient and mirror descent. arXiv preprint arXiv:1407.1537, 2014. URL: https://arxiv.org/pdf/1407.1537.pdf.">2014</a>]</span>).
 This is the scheme we will be analysing.</p>
 </section>
 <section id="convergence">
@@ -515,7 +516,18 @@ We directly get from <a class="reference internal" href="#equation-eq-phi-sum">(
 <p>So to be less than <span class="math notranslate nohighlight">\(\epsilon\)</span> we have to run for at least <span class="math notranslate nohighlight">\(\mathcal O (\frac{1}{\sqrt{\epsilon}})\)</span> iterations.
 This is a quadratic speed up over vanilla gradient descent on smooth functions which requires <span class="math notranslate nohighlight">\(\mathcal O(\frac{1}{\epsilon})\)</span> steps.</p>
 <p>The crucial observation is that we bound <span class="math notranslate nohighlight">\(z_t\)</span> in terms of the norm and <span class="math notranslate nohighlight">\(y_t\)</span> in terms of the gradient.
-This technique is further exploited in <a class="reference external" href="https://arxiv.org/pdf/1407.1537.pdf">Mirr+Grad paper</a> for general Mirror maps in the aggressive update, <span class="math notranslate nohighlight">\(z_t\)</span>.</p>
+This technique is further exploited in <span id="id3">Allen-Zhu and Orecchia [<a class="reference internal" href="#id11" title="Zeyuan Allen-Zhu and Lorenzo Orecchia. Linear coupling: an ultimate unification of gradient and mirror descent. arXiv preprint arXiv:1407.1537, 2014. URL: https://arxiv.org/pdf/1407.1537.pdf.">2014</a>]</span> for general Mirror maps in the aggressive update, <span class="math notranslate nohighlight">\(z_t\)</span>.</p>
+<hr class="docutils" />
+<div class="docutils container" id="id4">
+<dl class="citation">
+<dt class="label" id="id11"><span class="brackets">AZO14</span><span class="fn-backref">(<a href="#id2">1</a>,<a href="#id3">2</a>)</span></dt>
+<dd><p>Zeyuan Allen-Zhu and Lorenzo Orecchia. Linear coupling: an ultimate unification of gradient and mirror descent. <em>arXiv preprint arXiv:1407.1537</em>, 2014. URL: <a class="reference external" href="https://arxiv.org/pdf/1407.1537.pdf">https://arxiv.org/pdf/1407.1537.pdf</a>.</p>
+</dd>
+<dt class="label" id="id25"><span class="brackets"><a class="fn-backref" href="#id1">BG17</a></span></dt>
+<dd><p>Nikhil Bansal and Anupam Gupta. Potential-function proofs for first-order methods. <em>arXiv preprint arXiv:1712.04581</em>, 2017. URL: <a class="reference external" href="https://arxiv.org/pdf/1712.04581.pdf">https://arxiv.org/pdf/1712.04581.pdf</a>.</p>
+</dd>
+</dl>
+</div>
 </section>
 </section>
 </section>

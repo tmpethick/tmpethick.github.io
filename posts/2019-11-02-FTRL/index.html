@@ -429,6 +429,7 @@ title="Toggle navigation"
 \DeclareMathOperator*{\argmin}{arg\,min}\]</div>
 <section class="tex2jax_ignore mathjax_ignore" id="online-convex-optimization">
 <h1>Online convex optimization<a class="headerlink" href="#online-convex-optimization" title="Permalink to this headline">#</a></h1>
+<p><em>Posted on Nov 02, 2019</em></p>
 <div class="admonition-disclaimer admonition">
 <p class="admonition-title">Disclaimer</p>
 <p>We will require some familiarity with convex optimization.</p>
@@ -452,10 +453,10 @@ Instead we compare ourselves with the best fixed strategy <span class="math notr
 <div class="math notranslate nohighlight">
 \[\mathcal R_t = \sum_{t=1}^T f_t(\mathbf x_t) - \min_{\mathbf x} \sum_{t=1}^T f_t(\mathbf x).\]</div>
 </section>
-</div><p>This is called the <em>regret</em> as it captures how badly we did in hindsight <label for='sidenote-role-1' class='margin-toggle'><span id="id1">
+</div><p>This is called the <em>regret</em> as it captures how badly we did in hindsight.<label for='sidenote-role-1' class='margin-toggle'><span id="id1">
 <sup>1</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>Ideally we want \mathcal R_T = o(T) since then lim_{T\rightarrow \infty} \mathcal R_T/T = 0.</span>.</p>
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>Ideally we want \mathcal R_T = o(T) since then lim_{T\rightarrow \infty} \mathcal R_T/T = 0.</span></p>
 </section>
 <section id="follow-the-leader-ftl">
 <h2>Follow the Leader (FTL)<a class="headerlink" href="#follow-the-leader-ftl" title="Permalink to this headline">#</a></h2>
@@ -541,13 +542,11 @@ $<span class="math notranslate nohighlight">\(\psi(\mathbf x)-\psi(\mathbf y) \l
 \[f_{t}\left(\mathbf x_{t}\right)-f_{t}\left(\mathbf x_{t+1}\right) \leqslant \eta\left\|\nabla f_{t}\left(\mathbf x_{t}\right)\right\|_{*}^{2}\]</div>
 <p>with <span class="math notranslate nohighlight">\(\|\cdot\|_*\)</span> is the dual norm of <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> defined as <span class="math notranslate nohighlight">\(\|\mathbf x\|_{*}=\sup _{\|\mathbf y\| \leqslant 1} \mathbf x^{\top} \mathbf y\)</span>.</p>
 </section>
-</div><span class="sidenote proof" id="proof"><sup>2</sup>This will ultimately let us bound f_t(\textbf x_t) - f_t(\textbf x_{t+1}).</span><span class="sidenote proof" id="proof"><sup>3</sup>First order characterization of convexity says
-f(\mathbf y) - f(\mathbf x) \leq \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x).
-So when f(\mathbf y) is minimum we have \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x) \geq 0.</span><div class="proof admonition" id="proof">
+</div><span class="sidenote proof" id="proof"><sup>2</sup>This will ultimately let us bound f_t(\textbf x_t) - f_t(\textbf x_{t+1}).</span><span class="sidenote proof" id="proof"><sup>3</sup>First order characterization of convexity says f(\mathbf y) - f(\mathbf x) \leq \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x). So when f(\mathbf y) is minimum we have \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x) \geq 0.</span><div class="proof admonition" id="proof">
 <p>Proof. Let’s define the function we minimizes in the decision selection</p>
 <div class="math notranslate nohighlight">
 \[
-F_{f}(\mathbf x)=\sum_{t7tau=1}^{t} f_{r}(\mathbf x)+\frac{1}{\eta} \psi(\mathbf x)
+F_{t}(\mathbf x)=\sum_{\tau=1}^{t} f_{\tau}(\mathbf x)+\frac{1}{\eta} \psi(\mathbf x)
 \]</div>
 <p>By strong convexity of <span class="math notranslate nohighlight">\(\psi\)</span> and convexity of <span class="math notranslate nohighlight">\(f_\tau\)</span> we have that <label for='sidenote-role-2' class='margin-toggle'><span id="id2">
 <sup>2</sup></span>
@@ -558,9 +557,7 @@ F_{f}(\mathbf x)=\sum_{t7tau=1}^{t} f_{r}(\mathbf x)+\frac{1}{\eta} \psi(\mathbf
 <p>FTRL defines <span class="math notranslate nohighlight">\(\mathbf x_{t}=\argmin_{\mathbf{x}} F_{t-1}(\mathbf x)\)</span> so <span class="math notranslate nohighlight">\(F_{t-1}(\mathbf x_t)\)</span> is the optimum and first order characterization<label for='sidenote-role-3' class='margin-toggle'><span id="id3">
 <sup>3</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote d-n"><sup>3</sup>First order characterization of convexity says
-f(\mathbf y) - f(\mathbf x) \leq \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x).
-So when f(\mathbf y) is minimum we have \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x) \geq 0.</span> becomes</p>
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote d-n"><sup>3</sup>First order characterization of convexity says f(\mathbf y) - f(\mathbf x) \leq \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x). So when f(\mathbf y) is minimum we have \nabla f(\mathbf y)^\top (\mathbf y - \mathbf x) \geq 0.</span> becomes</p>
 <div class="math notranslate nohighlight">
 \[
 \left\langle\nabla F_{t-1}\left(\mathbf x_{t}\right), \mathbf x_{t}-\mathbf x_{t+1}\right\rangle \leqslant 0.
@@ -667,18 +664,18 @@ To see this, consider</p>
 \[\begin{split}\begin{aligned} \mathcal R_{T}^{\mathrm{FTRL}} &amp; \leqslant \max _{\mathbf x} \sum_{t=1}^{T} f_{t}\left(u_{t}\right)-f_{t}(\mathbf x) \\ &amp; \leqslant \max _{\mathbf x} \sum_{t=1}^{T}\left\langle\nabla f_{t}\left(\mathbf x_{t}\right), \mathbf x_{t}-\mathbf x\right\rangle. &amp;&amp; \text{(Convexity applied to each term)}\end{aligned}\end{split}\]</div>
 <p>So we can bound the regret for <span class="math notranslate nohighlight">\(f_t(\mathbf x)\)</span> by bounding the regret for the new problem which only considers its gradient <span class="math notranslate nohighlight">\(f'_t(\mathbf x)=\braket{\nabla f_t(\mathbf x_t), \mathbf x}\)</span>.
 The bound stays as tight since we already used convexity in our argument for <em>stability</em>.</p>
-<p><em>These notes are primarily based on Prof. Luo’s lectures notes <span id="id6">[<a class="reference internal" href="#id17" title="CSCI 699: Introduction to Online Learning. URL: https://haipeng-luo.net/courses/CSCI699/ (visited on 2019-11-02)."><em>CSCI 699: Introduction to Online Learning</em>, n.d.</a>]</span> with minor modifications borrowed from Hazan’s book <span id="id7">[<a class="reference internal" href="#id19" title="Elad Hazan. Introduction to Online Convex Optimization. URL: http://arxiv.org/abs/1909.05207 (visited on 2019-11-02), arXiv:1909.05207.">Hazan, n.d.</a>]</span> and the lecture notes of Prof. Orabona <span id="id8">[<a class="reference internal" href="#id18" title="Introduction to Online Learning. URL: https://parameterfree.com/lecture-notes-on-online-learning/ (visited on 2019-11-02)."><em>Introduction to Online Learning</em>, n.d.</a>]</span></em>.</p>
+<p><em>These notes are primarily based on Prof. Luo’s lectures notes <span id="id6">[<a class="reference internal" href="#id18" title="CSCI 699: Introduction to Online Learning. 2019. URL: https://haipeng-luo.net/courses/CSCI699/ (visited on 2019-11-02)."><em>CSCI 699: Introduction to Online Learning</em>, 2019</a>]</span> with minor modifications borrowed from Hazan’s book <span id="id7">[<a class="reference internal" href="#id20" title="Elad Hazan. Introduction to Online Convex Optimization. 2019. URL: http://arxiv.org/abs/1909.05207 (visited on 2019-11-02), arXiv:1909.05207.">Hazan, 2019</a>]</span> and the lecture notes of Prof. Orabona <span id="id8">[<a class="reference internal" href="#id19" title="Introduction to Online Learning. 2019. URL: https://parameterfree.com/lecture-notes-on-online-learning/ (visited on 2019-11-02)."><em>Introduction to Online Learning</em>, 2019</a>]</span></em>.</p>
 <hr class="docutils" />
 <div class="docutils container" id="id9">
 <dl class="citation">
-<dt class="label" id="id18"><span class="brackets"><a class="fn-backref" href="#id8">Int</a></span></dt>
-<dd><p>Introduction to Online Learning. URL: <a class="reference external" href="https://parameterfree.com/lecture-notes-on-online-learning/">https://parameterfree.com/lecture-notes-on-online-learning/</a> (visited on 2019-11-02).</p>
+<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id8">Int19</a></span></dt>
+<dd><p>Introduction to Online Learning. 2019. URL: <a class="reference external" href="https://parameterfree.com/lecture-notes-on-online-learning/">https://parameterfree.com/lecture-notes-on-online-learning/</a> (visited on 2019-11-02).</p>
 </dd>
-<dt class="label" id="id17"><span class="brackets"><a class="fn-backref" href="#id6">CSC</a></span></dt>
-<dd><p>CSCI 699: Introduction to Online Learning. URL: <a class="reference external" href="https://haipeng-luo.net/courses/CSCI699/">https://haipeng-luo.net/courses/CSCI699/</a> (visited on 2019-11-02).</p>
+<dt class="label" id="id18"><span class="brackets"><a class="fn-backref" href="#id6">CSC19</a></span></dt>
+<dd><p>CSCI 699: Introduction to Online Learning. 2019. URL: <a class="reference external" href="https://haipeng-luo.net/courses/CSCI699/">https://haipeng-luo.net/courses/CSCI699/</a> (visited on 2019-11-02).</p>
 </dd>
-<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id7">Haz</a></span></dt>
-<dd><p>Elad Hazan. Introduction to Online Convex Optimization. URL: <a class="reference external" href="http://arxiv.org/abs/1909.05207">http://arxiv.org/abs/1909.05207</a> (visited on 2019-11-02), <a class="reference external" href="https://arxiv.org/abs/1909.05207">arXiv:1909.05207</a>.</p>
+<dt class="label" id="id20"><span class="brackets"><a class="fn-backref" href="#id7">Haz19</a></span></dt>
+<dd><p>Elad Hazan. Introduction to Online Convex Optimization. 2019. URL: <a class="reference external" href="http://arxiv.org/abs/1909.05207">http://arxiv.org/abs/1909.05207</a> (visited on 2019-11-02), <a class="reference external" href="https://arxiv.org/abs/1909.05207">arXiv:1909.05207</a>.</p>
 </dd>
 </dl>
 </div>
