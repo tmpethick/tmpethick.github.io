@@ -273,14 +273,12 @@ In multi-armed bandit we consider a slight modification to the setting for which
 The difference lies in considering _limited feedback_.
 That is, we only observe the loss $\ell_t(i_t)$ which we incur instead of the entire function $\ell_t$.
 
-<div class="block--def">(Bandit setting)
-The player is given a fixed decision set $\mathcal K$.
-At each round $t=1,...,T$:
+**Bandit setting**
+The player is given a fixed decision set $\mathcal K$. At each round $t=1,...,T$:
 
 1. Player pick $i_t \in \mathcal K$.
 2. The environment picks a convex loss vector $\ell_t$.
 3. The player then observes and suffers loss $\ell_t(i_t)$.
-</div>
 
 **Exploration/Exploitation**
 Central to this setting is the _exploration-exploitation tradeoff_: we want to learn the best arm to pull (explore) but also pull the right arm (exploit).
@@ -293,7 +291,7 @@ Much of the notation will allow a continuos $\mathcal K$ (i.e. _infinite arms_) 
 We cannot naively apply Hedge as it would require full information of the previous losses $f_t$.
 What we _can_ do is construct an unbiased estimator of the gradient on which we then apply Hedge.
 
-<div class="block--lemma">(Importance-Weighted Estimator)
+```{prf:lemma} Importance-Weighted Estimator
 Say you sample $I_t \sim p_t$ and construct
 
 $$\tilde{\ell}_{t}(i)=\begin{cases} 
@@ -304,14 +302,16 @@ $$\tilde{\ell}_{t}(i)=\begin{cases}
 then this estimator is unbiased
 
 $$\mathbb E_{I_t \sim p_t}\left[\tilde{\ell}_{t}(i)\right]=\left(1-p_{t}(i)\right) \cdot 0+p_{t}(i) \cdot \frac{\ell_{t}(i)}{p_{t}(i)}=\ell_{t}(i).$$
-</div>
+```
 
 Combining importance-weighting with Hedge leads to what has been called Exp3.
 
-<div class="block--algorithm">(Exp3)<br>
-Initialize uniformly:<br>
-$w_0(i) = 0\ \forall i$<br>
+```{prf:algorithm} Exp3
+
+Initialize uniformly: $w_0(i) = 0\ \forall i$
+
 Then for $t=1..T$
+
 $$\begin{aligned}
 &p_t(i) = \exp{\left(w_{t-1}(i)\right)} / \sum_{j=1}^N \exp{\left(w_{t-1}(j)\right)} && \text{(Turn into prob. dist.)}\\
 &I_t \sim p_t && \text{(sample arm)}\\
@@ -321,10 +321,9 @@ $$\begin{aligned}
    \end{cases} && \text{(Construct estimator)}\\
 &w_t(i) =w_{t-1}(i) -\eta \tilde{\ell}_{t-1}(i). && \text{(Compute weights)}
 \end{aligned}$$
-</div>
+```
 
 **Regret analysis**
-
 The standard FTRL analysis would fail.
 To see why, let's look at the regret on our estimator
 
@@ -349,14 +348,13 @@ Notice how it will blow up if $p_t(i)$ is very small for _some_ $i$ [^uniform].
 
 We can tighten the analysis, however, using some tricks almost exclusively reserved for the particular case of Exp3.
 
-```{prf:theorem} Exp3 Regret bound[^exp]
+```{prf:theorem} Exp3 Regret bound
 
 $$\mathcal R_T = \mathcal O (\sqrt{T K \log (K)).}
 $$
 ```
 
-
-[^exp]: proof can be found [here](https://banditalgs.com/2016/10/01/adversarial-bandits/).
+Proof can be found [here](https://banditalgs.com/2016/10/01/adversarial-bandits/).
 
 <!-- <div class="proof">
 We will only outline the proof here ([for a complete proof](https://banditalgs.com/2016/10/01/adversarial-bandits/)).
