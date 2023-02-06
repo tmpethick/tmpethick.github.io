@@ -341,7 +341,7 @@ title="Toggle navigation"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
+  <a class="reference internal nav-link" href="#id7">
    Final Remarks
   </a>
  </li>
@@ -397,7 +397,7 @@ title="Toggle navigation"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id6">
+  <a class="reference internal nav-link" href="#id7">
    Final Remarks
   </a>
  </li>
@@ -716,12 +716,17 @@ To see why, let’s look at the regret on our estimator</p>
 </label><input type='checkbox' id='sidenote-role-4' name='sidenote-role-4' class='margin-toggle'><span class="sidenote"><sup>4</sup>The initial analysis bounded the regret by explicitly exploring uniformly based on a coin flip.
 This way <span class="math notranslate nohighlight">\(p_t(i)\)</span> was ensured to be sufficiently big for all <span class="math notranslate nohighlight">\(i\)</span>.</span>.</p>
 <p>We can tighten the analysis, however, using some tricks almost exclusively reserved for the particular case of Exp3.</p>
-<div class="block--theorem">(Exp3 Regret bound)[^exp]
+<div class="proof theorem admonition" id="theorem-6">
+<span class="sidenote"><sup>5</sup>proof can be found <a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">here</a>.</span><p class="admonition-title"><span class="caption-number">Theorem 2 </span> (Exp3 Regret bound<label for='sidenote-role-5' class='margin-toggle'><span id="id5">
+<sup>5</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote d-n"><sup>5</sup>proof can be found <a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">here</a>.</span>)</p>
+<section class="theorem-content" id="proof-content">
 <div class="math notranslate nohighlight">
 \[\mathcal R_T = \mathcal O (\sqrt{T K \log (K)).}
 \]</div>
-</div>
-<!-- <div class="proof">
+</section>
+</div><!-- <div class="proof">
 We will only outline the proof here ([for a complete proof](https://banditalgs.com/2016/10/01/adversarial-bandits/)).
 
 - Develop a bound on the exponentiated difference
@@ -736,18 +741,18 @@ We will only outline the proof here ([for a complete proof](https://banditalgs.c
 </div> -->
 <p><em>Remarks</em>:</p>
 <ul>
-<span class="sidenote"><sup>5</sup>See e.g. <a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">this proof</a>.</span><li><p>The lower bound for adversarial regret is <span class="math notranslate nohighlight">\(\mathcal{O}(\sqrt{TK})\)</span><label for='sidenote-role-5' class='margin-toggle'><span id="id5">
-<sup>5</sup></span>
+<span class="sidenote"><sup>6</sup>See e.g. <a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">this proof</a>.</span><li><p>The lower bound for adversarial regret is <span class="math notranslate nohighlight">\(\mathcal{O}(\sqrt{TK})\)</span><label for='sidenote-role-6' class='margin-toggle'><span id="id6">
+<sup>6</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote d-n"><sup>5</sup>See e.g. <a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">this proof</a>.</span>.
+</label><input type='checkbox' id='sidenote-role-6' name='sidenote-role-6' class='margin-toggle'><span class="sidenote d-n"><sup>6</sup>See e.g. <a class="reference external" href="https://banditalgs.com/2016/10/01/adversarial-bandits/">this proof</a>.</span>.
 So we achieve minimax regret up to a <span class="math notranslate nohighlight">\(\sqrt{\ln K}\)</span> factor.</p></li>
 <li><p>Compared with the full information setting we are competitive up to a factor of <span class="math notranslate nohighlight">\(\sqrt{K}\)</span>.</p></li>
 <li><p><a class="reference external" href="https://parameterfree.com/2019/11/12/multi-armed-bandit-i/">Francesco Orabona</a> has a very different take on the proof coming from an Online Convex Optimization perspective that might be of interest.</p></li>
 </ul>
 <!-- $$\mathbb{E}\left[\mathcal{R}_{T}\right]=\mathbb{E}\left[\sum_{t=1}^{T} \ell_{t}\left(a_{t}\right)\right]-\min _{a \in[K]} \sum_{t=1}^{T} \ell_{t}(a)$$ -->
 </section>
-<section id="id6">
-<h2>Final Remarks<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h2>
+<section id="id7">
+<h2>Final Remarks<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h2>
 <p>This presentation primarily pulls from the following sources:</p>
 <ul class="simple">
 <li><p>The Hedge part heavily relies on Haipeng’s <a class="reference external" href="https://haipeng-luo.net/courses/CSCI699/lecture3.pdf">lecture note 3</a> except for the (standard) derivation with Langrange multiplier which I weirdly enough didn’t come across anywhere.</p></li>
@@ -762,7 +767,7 @@ A good starting point for the curious reader is either <a class="reference exter
 - Stocastic vs adverserial
 - Infinite arms -->
 <hr class="docutils" />
-<span class="target" id="id7"></span><hr class="footnotes docutils" />
+<span class="target" id="id8"></span><hr class="footnotes docutils" />
 </section>
 </section>
 

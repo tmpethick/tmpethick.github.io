@@ -349,11 +349,12 @@ Notice how it will blow up if $p_t(i)$ is very small for _some_ $i$ [^uniform].
 
 We can tighten the analysis, however, using some tricks almost exclusively reserved for the particular case of Exp3.
 
-<div class="block--theorem">(Exp3 Regret bound)[^exp]
+```{prf:theorem} Exp3 Regret bound[^exp]
 
 $$\mathcal R_T = \mathcal O (\sqrt{T K \log (K)).}
 $$
-</div>
+```
+
 
 [^exp]: proof can be found [here](https://banditalgs.com/2016/10/01/adversarial-bandits/).
 

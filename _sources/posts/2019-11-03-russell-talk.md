@@ -37,6 +37,7 @@ This is simply because robustness will give you sample efficiency which correspo
 
 [^giraffe]: He had a nice picture of this: children don't scroll through a book with thousands of picture of giraffe's to understand the concept of a giraffe. 
 
+
 **Motivation**
 This picturesque introduction showed how brittle these systems are and how that can lead to unwanted behavior.
 He then switched gears to argue that a system, which on the contrary is _not_ stupid[^power], could still exhibit undesired behavior.

@@ -528,8 +528,9 @@ Intuitively a solution to our problem with FTL is then to make sure the strategy
 <p>where <span class="math notranslate nohighlight">\(\eta &gt; 0\)</span> is the learning rate and <span class="math notranslate nohighlight">\(\psi: \mathcal X \rightarrow \mathbb R\)</span> is a regularizer.</p>
 <p>The regularizer is there to ensure that our choice does not change too much between iterations.
 To capture this we will rely on <span class="math notranslate nohighlight">\(\psi\)</span> being strongly convex.
-That is,
-$<span class="math notranslate nohighlight">\(\psi(\mathbf x)-\psi(\mathbf y) \leqslant \nabla \psi(\mathbf x)^{T}(\mathbf x-\mathbf y)-\frac{1}{2}\|\mathbf x-\mathbf y\|^{2} \quad \forall \mathbf y, \mathbf x \in \mathcal X\)</span>$</p>
+That is,</p>
+<div class="math notranslate nohighlight">
+\[\psi(\mathbf x)-\psi(\mathbf y) \leqslant \nabla \psi(\mathbf x)^{T}(\mathbf x-\mathbf y)-\frac{1}{2}\|\mathbf x-\mathbf y\|^{2} \quad \forall \mathbf y, \mathbf x \in \mathcal X\]</div>
 <p>for some norm <span class="math notranslate nohighlight">\(||\cdot||\)</span>.</p>
 <section id="stability">
 <h3>Stability<a class="headerlink" href="#stability" title="Permalink to this headline">#</a></h3>

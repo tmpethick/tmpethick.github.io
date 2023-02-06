@@ -412,13 +412,13 @@ title="Toggle navigation"
 <p>Caroline Uhler gave a very interesting talk this Friday<label for='sidenote-role-3' class='margin-toggle'><span id="id1">
 <sup>3</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>For an almost identical talk see her talk at ICML 2019.</span> that went from the very practically motivated problem of studying genes all the way down to characterizing overparameterization of neural network theory.</p>
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>For an almost identical talk see <a class="reference external" href="https://slideslive.com/38917596/from-predictive-to-caussal-modeling-bridging-the-gap">her talk at ICML 2019</a>.</span> that went from the very practically motivated problem of studying genes all the way down to characterizing overparameterization of neural network theory.</p>
 <p>The talk was given in the backlit of the scientific opportunity which comes with having high-throughput observation and interventional single-cell gene expression<label for='sidenote-role-1' class='margin-toggle'><span id="id2">
 <sup>1</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>It is still unclear to me what exactly we observe as a gene expression.
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>It is still unclear to me what <em>exactly</em> we observe as a gene expression.
 However, I imagine that the reason we model this as a causal network is because a particular gene could impact to what degree other genes are being read.
-So the genes do not have a causal relation directly by the expression of them does.</span> data available.
+So the genes do not have a causal relation directly by the <em>expression</em> of them does.</span> data available.
 Let us unpack that a little to appreciate it: we have roughly 20,000 genes in each cell.
 For one of those cells we can quickly obtain 100,000 to 1 mio. observations (see <a class="reference internal" href="#fig-data"><span class="std std-numref">Fig. 1</span></a>).
 Not only that, we can even knock out a particular gene thanks to the <a class="reference external" href="https://en.wikipedia.org/wiki/Perturb-seq">CRISPR-seq method</a>.
@@ -555,13 +555,13 @@ Not only did this provide a way to step back in time but she additionally use it
 </label><input type='checkbox' id='sidenote-role-5' name='sidenote-role-5' class='margin-toggle'><span class="sidenote"><sup>5</sup>It was a little unclear to what extend they manage to distinguish cancerous cells before experts. Especially since it is not obvious how to evaluate your performance – after all no baseline exists that you can compare yourself against.</span><label for='sidenote-role-6' class='margin-toggle'><span id="id6">
 <sup>6</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-6' name='sidenote-role-6' class='margin-toggle'><span class="sidenote"><sup>6</sup>The details of the method can be found on bioRxiv. It seems to be an early draft with the mathematical details showing quite a bit into it in the supplementary material.</span>.</p>
+</label><input type='checkbox' id='sidenote-role-6' name='sidenote-role-6' class='margin-toggle'><span class="sidenote"><sup>6</sup>The details of the method can be found on <a class="reference external" href="https://www.biorxiv.org/content/10.1101/455469v1.full">bioRxiv</a>. It seems to be an early draft with the mathematical details showing quite a bit into it in the supplementary material.</span>.</p>
 <p><strong>Auto-encoders</strong>
 What I found even more fascinating with this use of Auto-encoders (AE) here was that it motivated a theoretical study of AE which lead to very general results.
 In particular, her group showed that an overparameterized AE<label for='sidenote-role-7' class='margin-toggle'><span id="id7">
 <sup>7</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-7' name='sidenote-role-7' class='margin-toggle'><span class="sidenote"><sup>7</sup>Note that there is a slight discrepancy here: the study on overparameterization is done in the context of Auto-Encoders not Variational Auto-Encoders as used in the cancer application.
+</label><input type='checkbox' id='sidenote-role-7' name='sidenote-role-7' class='margin-toggle'><span class="sidenote"><sup>7</sup>Note that there is a slight discrepancy here: the study on overparameterization is done in the context of Auto-Encoders <em>not</em> Variational Auto-Encoders as used in the cancer application.
 Even though the difference might seem subtle at first sight my understanding is that they are treated as two very different mathematical objects.</span> network generalizes well <em>because it memorizes the training data and interpolate between the points</em>.</p>
 <p><strong>A contracting map</strong>
 In the process they even devised a procedure for extracting the training examples.
@@ -581,7 +581,7 @@ They first showed that when restricted to linear mappings the network learns the
 They then managed to obtain analogies results to this for non-linear mapping<label for='sidenote-role-8' class='margin-toggle'><span id="id8">
 <sup>8</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-8' name='sidenote-role-8' class='margin-toggle'><span class="sidenote"><sup>8</sup>From what I understand they actually manage to understand the overparameterized setting for Autoencoder fully. I would like to understand the details however, since for neural networks as function approximators the interest is in the degree of overparameterization. I don’t know whether what they have obtain is in some way tight.</span>.
+</label><input type='checkbox' id='sidenote-role-8' name='sidenote-role-8' class='margin-toggle'><span class="sidenote"><sup>8</sup>From what I understand they actually manage to understand the overparameterized setting for Autoencoder fully. I would like to understand the details however, since for neural networks as function approximators the interest is in the <em>degree</em> of overparameterization. I don’t know whether what they have obtain is in some way tight.</span>.
 This is <em>yet</em> another example of how useful it is to first reason about a problem under the simplifying assumption of linearity.</p>
 <!-- [^random]: Random... -->
 <p><strong>Practical advice</strong>

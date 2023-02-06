@@ -193,6 +193,7 @@ They first showed that when restricted to linear mappings the network learns the
 They then managed to obtain analogies results to this for non-linear mapping[^linalg].
 This is _yet_ another example of how useful it is to first reason about a problem under the simplifying assumption of linearity.
 
+
 [^linalg]: From what I understand they actually manage to understand the overparameterized setting for Autoencoder fully. I would like to understand the details however, since for neural networks as function approximators the interest is in the _degree_ of overparameterization. I don't know whether what they have obtain is in some way tight.
 
 <!-- [^random]: Random... -->
