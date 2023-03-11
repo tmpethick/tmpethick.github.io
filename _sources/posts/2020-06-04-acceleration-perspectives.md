@@ -1,6 +1,7 @@
 ---
-substitutions:
-  date: 2020-06-04
+myst:
+ substitutions:
+  date: "2020-06-04"
 ---
 ```{post} 2020-06-04
 :tags: acceleration
@@ -8,7 +9,7 @@ substitutions:
 ```
 
 # Various ways of writing Nesterov's acceleration
-_Posted on {{ date.strftime("%b %d, %Y") }}_
+_Posted on {{ date }}_
 
 
 Nestorov's acceleration is usually presented in the following form (AGM1)

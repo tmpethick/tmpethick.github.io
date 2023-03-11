@@ -1,13 +1,14 @@
 ---
-substitutions:
-  date: 2020-05-15
+myst:
+ substitutions:
+  date: "2020-05-15"
 ---
 ```{post} 2020-05-15
 :excerpt: 0
 ```
 
 # Gradient boosting
-_Posted on {{ date.strftime("%b %d, %Y") }}_
+_Posted on {{ date }}_
 
 
 When going over Gradient boosting I got confused why there was a discrepancy between the residual and the weak learner.

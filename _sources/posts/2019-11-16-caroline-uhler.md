@@ -1,6 +1,7 @@
 ---
-substitutions:
-  date: 2019-11-16
+myst:
+ substitutions:
+  date: "2019-11-16"
 ---
 ```{post} 2019-11-16
 :tags: talk
@@ -8,7 +9,7 @@ substitutions:
 ```
 
 # From causal inference to autoencoders and gene regulation by Caroline Uhler
-_Posted on {{ date.strftime("%b %d, %Y") }}_
+_Posted on {{ date }}_
 
 
 <!--  https://slideslive.com/38917596/from-predictive-to-caussal-modeling-bridging-the-gap -->

@@ -25,7 +25,7 @@ You can also find all the posts in chronological order in the [archive](/posts/)
 
 <hr>
 
-## Open Source
+## Open source
 
 - **[Scalable Gaussian Processes for Economic Models][master]**.
   This codebase can be used to run high-dimensional scalable Gaussian Processes on Economic Models on a High Performance Computing cluster.

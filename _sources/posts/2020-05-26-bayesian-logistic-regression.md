@@ -1,13 +1,14 @@
 ---
-substitutions:
-  date: 2020-05-15
+myst:
+ substitutions:
+  date: "2020-05-15"
 ---
 ```{post} 2020-05-15
 :excerpt: 0
 ```
 
 # Bayesian logistic regression
-_Posted on {{ date.strftime("%b %d, %Y") }}_
+_Posted on {{ date }}_
 
 
 _I recently had to run an experiment with Bayesian logistic regression but didn't find a place that contained both a satisfying explanation for the motivation and derivation of the gradient._

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://pethick.dk/</id>
   <title>Thomas Pethick's blog</title>
-  <updated>2023-02-06T14:21:14.521734+00:00</updated>
+  <updated>2023-03-11T11:11:25.633987+00:00</updated>
   <link href="https://pethick.dk/"/>
   <link href="https://pethick.dk/posts/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
@@ -25,7 +25,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -54,7 +54,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -84,7 +84,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -114,7 +114,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -144,7 +144,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -174,7 +174,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -204,7 +204,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -233,7 +233,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -262,7 +262,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true
@@ -292,7 +292,7 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./."
         },
         predefinedOutput: true

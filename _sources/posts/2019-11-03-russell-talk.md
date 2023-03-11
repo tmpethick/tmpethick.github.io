@@ -1,6 +1,7 @@
 ---
-substitutions:
-  date: 2019-11-03
+myst:
+ substitutions:
+  date: "2019-11-03"
 ---
 ```{post} 2019-11-03
 :tags: talk
@@ -8,7 +9,7 @@ substitutions:
 ```
 
 # Provably beneficial artificial intelligence by Stuart Russell
-_Posted on {{ date.strftime("%b %d, %Y") }}_
+_Posted on {{ date }}_
 
 
 Stuart Russell came to EPFL last Friday to talk about his new book on [Human Compatible: Artificial Intelligence and the Problem of Control][book].

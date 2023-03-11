@@ -1,6 +1,7 @@
 ---
-substitutions:
-  date: 2020-06-04
+myst:
+ substitutions:
+  date: "2020-06-04"
 ---
 ```{post} 2020-06-04
 :tags: acceleration
@@ -8,7 +9,7 @@ substitutions:
 ```
 
 # Acceleration convergence using a potential function
-_Posted on {{ date.strftime("%b %d, %Y") }}_
+_Posted on {{ date }}_
 
 
 We cover the analysis of acceleration from {cite:t}`bansal2017potential`.

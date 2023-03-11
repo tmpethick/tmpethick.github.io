@@ -1,6 +1,7 @@
 ---
-substitutions:
-  date: 2020-01-06
+myst:
+ substitutions:
+  date: "2020-01-06"
 ---
 ```{post} 2020-01-06
 :tags: online-learning
@@ -9,7 +10,7 @@ substitutions:
 
 
 # Hedge and bandits
-_Posted on {{ date.strftime("%b %d, %Y") }}_
+_Posted on {{ date }}_
 
 
 <!-- 
