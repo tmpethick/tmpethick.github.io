@@ -102,7 +102,6 @@ body,
 figure figcaption,
 aside.sidebar p.sidebar-title {
   font-family: "Computer Modern Serif";
-  color: #333;
 }
 
 em {
@@ -127,19 +126,24 @@ blockquote {
 .bd-article-container h6,
 .navbar-brand .logo__title
 {
-	color: black;
   font-weight: bold;
   font-family: "Computer Modern Sans";
+}
+
+html[data-theme="light"] .bd-article-container h1, 
+html[data-theme="light"] .bd-article-container h2, 
+html[data-theme="light"] .bd-article-container h3, 
+html[data-theme="light"] .bd-article-container h4, 
+html[data-theme="light"] .bd-article-container h5, 
+html[data-theme="light"] .bd-article-container h6,
+html[data-theme="light"] .navbar-brand .logo__title
+{
+	color: black;
 }
 
 .navbar-brand .logo__title {
 	font-size: 1.5rem;
 }
-
-/* 
-:root {
-  --pst-color-primary: red;
-} */
 
 /*************************************************/
 /* Layout */
@@ -149,9 +153,9 @@ blockquote {
 	visibility: hidden;
 }
 
-.theme-switch-button {
+/* .theme-switch-button {
 	display: none;
-}
+} */
 
 #rtd-footer-container {
 	display: none;
