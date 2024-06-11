@@ -213,6 +213,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../">Posts</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-05-15-gradientboosting/">Gradient boosting</a></li>
@@ -455,7 +456,7 @@ With this we can upper and lower bound the loss with high probability<label for=
 <p>The first term (<span class="math notranslate nohighlight">\(*\)</span>) can now be treated as a full information setting where the function is <span class="math notranslate nohighlight">\(\hat \ell_t(a) = \min \set{1, \operatorname{UCB}_t(a, a^{-i}_t)}\)</span> while the second part (<span class="math notranslate nohighlight">\(**\)</span>) can be analysed independent of the algorithm<label for='sidenote-role-2' class='margin-toggle'><span id="id3">
 <sup>2</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>This trick is in fact more general and has also been applied to reinforcement learning <span id="id30">[<a class="reference internal" href="#id22" title="Ching-An Cheng, Remi Tachet des Combes, Byron Boots, and Geoff Gordon. A reduction from reinforcement learning to no-regret online learning. 2019. arXiv:1911.05873.">Cheng <em>et al.</em>, 2019</a>]</span>.</span>.</p>
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>This trick is in fact more general and has also been applied to reinforcement learning <span id="id33">[<a class="reference internal" href="#id22" title="Ching-An Cheng, Remi Tachet des Combes, Byron Boots, and Geoff Gordon. A reduction from reinforcement learning to no-regret online learning. 2019. arXiv:1911.05873.">Cheng <em>et al.</em>, 2019</a>]</span>.</span>.</p>
 <section id="bounding-with-hedge">
 <h4>Bounding with Hedge<a class="headerlink" href="#bounding-with-hedge" title="Permalink to this headline">#</a></h4>
 <p>We cannot apply our tools from OCO directly to <span class="math notranslate nohighlight">\(\hat \ell_t(a) = \min \set{1, \operatorname{UCB}_t(a, a^{-i}_t)}\)</span> since it is non-convex in general.
@@ -540,7 +541,7 @@ For precisely specified assumptions of each lemma and statement please see <span
 <hr class="docutils" />
 <div class="docutils container" id="id7">
 <dl class="citation">
-<dt class="label" id="id22"><span class="brackets"><a class="fn-backref" href="#id30">CdCBG19</a></span></dt>
+<dt class="label" id="id22"><span class="brackets"><a class="fn-backref" href="#id33">CdCBG19</a></span></dt>
 <dd><p>Ching-An Cheng, Remi Tachet des Combes, Byron Boots, and Geoff Gordon. A reduction from reinforcement learning to no-regret online learning. 2019. <a class="reference external" href="https://arxiv.org/abs/1911.05873">arXiv:1911.05873</a>.</p>
 </dd>
 <dt class="label" id="id21"><span class="brackets">SBKK19</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id5">2</a>,<a href="#id6">3</a>)</span></dt>

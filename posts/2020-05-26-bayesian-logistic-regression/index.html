@@ -213,6 +213,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../">Posts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-05-15-gradientboosting/">Gradient boosting</a></li>
@@ -377,7 +378,7 @@ l(\beta ; Y, X)=\sum_{i=1}^{N}\left[-\ln \left(1+\exp \left(x_{i} \beta\right)\r
 \]</div>
 <p>The derivative of the log-likelihood (sometimes called the score) can then be shown to be,</p>
 <div class="math notranslate nohighlight" id="equation-eq-grad-log-likelihood">
-<span class="eqno">(5)<a class="headerlink" href="#equation-eq-grad-log-likelihood" title="Permalink to this equation">#</a></span>\[\nabla_{\beta} l(\beta ; Y, X)=\sum_{i=1}^{N}\left[y_{i}-\sigma\left(x_{i} \beta\right)\right] x_{i}.\]</div>
+<span class="eqno">(7)<a class="headerlink" href="#equation-eq-grad-log-likelihood" title="Permalink to this equation">#</a></span>\[\nabla_{\beta} l(\beta ; Y, X)=\sum_{i=1}^{N}\left[y_{i}-\sigma\left(x_{i} \beta\right)\right] x_{i}.\]</div>
 </section>
 <section id="in-practice">
 <h2>In practice<a class="headerlink" href="#in-practice" title="Permalink to this headline">#</a></h2>
@@ -397,7 +398,7 @@ p(\beta|X,Y) \propto p(\beta|X,Y)p(\beta).
 \]</div>
 <p>If we choose a Gaussian prior <span class="math notranslate nohighlight">\(p(\beta) = \mathcal N(0, \lambda I)\)</span> this is,</p>
 <div class="math notranslate nohighlight" id="equation-eq-gauss-reg">
-<span class="eqno">(6)<a class="headerlink" href="#equation-eq-gauss-reg" title="Permalink to this equation">#</a></span>\[\log p(\beta|X,Y) \propto \nabla_{\beta} l(\beta ; y, X) + \lambda \|\beta\|_2,\]</div>
+<span class="eqno">(8)<a class="headerlink" href="#equation-eq-gauss-reg" title="Permalink to this equation">#</a></span>\[\log p(\beta|X,Y) \propto \nabla_{\beta} l(\beta ; y, X) + \lambda \|\beta\|_2,\]</div>
 <p>Which is simply the negative log-likelihood with <span class="math notranslate nohighlight">\(L_2\)</span>-regularization!</p>
 </section>
 <section id="alternatives">
@@ -418,8 +419,8 @@ This is because gradient based sampling techniques such as Unadjusted Langevin D
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">#</a></h2>
 <ol class="arabic simple">
-<li><p>Derive the gradient of the log-likelihood in <a class="reference internal" href="#equation-eq-grad-log-likelihood">(5)</a>.</p></li>
-<li><p>Verify that Gaussian is equivalent to <span class="math notranslate nohighlight">\(L_2\)</span>-regularization in <a class="reference internal" href="#equation-eq-gauss-reg">(6)</a>.</p></li>
+<li><p>Derive the gradient of the log-likelihood in <a class="reference internal" href="#equation-eq-grad-log-likelihood">(7)</a>.</p></li>
+<li><p>Verify that Gaussian is equivalent to <span class="math notranslate nohighlight">\(L_2\)</span>-regularization in <a class="reference internal" href="#equation-eq-gauss-reg">(8)</a>.</p></li>
 </ol>
 <hr class="docutils" />
 <div class="docutils container" id="id2">
