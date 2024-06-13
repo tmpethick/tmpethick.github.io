@@ -14,7 +14,7 @@ _Posted on {{ date }}_
 The gradient method can obtain a $\mathcal O(1/\sqrt{T})$ rate for nonsmooth problems
 and a $\mathcal O(1/T)$ for smooth problems.
 However, the stepsize needs to be set differently (decreasing and constant respectively) and requires knowledge of the problem constants.
-In this blog post we will look at a very simply adaptive stepsize choice that circumvents these problems:
+In this blog post we will look at a very simple adaptive stepsize choice that circumvents these problems:
 
 ```{prf:algorithm} Gradient method with Polyak stepsize
 :label: alg-polyak
@@ -24,7 +24,7 @@ In this blog post we will look at a very simply adaptive stepsize choice that ci
 \gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|}$
 ```
 
-where we require knowledge of the optimal function value $f(x^\star)$.
+The scheme only requires knowledge of the optimal function value $f(x^\star)$.
 The adaptive stepsize choice $\gamma_k$ might look mysterious at first, but as we will see promptly, it appears very naturally when constructing a halfspace containing our solutions.
 
 
@@ -174,6 +174,7 @@ There are a couple of things we did not cover:
 - The Polyak stepsize can also adapt to strongly convexity, which is treated in {cite:t}`hazan2019revisiting`.
 - The method requires knowledge of the optimal value, $f(x^\star)$. {cite:t}`hazan2019revisiting` removes this requirement by paying a logarithmic factor in the complexity.
 - The stochastic case {cite:p}`gower2021stochastic,garrigos2023function`, which also uses a hyperplane projection approach.
+- See Ch. 5 in {cite:t}`boyd2003subgradient` for an example of the subgradient method with Polyak stepsize ({prf:ref}`alg-polyak`) applied to finding a point in the intersection of convex sets.
 
 ---
 ```{bibliography}
