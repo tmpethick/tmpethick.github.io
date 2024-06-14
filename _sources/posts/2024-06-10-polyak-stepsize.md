@@ -8,6 +8,11 @@ myst:
 :excerpt: 0
 ```
 
+```{math}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+```
+
 # Polyak stepsize through a hyperplane projection interpretation
 _Posted on {{ date }}_
 
@@ -21,7 +26,7 @@ In this blog post we will look at a very simple adaptive stepsize choice that ci
 
 1. Compute $g^k \in \partial f(x^k)$
 2. Update $x^{k+1} = x^k - \gamma_k g^k \quad \text{with}\quad 
-\gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|}$
+\gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|^2}$
 ```
 
 The scheme only requires knowledge of the optimal function value $f(x^\star)$.
@@ -59,18 +64,18 @@ If we can project onto $\mathcal D(x^k)$ we know that we would make progress tow
 Fortunately, the projection unto a halfspace is simple.
 
 ```{prf:lemma}
-The projection $\boldsymbol \Pi_{\mathcal{C}}(x):=\min_{z \in \mathcal{C}} \frac{1}{2}\|z-x\|^2$ onto the set $\mathcal{C} = \{z \mid \braket{a,z} \geq b\}$ of $x \not \in \mathcal{C}$ is given as,
+The projection $\boldsymbol \Pi_{\mathcal{C}}(x):=\argmin_{z \in \mathcal{C}} \|z-x\|^2$ onto the set $\mathcal{C} = \{z \mid \braket{a,z} \geq b\}$ of $x \not \in \mathcal{C}$ is given as,
 
 $$
 \boldsymbol \Pi_{\mathcal{C}}(x) = x - \frac{\braket{a,x}-b}{\|a\|^2} a.
 $$
 ```
 
-Applying the above lemma to our particular case, by taking $\mathcal C= \mathcal D(x^k)$ such that $a=- g^k$ and $b=-\braket{ g^k,x^k-w} + f(x^k) - f(x^\star)$, leads to:
+Applying the above lemma to our particular case, by taking $\mathcal C= \mathcal D(x^k)$ such that $a=- g^k$ and $b=-\braket{ g^k,x^k} + f(x^k) - f(x^\star)$, leads to:
 
 $$
 P(x^k):=\boldsymbol \Pi_{\mathcal{D}(x^k)}(x^k) = x^k - \gamma_k g^k \quad \text{with}\quad 
-\gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|}
+\gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|^2}
 $$
 
 when $x^k \notin \mathcal D(x^k)$ and otherwise $P(x^k)=x^k$.

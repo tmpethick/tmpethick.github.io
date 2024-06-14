@@ -317,7 +317,10 @@ document.write(`
                 
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
-                   <section class="tex2jax_ignore mathjax_ignore" id="polyak-stepsize-through-a-hyperplane-projection-interpretation">
+                   <div class="math notranslate nohighlight">
+\[\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}\]</div>
+<section class="tex2jax_ignore mathjax_ignore" id="polyak-stepsize-through-a-hyperplane-projection-interpretation">
 <h1>Polyak stepsize through a hyperplane projection interpretation<a class="headerlink" href="#polyak-stepsize-through-a-hyperplane-projection-interpretation" title="Permalink to this headline">#</a></h1>
 <p><em>Posted on 2024-06-10</em></p>
 <p>The gradient method can obtain a <span class="math notranslate nohighlight">\(\mathcal O(1/\sqrt{T})\)</span> rate for nonsmooth problems
@@ -330,7 +333,7 @@ In this blog post we will look at a very simple adaptive stepsize choice that ci
 <ol class="arabic simple">
 <li><p>Compute <span class="math notranslate nohighlight">\(g^k \in \partial f(x^k)\)</span></p></li>
 <li><p>Update <span class="math notranslate nohighlight">\(x^{k+1} = x^k - \gamma_k g^k \quad \text{with}\quad 
-\gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|}\)</span></p></li>
+\gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|^2}\)</span></p></li>
 </ol>
 </section>
 </div><p>The scheme only requires knowledge of the optimal function value <span class="math notranslate nohighlight">\(f(x^\star)\)</span>.
@@ -363,17 +366,17 @@ Fortunately, the projection unto a halfspace is simple.</p>
 <div class="proof lemma admonition" id="lemma-2">
 <p class="admonition-title"><span class="caption-number">Lemma 6 </span></p>
 <section class="lemma-content" id="proof-content">
-<p>The projection <span class="math notranslate nohighlight">\(\boldsymbol \Pi_{\mathcal{C}}(x):=\min_{z \in \mathcal{C}} \frac{1}{2}\|z-x\|^2\)</span> onto the set <span class="math notranslate nohighlight">\(\mathcal{C} = \{z \mid \braket{a,z} \geq b\}\)</span> of <span class="math notranslate nohighlight">\(x \not \in \mathcal{C}\)</span> is given as,</p>
+<p>The projection <span class="math notranslate nohighlight">\(\boldsymbol \Pi_{\mathcal{C}}(x):=\argmin_{z \in \mathcal{C}} \|z-x\|^2\)</span> onto the set <span class="math notranslate nohighlight">\(\mathcal{C} = \{z \mid \braket{a,z} \geq b\}\)</span> of <span class="math notranslate nohighlight">\(x \not \in \mathcal{C}\)</span> is given as,</p>
 <div class="math notranslate nohighlight">
 \[
 \boldsymbol \Pi_{\mathcal{C}}(x) = x - \frac{\braket{a,x}-b}{\|a\|^2} a.
 \]</div>
 </section>
-</div><p>Applying the above lemma to our particular case, by taking <span class="math notranslate nohighlight">\(\mathcal C= \mathcal D(x^k)\)</span> such that <span class="math notranslate nohighlight">\(a=- g^k\)</span> and <span class="math notranslate nohighlight">\(b=-\braket{ g^k,x^k-w} + f(x^k) - f(x^\star)\)</span>, leads to:</p>
+</div><p>Applying the above lemma to our particular case, by taking <span class="math notranslate nohighlight">\(\mathcal C= \mathcal D(x^k)\)</span> such that <span class="math notranslate nohighlight">\(a=- g^k\)</span> and <span class="math notranslate nohighlight">\(b=-\braket{ g^k,x^k} + f(x^k) - f(x^\star)\)</span>, leads to:</p>
 <div class="math notranslate nohighlight">
 \[
 P(x^k):=\boldsymbol \Pi_{\mathcal{D}(x^k)}(x^k) = x^k - \gamma_k g^k \quad \text{with}\quad 
-\gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|}
+\gamma_k = \tfrac{f(x^k) - f(x^\star)}{\| g^k\|^2}
 \]</div>
 <p>when <span class="math notranslate nohighlight">\(x^k \notin \mathcal D(x^k)\)</span> and otherwise <span class="math notranslate nohighlight">\(P(x^k)=x^k\)</span>.
 We can apply the projection iteratively, i.e. <span class="math notranslate nohighlight">\(x^{k+1}=P(x^k)\)</span>.
