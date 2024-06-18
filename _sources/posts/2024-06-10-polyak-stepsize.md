@@ -41,7 +41,7 @@ which includes all convex functions.
 ```{prf:definition} Star-convex
 :label: star-convex
 
-A function $f: \mathbb R^d \rightarrow \mathbb R$ is star-convex with respect to all $x^\star \in \mathcal X^\star \subseteq \operatorname{zer} \partial f$, if for all $g \in \partial f(x)$ and $x \in \mathbb R^d$
+A function $f: \mathbb R^d \rightarrow \mathbb R$ is star-convex with respect to all $x^\star \in \mathcal X^\star \subseteq \argmin_x f(x)$, if for all $g \in \partial f(x)$ and $x \in \mathbb R^d$
 
 $$
 \braket{g, x-x^\star} \geq f(x) - f(x^\star).
@@ -60,7 +60,7 @@ $$ (halfspace)
 
 It is easy to verify that the solution set is contained by observing that {eq}`halfspace` reduces to {prf:ref}`star-convex` when taking $w=x^\star$.
 
-If we can project onto $\mathcal D(x^k)$ we know that we would make progress towards a solution (as long as $\operatorname{fix} \boldsymbol \Pi_{\mathcal{D}(x)}(x) \subseteq \operatorname{zer} \partial f$).
+If we can project onto $\mathcal D(x^k)$ we know that we would make progress towards a solution (as long as $\operatorname{fix} \boldsymbol \Pi_{\mathcal{D}(x)}(x) \subseteq \argmin_x f(x)$).
 Fortunately, the projection unto a halfspace is simple.
 
 ```{prf:lemma}
@@ -92,13 +92,13 @@ $$
 \|P(x^k) - w^\star\|^2 \leq \|x^k - w^\star\|^2 - \|x^k - P(x^k)\|^2
 $$
 
-where $w^\star\in \operatorname{fix} P(x)$.
-We just need to convince ourselves that $w^\star$ also provides a solution to our original problem, i.e. $\operatorname{fix} P(x) \subseteq \operatorname{zer} \partial f$.
-Suppose that $g^k \neq 0$.
-Then, the projection $P(x^k)$ can only be a fixed point if the stepsize $\gamma_k = 0$.
-In other words, we need to show that the adaptive stepsize $\gamma_k$ is strictly positive, which reduces to showing that the denominator, $\|g^k\|^2$, is upper bounded.
+where $w^\star\in \operatorname{fix} P$.
+We just need to convince ourselves that $w^\star$ also provides a solution to our original problem, i.e. $\operatorname{fix} P \subseteq \argmin_x f(x)$.
+If $x^k \notin \mathcal D(x^k)$ then it is easy to see that the the subgradient $g^k=0$ (which implies $x^k$ being a minimizer).
+On the other hand, if $x^k \in \mathcal D(x^k)$ then we know $0 \geq f(x^k) - f(x^\star)$, which also implies $x^k \in \argmin_x f(x)$.
+Thus, under star-convexity alone, nonasymptotic convergence is established.
 
-The lower bound on $\gamma_k$ directly translates into rates as made precise in the following theorem.
+Rates follows directly from lower bounding the stepsize $\gamma_k$ as made precise in the following theorem.
 
 ```{prf:theorem}
 Suppose {prf:ref}`star-convex` holds for $f: \mathbb R^d \rightarrow \mathbb R$.
@@ -177,9 +177,11 @@ Observing that the minimum is smaller than the average completes the proof.
 There are a couple of things we did not cover:
 
 - The Polyak stepsize can also adapt to strongly convexity, which is treated in {cite:t}`hazan2019revisiting`.
-- The method requires knowledge of the optimal value, $f(x^\star)$. {cite:t}`hazan2019revisiting` removes this requirement by paying a logarithmic factor in the complexity.
+- The method requires knowledge of the optimal value, $f(x^\star)$. {cite:t}`hazan2019revisiting` removes this requirement by paying a logarithmic factor in the complexity (provided we have a lower bound on $f(x^\star)$).
 - The stochastic case {cite:p}`gower2021stochastic,garrigos2023function`, which also uses a hyperplane projection approach.
 - See Ch. 5 in {cite:t}`boyd2003subgradient` for an example of the subgradient method with Polyak stepsize ({prf:ref}`alg-polyak`) applied to finding a point in the intersection of convex sets.
+
+<!-- p. 142 of Polyak's original book simply states the stepsize, Ch. 4.1 of Boyd's book motived the stepsize intuitively through analysis  -->
 
 ---
 ```{bibliography}

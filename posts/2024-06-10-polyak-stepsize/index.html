@@ -345,7 +345,7 @@ which includes all convex functions.</p>
 <div class="proof definition admonition" id="star-convex">
 <p class="admonition-title"><span class="caption-number">Definition 3 </span> (Star-convex)</p>
 <section class="definition-content" id="proof-content">
-<p>A function <span class="math notranslate nohighlight">\(f: \mathbb R^d \rightarrow \mathbb R\)</span> is star-convex with respect to all <span class="math notranslate nohighlight">\(x^\star \in \mathcal X^\star \subseteq \operatorname{zer} \partial f\)</span>, if for all <span class="math notranslate nohighlight">\(g \in \partial f(x)\)</span> and <span class="math notranslate nohighlight">\(x \in \mathbb R^d\)</span></p>
+<p>A function <span class="math notranslate nohighlight">\(f: \mathbb R^d \rightarrow \mathbb R\)</span> is star-convex with respect to all <span class="math notranslate nohighlight">\(x^\star \in \mathcal X^\star \subseteq \argmin_x f(x)\)</span>, if for all <span class="math notranslate nohighlight">\(g \in \partial f(x)\)</span> and <span class="math notranslate nohighlight">\(x \in \mathbb R^d\)</span></p>
 <div class="math notranslate nohighlight">
 \[
 \braket{g, x-x^\star} \geq f(x) - f(x^\star).
@@ -361,7 +361,7 @@ We can construct a halfspace that contains the solution set <span class="math no
 \mathcal D(x^k) = \set{w\mid \braket{g^k, x^k-w} \geq f(x^k) - f(x^\star)}.
 \]</div>
 <p>It is easy to verify that the solution set is contained by observing that <a class="reference internal" href="#equation-halfspace">(3)</a> reduces to <a class="reference internal" href="#star-convex">Definition 3</a> when taking <span class="math notranslate nohighlight">\(w=x^\star\)</span>.</p>
-<p>If we can project onto <span class="math notranslate nohighlight">\(\mathcal D(x^k)\)</span> we know that we would make progress towards a solution (as long as <span class="math notranslate nohighlight">\(\operatorname{fix} \boldsymbol \Pi_{\mathcal{D}(x)}(x) \subseteq \operatorname{zer} \partial f\)</span>).
+<p>If we can project onto <span class="math notranslate nohighlight">\(\mathcal D(x^k)\)</span> we know that we would make progress towards a solution (as long as <span class="math notranslate nohighlight">\(\operatorname{fix} \boldsymbol \Pi_{\mathcal{D}(x)}(x) \subseteq \argmin_x f(x)\)</span>).
 Fortunately, the projection unto a halfspace is simple.</p>
 <div class="proof lemma admonition" id="lemma-2">
 <p class="admonition-title"><span class="caption-number">Lemma 6 </span></p>
@@ -390,12 +390,12 @@ In other words we do not need to specify a stepsize!</p>
 \[
 \|P(x^k) - w^\star\|^2 \leq \|x^k - w^\star\|^2 - \|x^k - P(x^k)\|^2
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(w^\star\in \operatorname{fix} P(x)\)</span>.
-We just need to convince ourselves that <span class="math notranslate nohighlight">\(w^\star\)</span> also provides a solution to our original problem, i.e. <span class="math notranslate nohighlight">\(\operatorname{fix} P(x) \subseteq \operatorname{zer} \partial f\)</span>.
-Suppose that <span class="math notranslate nohighlight">\(g^k \neq 0\)</span>.
-Then, the projection <span class="math notranslate nohighlight">\(P(x^k)\)</span> can only be a fixed point if the stepsize <span class="math notranslate nohighlight">\(\gamma_k = 0\)</span>.
-In other words, we need to show that the adaptive stepsize <span class="math notranslate nohighlight">\(\gamma_k\)</span> is strictly positive, which reduces to showing that the denominator, <span class="math notranslate nohighlight">\(\|g^k\|^2\)</span>, is upper bounded.</p>
-<p>The lower bound on <span class="math notranslate nohighlight">\(\gamma_k\)</span> directly translates into rates as made precise in the following theorem.</p>
+<p>where <span class="math notranslate nohighlight">\(w^\star\in \operatorname{fix} P\)</span>.
+We just need to convince ourselves that <span class="math notranslate nohighlight">\(w^\star\)</span> also provides a solution to our original problem, i.e. <span class="math notranslate nohighlight">\(\operatorname{fix} P \subseteq \argmin_x f(x)\)</span>.
+If <span class="math notranslate nohighlight">\(x^k \notin \mathcal D(x^k)\)</span> then it is easy to see that the the subgradient <span class="math notranslate nohighlight">\(g^k=0\)</span> (which implies <span class="math notranslate nohighlight">\(x^k\)</span> being a minimizer).
+On the other hand, if <span class="math notranslate nohighlight">\(x^k \in \mathcal D(x^k)\)</span> then we know <span class="math notranslate nohighlight">\(0 \geq f(x^k) - f(x^\star)\)</span>, which also implies <span class="math notranslate nohighlight">\(x^k \in \argmin_x f(x)\)</span>.
+Thus, under star-convexity alone, nonasymptotic convergence is established.</p>
+<p>Rates follows directly from lower bounding the stepsize <span class="math notranslate nohighlight">\(\gamma_k\)</span> as made precise in the following theorem.</p>
 <div class="proof theorem admonition" id="theorem-3">
 <p class="admonition-title"><span class="caption-number">Theorem 4 </span></p>
 <section class="theorem-content" id="proof-content">
@@ -470,10 +470,11 @@ By assumption <span class="math notranslate nohighlight">\(\nabla f\)</span> is 
 <p>There are a couple of things we did not cover:</p>
 <ul class="simple">
 <li><p>The Polyak stepsize can also adapt to strongly convexity, which is treated in <span id="id1">Hazan and Kakade [<a class="reference internal" href="#id28" title="Elad Hazan and Sham Kakade. Revisiting the polyak step size. arXiv preprint arXiv:1905.00313, 2019.">2019</a>]</span>.</p></li>
-<li><p>The method requires knowledge of the optimal value, <span class="math notranslate nohighlight">\(f(x^\star)\)</span>. <span id="id2">Hazan and Kakade [<a class="reference internal" href="#id28" title="Elad Hazan and Sham Kakade. Revisiting the polyak step size. arXiv preprint arXiv:1905.00313, 2019.">2019</a>]</span> removes this requirement by paying a logarithmic factor in the complexity.</p></li>
+<li><p>The method requires knowledge of the optimal value, <span class="math notranslate nohighlight">\(f(x^\star)\)</span>. <span id="id2">Hazan and Kakade [<a class="reference internal" href="#id28" title="Elad Hazan and Sham Kakade. Revisiting the polyak step size. arXiv preprint arXiv:1905.00313, 2019.">2019</a>]</span> removes this requirement by paying a logarithmic factor in the complexity (provided we have a lower bound on <span class="math notranslate nohighlight">\(f(x^\star)\)</span>).</p></li>
 <li><p>The stochastic case <span id="id3">[<a class="reference internal" href="#id29" title="Guillaume Garrigos, Robert M Gower, and Fabian Schaipp. Function value learning: adaptive learning rates based on the polyak stepsize and function splitting in erm. arXiv preprint arXiv:2307.14528, 2023.">Garrigos <em>et al.</em>, 2023</a>, <a class="reference internal" href="#id30" title="Robert M Gower, Aaron Defazio, and Michael Rabbat. Stochastic polyak stepsize with a moving target. arXiv preprint arXiv:2106.11851, 2021.">Gower <em>et al.</em>, 2021</a>]</span>, which also uses a hyperplane projection approach.</p></li>
 <li><p>See Ch. 5 in <span id="id4">Boyd <em>et al.</em> [<a class="reference internal" href="#id31" title="Stephen Boyd, Lin Xiao, and Almir Mutapcic. Subgradient methods. lecture notes of EE392o, Stanford University, Autumn Quarter, 2003. URL: https://stanford.edu/class/ee364b/lectures/subgrad_method_notes.pdf.">2003</a>]</span> for an example of the subgradient method with Polyak stepsize (<a class="reference internal" href="#alg-polyak">Algorithm 8</a>) applied to finding a point in the intersection of convex sets.</p></li>
 </ul>
+<!-- p. 142 of Polyak's original book simply states the stepsize, Ch. 4.1 of Boyd's book motived the stepsize intuitively through analysis  -->
 <hr class="docutils" />
 <div class="docutils container" id="id5">
 <dl class="citation">
