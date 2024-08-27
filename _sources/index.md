@@ -1,18 +1,29 @@
+# About
 
-# Content
+I am currently doing a PhD at EPFL in the [LIONS][lions] lab with Prof. Volkan Cevher, where I am mostly interested in nonconvex-nonconcave minimax problems.
 
-## Online learning
+
+[lions]: https://lions.epfl.ch/
+
+
+### Content
+
+**A geometric view on optimization**
+
+- [Polyak stepsize through a hyperplane projection interpretation](/posts/2024-06-10-polyak-stepsize/)
+
+**Online learning**
 
 - [Follow the regularized leader](/posts/2019-11-02-FTRL/)
 - [Hedge and bandits](/posts/2020-01-06-hedge-and-bandit/)
 - [Gaussian processes and Hedge for infinite armed bandits](/posts/2020-01-07-gp-mw/)
 
-## Talks
+**Talks**
 
 - [Provably beneficial artificial intelligence by Stuart Russell](/posts/2019-11-03-russell-talk/)
 - [From causal inference to autoencoders and gene regulation by Caroline Uhler](/posts/2019-11-16-caroline-uhler/)
 
-## Tidbits
+**Tidbits**
 
 - [Various ways of writing Nesterov's acceleration](/posts/2020-06-04-acceleration-perspectives/)
 - [Acceleration convergence using a potential function](/posts/2020-06-04-acceleration-with-potential-function/)
@@ -21,11 +32,13 @@
 - [The I/O model](/posts/2018-05-22-io-model/)
 
 
-You can also find all the posts in chronological order in the [archive](/posts/).
+All the posts can also be found in chronological order in the [archive](/posts/).
 
 <hr>
 
-## Open source
+### Open source
+
+Some of the projects I worked on prior to the PhD:
 
 - **[Scalable Gaussian Processes for Economic Models][master]**.
   This codebase can be used to run high-dimensional scalable Gaussian Processes on Economic Models on a High Performance Computing cluster.
@@ -50,3 +63,54 @@ I have since moved to <a href="https://ebp.jupyterbook.org">the Executable Book 
 [7]: https://arxiv.org/abs/1502.05700
 [8]: https://github.com/tmpethick/pethick-site-hakyll
 [master]: https://github.com/tmpethick/thesis-code
+
+<!--
+
+### External links
+
+Prior to the PhD I have written on a variety of areas outside of this blog:
+
+- My Master thesis on [Scalable Gaussian Processes for Economic Models][master].
+- Bayesian Optimization using an [Ensembled Deep Network for Global Optimization][ensembled-dngo] which explores the behavior of an ensembled variant of the architecture proposed by [(Snoek et al 2015)][snoek2015] on various Bayesian Optimization benchmark problems.
+- Environmental sound classification using [convolutional autoencoders][CAE] with an custom built unpooling layer in keras.
+- [Bachelor][mcmc] on markov chain monte carlo and probabilistic programming.
+- [Compilation][prover] of a theorem prover written in Isabelle into Prolog using catamorphism in Haskell.
+- *A Process Calculus for Design and Modeling of Retro-synthesis* (published and presented at [EJC 2018 conference][ejc2018]).
+- A [summary][DEL] of dynamic epistemic logic and game theory.
+
+-->
+
+
+[DEL]: https://pethick.dk/epistemic-planning-and-games.pdf
+[mcmc]: https://github.com/tmpethick/mcmc
+[ejc2018]: http://www.ejc-conference.org/
+[prover]: https://github.com/tmpethick/simple-prover-pl
+[CAE]: https://github.com/Rasmusafj/02456-deep-learning-project12/blob/master/paper/Arpethick-CAE.pdf
+[02405]: http://kurser.dtu.dk/course/02405
+[02180]: http://kurser.dtu.dk/course/02180
+[birdback]: https://www.crunchbase.com/organization/birdback
+[campusnet]: http://pethick.dk/campusnet-electron/
+[ensembled-dngo]: https://github.com/tmpethick/ensembled-dngo
+[snoek2015]: https://arxiv.org/abs/1502.05700
+[master]: https://github.com/tmpethick/thesis-code
+[lions]: https://lions.epfl.ch/
+[MICRO-455]: https://edu.epfl.ch/coursebook/en/applied-machine-learning-MICRO-455
+[EE-559]: https://edu.epfl.ch/coursebook/en/deep-learning-EE-559
+[EE-618]: https://edu.epfl.ch/coursebook/en/theory-and-methods-for-reinforcement-learning-EE-618
+[EE-556]: https://edu.epfl.ch/coursebook/en/mathematics-of-data-from-theory-to-computation-EE-556
+
+
+<!--
+I have had the joy of being a teaching assistant in the following courses:
+
+- [02405 Probability theory][02405] (fall 2015)
+- [02180 Introduction to artificial intelligence][02180] (Spring 2018)
+- [MICRO-455 Applied machine learning][MICRO-455] (spring 2020)
+- [EE-559 Deep learning][EE-559] (spring 2021)
+- [EE-618 Theory and methods for reinforcement Learning][EE-618] (spring 2022)
+- [EE-556 Mathematics of data: from theory to computation][EE-556] (fall 2020, fall 2021, fall 2022)
+--> 
+
+<!-- Before I went into academia I worked on [card linked loyalty][birdback]
+- app development in react
+- [desktop development][campusnet] with electron -->
