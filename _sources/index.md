@@ -1,10 +1,34 @@
-# About
+# Short bio
 
-I am currently doing a PhD at EPFL in the [LIONS][lions] lab with Prof. Volkan Cevher, where I am mostly interested in nonconvex-nonconcave minimax problems.
+I am currently doing a PhD at EPFL in the [LIONS][lions] lab with Prof. Volkan Cevher, where I am mostly interested in nonmonotone games.
 
 
 [lions]: https://lions.epfl.ch/
 
+
+<!-- ### News -->
+
+
+### Selected publications
+
+See [publications](/publications/) for other publications and [Google Scholar](https://scholar.google.com/citations?user=l99LRFkAAAAJ&hl=en) for the most up to date version.
+
+```{div} full-width
+```{jinja} publications_ctx
+
+<div class="disable-hyphens">
+{% for p in publications %}
+{% if p.selected %}
+<a href="{{p.paper}}"><b>{{p.title}}</b></a><br/>
+{{p.authors}}<br/>
+<em>{{p.conference}}</em><br/>
+{% if p.paper %}<a href="{{p.paper}}">paper</a>{% endif %}
+{% if p.code %}<a href="{{p.code}}">code</a>{% endif %}
+{% if not loop.last %}<hr/>{% endif %}
+{% endif %}
+{% endfor %}
+</div>
+```
 
 ### Content
 
