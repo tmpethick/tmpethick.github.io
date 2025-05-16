@@ -1,7 +1,7 @@
 # Short bio
 
-I am currently doing a PhD at EPFL in the [LIONS][lions] lab with Prof. Volkan Cevher, where I am mostly interested in nonmonotone games.
-
+I am currently finishing my PhD at EPFL in the [LIONS][lions] lab with Prof. Volkan Cevher, where I've broadly been interested in optimization for machine learning with a focus on stable training of deep learning models.
+During my studies, I interned with Amazon and ETH Zürich.
 
 [lions]: https://lions.epfl.ch/
 
