@@ -1,0 +1,634 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc? &#8212; Thomas Pethick</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Serif/cmun-serif.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Sans/cmun-sans.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'posts/2025-07-06-one-change-at-a-time';</script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="Polyak stepsize through a hyperplane projection interpretation" href="../2024-06-10-polyak-stepsize/" />
+    <link rel="prev" title="Posts" href="../" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../posts/atom.xml"
+  title="Thomas Pethick's blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Thomas Pethick</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../publications/">Publications</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../online-learning/">Online learning</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2019-11-02-FTRL/">Online convex optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-01-06-hedge-and-bandit/">Hedge and bandits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-01-07-gp-mw/">Gaussian processes and Hedge for infinite armed bandits</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../">Posts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-05-15-gradientboosting/">Gradient boosting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">Bayesian logistic regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2019-11-03-russell-talk/">Provably beneficial artificial intelligence by Stuart Russell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2019-11-16-caroline-uhler/">From causal inference to autoencoders and gene regulation by Caroline Uhler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2018-05-22-io-model/">The I/O Model</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#layerwise-block-normalization">Layerwise/block normalization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#momentum-based-gradient-estimator">Momentum based gradient estimator</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                   <div class="math notranslate nohighlight">
+\[\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}\]</div>
+<section class="tex2jax_ignore mathjax_ignore" id="one-change-at-a-time-how-to-compare-sgd-signsgd-spectral-descent-lars-etc">
+<h1>One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?<a class="headerlink" href="#one-change-at-a-time-how-to-compare-sgd-signsgd-spectral-descent-lars-etc" title="Permalink to this headline">#</a></h1>
+<p><em>Posted on 2025-07-06</em></p>
+<!-- 
+Two commonly used methods in ML are:
+
+$$
+\begin{align*}
+ x^{k+1}&=x^k - \gamma_k \nabla f(x^k,\xi_k) && \text{(SGD)} \\
+x^{k+1}&=x^k - \gamma_k\operatorname{sign}(\nabla f(x^k,\xi_k)) && \text{(signSGD)}
+\end{align*}
+$$ -->
+<p>When comparing SGD and signSGD we are making two changes at once (possibly without realizing):</p>
+<ul class="simple">
+<li><p>we are changing the geometry</p></li>
+<li><p><em>and</em> we are normalizing the update.</p></li>
+</ul>
+<p>To see this, it is useful to write (normalized) steepest descent in terms of the linear minimization oracle (LMO):</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{lmo}(d) \in \argmin_{x \in \mathcal D} \langle d,x\rangle\]</div>
+<p>where the constraint is the norm ball, <span class="math notranslate nohighlight">\(\mathcal D = \{x \mid \Vert x \Vert \leq 1\}\)</span>.
+We have the following special cases:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Method</p></th>
+<th class="head"><p>Norm</p></th>
+<th class="head"><p>Steepest descent</p></th>
+<th class="head"><p>Normalized steepest descent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>General</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Vert \cdot\Vert\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{k+1}=x^k + \gamma_k\Vert d^k\Vert_* \operatorname{lmo}(d^k)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{k+1}=x^k + \gamma_k  \operatorname{lmo}(d^k)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Gradient descent</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Vert \cdot\Vert_2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{red}x^{k+1}=x^k - \gamma_k d^k\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{k+1}=x^k - \gamma_k \tfrac{d^k}{\Vert d^k\Vert_2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Sign descent</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Vert \cdot\Vert_\infty\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{k+1}=x^k - \gamma_k\Vert d^k\Vert_1\operatorname{sign}(d^k)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\color{red}x^{k+1}=x^k - \gamma_k\operatorname{sign}(d^k)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Spectral descent</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Vert \cdot\Vert_{\mathcal{S}_\infty}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{k+1}=x^k - \gamma_k\Vert d^k\Vert_1 U^k(V^k)^\top\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{k+1}=x^k - \gamma_k U^k(V^k)^\top\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>where the reduced SVD is given as <span class="math notranslate nohighlight">\(d^k=U^k\operatorname{diag}(\sigma^k)(V^k)^\top\)</span> and <span class="math notranslate nohighlight">\(d^k\)</span> is some gradient feedback.</p>
+<p>SGD and signSGD are highlighted in <span style="color:red;">red</span>.
+We argue that a more natural comparison to signSGD is normalized SGD.
+In a similar vein, Muon should be compared with normalized GD, like spectral descent should be compared with GD.</p>
+<p>Why do we care about disentangling the changes?
+Normalized methods have very different properties from their non-normalized variants:</p>
+<ul>
+<li><p>one benefit of normalization is that the initial stepsize does not have to be taken small enough to ensure convergence (although we do need <span class="math notranslate nohighlight">\(\gamma_k\rightarrow 0\)</span>). In comparison steepest descent requires a small enough stepsize <span class="math notranslate nohighlight">\(\gamma_k &lt;2/L\)</span>, otherwise the method might diverge. Intuitively, the benefit comes from the normalization making the update invariant to the gradient magnitude.</p></li>
+<li><p>one downside is that, due to the same invariance, normalization does not adapt to strong convexity/PL. In contrast, steepest descent enjoys linear convergence—intuitively, because steps are larger when farther from the solution, due to the updates dependency on the gradient magnitude.</p>
+<p><em>For instance, for a simple quadratic problem like <span class="math notranslate nohighlight">\(\min_x \Vert x\Vert^2_2\)</span> we should expect steepest descent methods (GD, signSGD with dual norm scaling) to converge much faster than their normalized counterparts (NGD, signSGD) when stepsizes are set appropriately.</em></p>
+</li>
+</ul>
+<p>The fact that normalization works much better in practice for deep learning suggests that we are not in the strongly convex/PL case (or that we are at least currently prevented from exploiting such structure even if present).</p>
+<section id="layerwise-block-normalization">
+<h2>Layerwise/block normalization<a class="headerlink" href="#layerwise-block-normalization" title="Permalink to this headline">#</a></h2>
+<p>Normalized updates alone have been observed to work very well for large batch sizes if updates are normalized layerwise (see e.g. LARS <span id="id1">[<a class="reference internal" href="#id47" title="Yang You, Igor Gitman, and Boris Ginsburg. Large batch training of convolutional networks. arXiv preprint arXiv:1708.03888, 2017.">You <em>et al.</em>, 2017</a>]</span> and other block-normalization schemes <span id="id2">[<a class="reference internal" href="#id46" title="Boris Ginsburg, Patrice Castonguay, Oleksii Hrinchuk, Oleksii Kuchaiev, Vitaly Lavrukhin, Ryan Leary, Jason Li, Huyen Nguyen, Yang Zhang, and Jonathan M Cohen. Stochastic gradient methods with layer-wise adaptive moments for training of deep networks. arXiv preprint arXiv:1905.11286, 2019.">Ginsburg <em>et al.</em>, 2019</a>, <a class="reference internal" href="#id45" title="Adams Wei Yu, Lei Huang, Qihang Lin, Ruslan Salakhutdinov, and Jaime Carbonell. Block-normalized gradient method: an empirical study for training deep neural network. arXiv preprint arXiv:1707.04822, 2017.">Yu <em>et al.</em>, 2017</a>]</span>).</p>
+<p>Consider the case where the parameter <span class="math notranslate nohighlight">\(x\)</span> decomposes into <span class="math notranslate nohighlight">\(n\)</span> blocks, i.e., <span class="math notranslate nohighlight">\(x=(W_1,...,W_n)\)</span> and the gradient estimator <span class="math notranslate nohighlight">\(d=(D_1,...,D_n)\)</span>.
+The block-normalized update implicitly chooses <span class="math notranslate nohighlight">\(\Vert x\Vert = \max_l \Vert W_l \Vert_F\)</span>.
+If using global <span class="math notranslate nohighlight">\(\ell_2\)</span> normalization instead we are implicitly picking <span class="math notranslate nohighlight">\(\ell_2\)</span> over the layers, i.e. <span class="math notranslate nohighlight">\(\Vert x\Vert_2 = \Vert (\Vert W_l\Vert_F)_l \Vert_2\)</span>.</p>
+<p>Some popular norm choices:</p>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>Norm</p></th>
+<th class="head"><p>Normalized steepest descent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Euclidean</p></td>
+<td><p><span class="math notranslate nohighlight">\(\Vert x\Vert_2 = \Vert (\Vert W_l\Vert_F)_l \Vert_2 \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{k+1}=x^k - \gamma_k \tfrac{d^k}{\Vert d^k\Vert_2}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Layerwise Frobenius</p></td>
+<td><p><span class="math notranslate nohighlight">\(\max_l \Vert W_l\Vert_F\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(W_l^{k+1}=W_l^k - \gamma_k \tfrac{D^k_i}{\Vert D^k_l\Vert_F}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Layerwise Sign</p></td>
+<td><p><span class="math notranslate nohighlight">\(\max_l \Vert W_l\Vert_{1 \rightarrow \infty}=\max_l \max_{i,j} |[W_l]_{i,j}|\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x^{k+1}=x^k - \gamma_k\operatorname{sign}(d^k)\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Layerwise RowNorm</p></td>
+<td><p><span class="math notranslate nohighlight">\(\max_l \Vert W_l\Vert_{2 \rightarrow \infty}=\max_l \max_i \Vert [W_l]_{i,\cdot}\Vert_2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([W_l^{k+1}]_{i,\cdot}=[W_l^k]_{i,\cdot} - \gamma_k \tfrac{[D^k_i]_{i,\cdot}}{\Vert [D^k_l]_{i,\cdot}\Vert_2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Layerwise Spectral</p></td>
+<td><p><span class="math notranslate nohighlight">\(\max_l \Vert W_l\Vert_{2\rightarrow 2}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(W_l^{k+1}=W_l^k - \gamma_k U^k_l(V^k_l)^\top\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>There are a couple of choices being made simultaneously here:</p>
+<ul class="simple">
+<li><p>There is an implicit choice of the norm over layers.
+The global <span class="math notranslate nohighlight">\(\ell_2\)</span> implicitly picks <span class="math notranslate nohighlight">\(\ell_2\)</span> over layers while the remaining uses the max-norm over layers. One could similarly consider e.g., the spectral norm with <span class="math notranslate nohighlight">\(\ell_2\)</span> over layers, i.e., <span class="math notranslate nohighlight">\(\Vert x\Vert = \Vert (\Vert W_l\Vert_{2\rightarrow 2})_l \Vert_2\)</span>.
+A comparison should ideally make one change at a time and for example compare layerwise Frobenius with layerwise spectral rather than with global <span class="math notranslate nohighlight">\(\ell_2\)</span> normalization.</p></li>
+<li><p>There is an implicit choice of what <em>type</em> of matrix norm. Is it an operator norm? Is it a Schatten norm? This has implications in the stochastic case where Sign and Spectral should be expected to behave differently (More on this later).</p></li>
+</ul>
+<p>One thing that can be gauged from above table is that RowNorm is a closer approximation to Spectral than Sign is.
+This might explain the popularity of row normalization in practice, e.g., in nGPT <span id="id3">[<a class="reference internal" href="#id51" title="Ilya Loshchilov, Cheng-Ping Hsieh, Simeng Sun, and Boris Ginsburg. Ngpt: normalized transformer with representation learning on the hypersphere. arXiv preprint arXiv:2410.01131, 2024.">Loshchilov <em>et al.</em>, 2024</a>]</span>, optimizers for diffusion models <span id="id4">[<a class="reference internal" href="#id22" title="Tero Karras, Miika Aittala, Jaakko Lehtinen, Janne Hellsten, Timo Aila, and Samuli Laine. Analyzing and improving the training dynamics of diffusion models. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, 24174–24184. 2024.">Karras <em>et al.</em>, 2024</a>]</span> and DASGO <span id="id5">[<a class="reference internal" href="#id49" title="Kang An, Yuxing Liu, Rui Pan, Yi Ren, Shiqian Ma, Donald Goldfarb, and Tong Zhang. Asgo: adaptive structured gradient optimization. arXiv preprint arXiv:2503.20762, 2025.">An <em>et al.</em>, 2025</a>]</span> (see the recent <span id="id6">Kovalev [<a class="reference internal" href="#id50" title="Dmitry Kovalev. Sgd with adaptive preconditioning: unified analysis and momentum acceleration. 2025. URL: https://arxiv.org/abs/2506.23803, arXiv:2506.23803.">2025</a>]</span> for a connection with RowNorm).</p>
+</section>
+<section id="momentum-based-gradient-estimator">
+<h2>Momentum based gradient estimator<a class="headerlink" href="#momentum-based-gradient-estimator" title="Permalink to this headline">#</a></h2>
+<p>Another element in these methods is the choice of the gradient estimator <span class="math notranslate nohighlight">\(d^k\)</span>, which turns out to be crucial for establishing convergence in the stochastic case.</p>
+<p>For SGD, <span class="math notranslate nohighlight">\(d^k\)</span> is simply picked as <span class="math notranslate nohighlight">\(d^k=\nabla f(x^k,\xi_k)\)</span> for some randomly sampled minibatch <span class="math notranslate nohighlight">\(\xi_k\)</span>.
+Both SGD and normalized SGD converges under standard assumptions (unbiased and bounded variance) <span id="id7">[<a class="reference internal" href="#id43" title="Elad Hazan, Kfir Levy, and Shai Shalev-Shwartz. Beyond convexity: stochastic quasi-convex optimization. Advances in neural information processing systems, 2015.">Hazan <em>et al.</em>, 2015</a>]</span>.</p>
+<p>In the non-Euclidean case, convergence is unfortunately not guaranteed<label for='sidenote-role-1' class='margin-toggle'><span id="id8">
+<sup>1</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>That is, without trivially killing the noise with an increasing batchsize.</span>, since the LMO can be non-linear, so the update <span class="math notranslate nohighlight">\(\operatorname{lmo}(d^k)\)</span> can be biased as soon as <span class="math notranslate nohighlight">\(d^k\)</span> has variance, regardless of whether <span class="math notranslate nohighlight">\(d^k\)</span> itself is unbiased.</p>
+<p>The issue can be resolved with the following estimator, which is sometimes referred to as a momentum estimator due to its connection with Polyak momentum in the Euclidean case:</p>
+<div class="math notranslate nohighlight" id="equation-mom">
+<span class="eqno">(3)<a class="headerlink" href="#equation-mom" title="Permalink to this equation">#</a></span>\[
+d^k = (1-\alpha_k)d^{k-1} + \alpha_k \nabla f(x^k,\xi_k)
+\]</div>
+<p><strong>Single sample</strong>
+There is an interesting exception where convergence can be established without the momentum estimator: the gradient of a weight matrix in an MLP computed over a single sample is rank-1 (see e.g., <span id="id9">[<a class="reference internal" href="#id42" title="Greg Yang, James B Simon, and Jeremy Bernstein. A spectral condition for feature learning. arXiv preprint arXiv:2310.17813, 2023.">Yang <em>et al.</em>, 2023</a>]</span>).</p>
+<p>In that case, all Schatten norms are equivalent (so Frobenius = Spectral = Nuclear), which means that spectral methods become equivalent to their <span class="math notranslate nohighlight">\(\ell_2\)</span> counterpart (e.g., Muon=normalized SGD with momentum).
+So spectral descent converges in the single-sample case, since SGD does!<label for='sidenote-role-2' class='margin-toggle'><span id="id10">
+<sup>2</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>Strictly speaking, the equivalence holds when <span class="math notranslate nohighlight">\(\ell_2\)</span> is picked as the norm-choice over layers, i.e. <span class="math notranslate nohighlight">\(\Vert (\Vert W_1\Vert_{\mathcal S_{\infty}}, ..., \Vert W_D\Vert_{\mathcal S_{\infty}})\Vert _2\)</span>.</span></p>
+<p>In contrast, we do not have that equivalence between SignSGD and SGD under low-rank structure (the equivalence rather hold when the gradients are as sparse as possible, namely a 1-hot vector).</p>
+<p><em>Why is this interesting?
+We should expect signSGD to <em>not</em> converge for <code class="docutils literal notranslate"><span class="pre">batchsize=1</span></code>, whereas spectral descent (with or without normalization) should in fact converge—and be equivalent to SGD.</em></p>
+<p><strong>The difference between averaging gradients and iterates</strong>
+Coming back to the momentum estimator, for non-Euclidean methods, the momentum in <a class="reference internal" href="#equation-mom">(3)</a> (i.e., averaging past gradient) is crucial to establish convergence by reducing the variance.
+Averaging the iterates instead would not lead to a convergent method.<label for='sidenote-role-3' class='margin-toggle'><span id="id11">
+<sup>3</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-3' name='sidenote-role-3' class='margin-toggle'><span class="sidenote"><sup>3</sup>See e.g., the analysis of ALMOND in <span id="id55">Pethick <em>et al.</em> [<a class="reference internal" href="#id54" title="Thomas Pethick, Wanyun Xie, Kimon Antonakopoulos, Zhenyu Zhu, Antonio Silveti-Falls, and Volkan Cevher. Training deep learning models with norm-constrained lmos. arXiv preprint arXiv:2502.07529, 2025.">2025</a>]</span>.</span></p>
+<p>In the Euclidean case, averaging the gradients (dual feedback) as in <a class="reference internal" href="#equation-mom">(3)</a> and averaging the iterates (primal variables) can be equivalent.
+E.g., Polyak momentum, can be written both in terms of averaging dual feedback (<span class="math notranslate nohighlight">\(x^{k+1} = x^k - \gamma v^{k+1}\)</span> where <span class="math notranslate nohighlight">\(v^{k+1} = \sum_{k=0}^l \beta^k \nabla f(x^{l-k})\)</span>) and in terms of primal averaging (see e.g. <span id="id12">Defazio [<a class="reference internal" href="#id52" title="Aaron Defazio. Momentum via primal averaging: theoretical insights and learning rate schedules for non-convex optimization. arXiv preprint arXiv:2010.00406, 2020.">2020</a>], Tao <em>et al.</em> [<a class="reference internal" href="#id53" title="Wei Tao, Zhisong Pan, Gaowei Wu, and Qing Tao. Primal averaging: a new gradient evaluation step to attain the optimal individual convergence. IEEE transactions on cybernetics, 50(2):835–845, 2018.">2018</a>]</span>).
+This leads to two additional properties:</p>
+<ul class="simple">
+<li><p>for the Euclidean and deterministic case, gradient descent with momentum applied to a convex quadratic the convergence rate is accelerated.</p></li>
+<li><p>for the Euclidean and stochastic case, stochastic gradient descent with momentum enjoys tight last iterate rates <span id="id13">[<a class="reference internal" href="#id52" title="Aaron Defazio. Momentum via primal averaging: theoretical insights and learning rate schedules for non-convex optimization. arXiv preprint arXiv:2010.00406, 2020.">Defazio, 2020</a>, <a class="reference internal" href="#id53" title="Wei Tao, Zhisong Pan, Gaowei Wu, and Qing Tao. Primal averaging: a new gradient evaluation step to attain the optimal individual convergence. IEEE transactions on cybernetics, 50(2):835–845, 2018.">Tao <em>et al.</em>, 2018</a>]</span>.</p></li>
+</ul>
+<p>Even though the two mechanism, primal averaging and averaging dual feedback, can sometimes be equivalent, they generally have different properties.</p>
+<p>Overall, to develop a better empirical understanding we should probably be more careful about <em>changing one thing at a time</em>.</p>
+<hr class="docutils" />
+<div class="docutils container" id="id14">
+<dl class="citation">
+<dt class="label" id="id49"><span class="brackets"><a class="fn-backref" href="#id5">ALP+25</a></span></dt>
+<dd><p>Kang An, Yuxing Liu, Rui Pan, Yi Ren, Shiqian Ma, Donald Goldfarb, and Tong Zhang. Asgo: adaptive structured gradient optimization. <em>arXiv preprint arXiv:2503.20762</em>, 2025.</p>
+</dd>
+<dt class="label" id="id52"><span class="brackets">Def20</span><span class="fn-backref">(<a href="#id12">1</a>,<a href="#id13">2</a>)</span></dt>
+<dd><p>Aaron Defazio. Momentum via primal averaging: theoretical insights and learning rate schedules for non-convex optimization. <em>arXiv preprint arXiv:2010.00406</em>, 2020.</p>
+</dd>
+<dt class="label" id="id46"><span class="brackets"><a class="fn-backref" href="#id2">GCH+19</a></span></dt>
+<dd><p>Boris Ginsburg, Patrice Castonguay, Oleksii Hrinchuk, Oleksii Kuchaiev, Vitaly Lavrukhin, Ryan Leary, Jason Li, Huyen Nguyen, Yang Zhang, and Jonathan M Cohen. Stochastic gradient methods with layer-wise adaptive moments for training of deep networks. <em>arXiv preprint arXiv:1905.11286</em>, 2019.</p>
+</dd>
+<dt class="label" id="id43"><span class="brackets"><a class="fn-backref" href="#id7">HLSS15</a></span></dt>
+<dd><p>Elad Hazan, Kfir Levy, and Shai Shalev-Shwartz. Beyond convexity: stochastic quasi-convex optimization. <em>Advances in neural information processing systems</em>, 2015.</p>
+</dd>
+<dt class="label" id="id22"><span class="brackets"><a class="fn-backref" href="#id4">KAL+24</a></span></dt>
+<dd><p>Tero Karras, Miika Aittala, Jaakko Lehtinen, Janne Hellsten, Timo Aila, and Samuli Laine. Analyzing and improving the training dynamics of diffusion models. In <em>Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition</em>, 24174–24184. 2024.</p>
+</dd>
+<dt class="label" id="id50"><span class="brackets"><a class="fn-backref" href="#id6">Kov25</a></span></dt>
+<dd><p>Dmitry Kovalev. Sgd with adaptive preconditioning: unified analysis and momentum acceleration. 2025. URL: <a class="reference external" href="https://arxiv.org/abs/2506.23803">https://arxiv.org/abs/2506.23803</a>, <a class="reference external" href="https://arxiv.org/abs/2506.23803">arXiv:2506.23803</a>.</p>
+</dd>
+<dt class="label" id="id51"><span class="brackets"><a class="fn-backref" href="#id3">LHSG24</a></span></dt>
+<dd><p>Ilya Loshchilov, Cheng-Ping Hsieh, Simeng Sun, and Boris Ginsburg. Ngpt: normalized transformer with representation learning on the hypersphere. <em>arXiv preprint arXiv:2410.01131</em>, 2024.</p>
+</dd>
+<dt class="label" id="id54"><span class="brackets"><a class="fn-backref" href="#id55">PXA+25</a></span></dt>
+<dd><p>Thomas Pethick, Wanyun Xie, Kimon Antonakopoulos, Zhenyu Zhu, Antonio Silveti-Falls, and Volkan Cevher. Training deep learning models with norm-constrained lmos. <em>arXiv preprint arXiv:2502.07529</em>, 2025.</p>
+</dd>
+<dt class="label" id="id53"><span class="brackets">TPWT18</span><span class="fn-backref">(<a href="#id12">1</a>,<a href="#id13">2</a>)</span></dt>
+<dd><p>Wei Tao, Zhisong Pan, Gaowei Wu, and Qing Tao. Primal averaging: a new gradient evaluation step to attain the optimal individual convergence. <em>IEEE transactions on cybernetics</em>, 50(2):835–845, 2018.</p>
+</dd>
+<dt class="label" id="id42"><span class="brackets"><a class="fn-backref" href="#id9">YSB23</a></span></dt>
+<dd><p>Greg Yang, James B Simon, and Jeremy Bernstein. A spectral condition for feature learning. <em>arXiv preprint arXiv:2310.17813</em>, 2023.</p>
+</dd>
+<dt class="label" id="id47"><span class="brackets"><a class="fn-backref" href="#id1">YGG17</a></span></dt>
+<dd><p>Yang You, Igor Gitman, and Boris Ginsburg. Large batch training of convolutional networks. <em>arXiv preprint arXiv:1708.03888</em>, 2017.</p>
+</dd>
+<dt class="label" id="id45"><span class="brackets"><a class="fn-backref" href="#id2">YHL+17</a></span></dt>
+<dd><p>Adams Wei Yu, Lei Huang, Qihang Lin, Ruslan Salakhutdinov, and Jaime Carbonell. Block-normalized gradient method: an empirical study for training deep neural network. <em>arXiv preprint arXiv:1707.04822</em>, 2017.</p>
+</dd>
+</dl>
+</div>
+<hr class="footnotes docutils" />
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+    
+  
+</div>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Posts</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../2024-06-10-polyak-stepsize/"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Polyak stepsize through a hyperplane projection interpretation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#layerwise-block-normalization">Layerwise/block normalization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#momentum-based-gradient-estimator">Momentum based gradient estimator</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Thomas Pethick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

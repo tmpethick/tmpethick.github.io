@@ -206,6 +206,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../">Posts</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
@@ -561,17 +562,17 @@ To see this, consider</p>
 \[\begin{split}\begin{aligned} \mathcal R_{T}^{\mathrm{FTRL}} &amp; \leqslant \max _{\mathbf x} \sum_{t=1}^{T} f_{t}\left(u_{t}\right)-f_{t}(\mathbf x) \\ &amp; \leqslant \max _{\mathbf x} \sum_{t=1}^{T}\left\langle\nabla f_{t}\left(\mathbf x_{t}\right), \mathbf x_{t}-\mathbf x\right\rangle. &amp;&amp; \text{(Convexity applied to each term)}\end{aligned}\end{split}\]</div>
 <p>So we can bound the regret for <span class="math notranslate nohighlight">\(f_t(\mathbf x)\)</span> by bounding the regret for the new problem which only considers its gradient <span class="math notranslate nohighlight">\(f'_t(\mathbf x)=\braket{\nabla f_t(\mathbf x_t), \mathbf x}\)</span>.
 The bound stays as tight since we already used convexity in our argument for <em>stability</em>.</p>
-<p><em>These notes are primarily based on Prof. Luo’s lectures notes <span id="id6">[<a class="reference internal" href="#id18" title="CSCI 699: Introduction to Online Learning. 2019. URL: https://haipeng-luo.net/courses/CSCI699/ (visited on 2019-11-02)."><em>CSCI 699: Introduction to Online Learning</em>, 2019</a>]</span> with minor modifications borrowed from Hazan’s book <span id="id7">[<a class="reference internal" href="#id20" title="Elad Hazan. Introduction to Online Convex Optimization. 2019. URL: http://arxiv.org/abs/1909.05207 (visited on 2019-11-02), arXiv:1909.05207.">Hazan, 2019</a>]</span> and the lecture notes of Prof. Orabona <span id="id8">[<a class="reference internal" href="#id19" title="Introduction to Online Learning. 2019. URL: https://parameterfree.com/lecture-notes-on-online-learning/ (visited on 2019-11-02)."><em>Introduction to Online Learning</em>, 2019</a>]</span></em>.</p>
+<p><em>These notes are primarily based on Prof. Luo’s lectures notes <span id="id6">[<a class="reference internal" href="#id19" title="CSCI 699: Introduction to Online Learning. 2019. URL: https://haipeng-luo.net/courses/CSCI699/ (visited on 2019-11-02)."><em>CSCI 699: Introduction to Online Learning</em>, 2019</a>]</span> with minor modifications borrowed from Hazan’s book <span id="id7">[<a class="reference internal" href="#id21" title="Elad Hazan. Introduction to Online Convex Optimization. 2019. URL: http://arxiv.org/abs/1909.05207 (visited on 2019-11-02), arXiv:1909.05207.">Hazan, 2019</a>]</span> and the lecture notes of Prof. Orabona <span id="id8">[<a class="reference internal" href="#id20" title="Introduction to Online Learning. 2019. URL: https://parameterfree.com/lecture-notes-on-online-learning/ (visited on 2019-11-02)."><em>Introduction to Online Learning</em>, 2019</a>]</span></em>.</p>
 <hr class="docutils" />
 <div class="docutils container" id="id9">
 <dl class="citation">
-<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id8">Int19</a></span></dt>
+<dt class="label" id="id20"><span class="brackets"><a class="fn-backref" href="#id8">Int19</a></span></dt>
 <dd><p>Introduction to Online Learning. 2019. URL: <a class="reference external" href="https://parameterfree.com/lecture-notes-on-online-learning/">https://parameterfree.com/lecture-notes-on-online-learning/</a> (visited on 2019-11-02).</p>
 </dd>
-<dt class="label" id="id18"><span class="brackets"><a class="fn-backref" href="#id6">CSC19</a></span></dt>
+<dt class="label" id="id19"><span class="brackets"><a class="fn-backref" href="#id6">CSC19</a></span></dt>
 <dd><p>CSCI 699: Introduction to Online Learning. 2019. URL: <a class="reference external" href="https://haipeng-luo.net/courses/CSCI699/">https://haipeng-luo.net/courses/CSCI699/</a> (visited on 2019-11-02).</p>
 </dd>
-<dt class="label" id="id20"><span class="brackets"><a class="fn-backref" href="#id7">Haz19</a></span></dt>
+<dt class="label" id="id21"><span class="brackets"><a class="fn-backref" href="#id7">Haz19</a></span></dt>
 <dd><p>Elad Hazan. Introduction to Online Convex Optimization. 2019. URL: <a class="reference external" href="http://arxiv.org/abs/1909.05207">http://arxiv.org/abs/1909.05207</a> (visited on 2019-11-02), <a class="reference external" href="https://arxiv.org/abs/1909.05207">arXiv:1909.05207</a>.</p>
 </dd>
 </dl>

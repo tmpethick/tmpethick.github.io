@@ -205,6 +205,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../">Posts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
@@ -371,7 +372,7 @@ The first model we considered, called the RAM model, assumes that everything can
 <section id="sorting">
 <h2>Sorting<a class="headerlink" href="#sorting" title="Permalink to this headline">#</a></h2>
 <!-- % TODO: Motivate sorting -->
-<p>One merge algorithm that can be adjusted to be efficient for the I/O model is the mergesort algorithm, specifically a <span class="math notranslate nohighlight">\((M/B)\)</span>-way mergesorting <span id="id1">[<a class="reference internal" href="#id10" title="Alok Aggarwal and S. Vitter, Jeffrey. The input/output complexity of sorting and related problems. Commun. ACM, 31(9):1116–1127, September 1988. URL: http://doi.acm.org/10.1145/48529.48535, doi:10.1145/48529.48535.">Aggarwal and Vitter, 1988</a>]</span>.</p>
+<p>One merge algorithm that can be adjusted to be efficient for the I/O model is the mergesort algorithm, specifically a <span class="math notranslate nohighlight">\((M/B)\)</span>-way mergesorting <span id="id1">[<a class="reference internal" href="#id11" title="Alok Aggarwal and S. Vitter, Jeffrey. The input/output complexity of sorting and related problems. Commun. ACM, 31(9):1116–1127, September 1988. URL: http://doi.acm.org/10.1145/48529.48535, doi:10.1145/48529.48535.">Aggarwal and Vitter, 1988</a>]</span>.</p>
 <section id="merge">
 <span id="sec-merge"></span><h3>Merge<a class="headerlink" href="#merge" title="Permalink to this headline">#</a></h3>
 <p>The objective is to merge a number of sorted arrays together.
@@ -452,7 +453,7 @@ Specifically it makes <span class="math notranslate nohighlight">\(O(N/B \log_{M
 <hr class="docutils" />
 <div class="docutils container" id="id2">
 <dl class="citation">
-<dt class="label" id="id10"><span class="brackets"><a class="fn-backref" href="#id1">AV88</a></span></dt>
+<dt class="label" id="id11"><span class="brackets"><a class="fn-backref" href="#id1">AV88</a></span></dt>
 <dd><p>Alok Aggarwal and S. Vitter, Jeffrey. The input/output complexity of sorting and related problems. <em>Commun. ACM</em>, 31(9):1116–1127, September 1988. URL: <a class="reference external" href="http://doi.acm.org/10.1145/48529.48535">http://doi.acm.org/10.1145/48529.48535</a>, <a class="reference external" href="https://doi.org/10.1145/48529.48535">doi:10.1145/48529.48535</a>.</p>
 </dd>
 </dl>

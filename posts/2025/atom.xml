@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://pethick.dk/</id>
-  <title>Thomas Pethick's blog - Posted in 2024</title>
-  <updated>2025-07-06T18:21:35.909703+00:00</updated>
+  <title>Thomas Pethick's blog - Posted in 2025</title>
+  <updated>2025-07-06T18:21:35.908316+00:00</updated>
   <link href="https://pethick.dk/"/>
-  <link href="https://pethick.dk/posts/2024/atom.xml" rel="self"/>
+  <link href="https://pethick.dk/posts/2025/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
   <entry>
-    <id>https://pethick.dk/posts/2024-06-10-polyak-stepsize/</id>
-    <title>Polyak stepsize through a hyperplane projection interpretation</title>
-    <updated>2024-06-10T00:00:00+02:00</updated>
+    <id>https://pethick.dk/posts/2025-07-06-one-change-at-a-time/</id>
+    <title>One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</title>
+    <updated>2025-07-06T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -32,8 +32,7 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2024-06-10-polyak-stepsize/" rel="alternate"/>
-    <category term="adaptivity" label="adaptivity"/>
-    <published>2024-06-10T00:00:00+02:00</published>
+    <link href="https://pethick.dk/posts/2025-07-06-one-change-at-a-time/" rel="alternate"/>
+    <published>2025-07-06T00:00:00+02:00</published>
   </entry>
 </feed>

@@ -206,6 +206,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../">Posts</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
@@ -385,7 +386,7 @@ In the context of OCO we are thus considering an infinite armed limited informat
 <div class="math notranslate nohighlight">
 \[\mathcal R^{i}_T=\max _{a \in \mathcal{A}^{i}} \sum_{t=1}^{T} r^{i}\left(a, a_{t}^{-i}\right)-\sum_{t=1}^{T} r^{i}\left(a_{t}^{i}, a_{t}^{-i}\right)
 \]</div>
-<p>In the work of <span id="id1">Sessa <em>et al.</em> [<a class="reference internal" href="#id21" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span> they crucially assume known adversarial actions.
+<p>In the work of <span id="id1">Sessa <em>et al.</em> [<a class="reference internal" href="#id22" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span> they crucially assume known adversarial actions.
 This is intuitively reasonable, since we need to exploit correlation between our actions in the infinite arm setting.
 Without known adversarial actions this correlation would be unknown.</p>
 <p>This assumption allows us to formulate a rather simple algorithm:</p>
@@ -451,7 +452,7 @@ With this we can upper and lower bound the loss with high probability<label for=
 <p>The first term (<span class="math notranslate nohighlight">\(*\)</span>) can now be treated as a full information setting where the function is <span class="math notranslate nohighlight">\(\hat \ell_t(a) = \min \set{1, \operatorname{UCB}_t(a, a^{-i}_t)}\)</span> while the second part (<span class="math notranslate nohighlight">\(**\)</span>) can be analysed independent of the algorithm<label for='sidenote-role-2' class='margin-toggle'><span id="id3">
 <sup>2</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>This trick is in fact more general and has also been applied to reinforcement learning <span id="id34">[<a class="reference internal" href="#id22" title="Ching-An Cheng, Remi Tachet des Combes, Byron Boots, and Geoff Gordon. A reduction from reinforcement learning to no-regret online learning. 2019. arXiv:1911.05873.">Cheng <em>et al.</em>, 2019</a>]</span>.</span>.</p>
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>This trick is in fact more general and has also been applied to reinforcement learning <span id="id48">[<a class="reference internal" href="#id23" title="Ching-An Cheng, Remi Tachet des Combes, Byron Boots, and Geoff Gordon. A reduction from reinforcement learning to no-regret online learning. 2019. arXiv:1911.05873.">Cheng <em>et al.</em>, 2019</a>]</span>.</span>.</p>
 <section id="bounding-with-hedge">
 <h4>Bounding with Hedge<a class="headerlink" href="#bounding-with-hedge" title="Permalink to this headline">#</a></h4>
 <p>We cannot apply our tools from OCO directly to <span class="math notranslate nohighlight">\(\hat \ell_t(a) = \min \set{1, \operatorname{UCB}_t(a, a^{-i}_t)}\)</span> since it is non-convex in general.
@@ -511,7 +512,7 @@ R^{i}(T)=\mathcal{O}(\sqrt{T \log K_{i}}+\sqrt{T \log (2 / \delta)}+B \sqrt{T \g
 <h3>Discretization<a class="headerlink" href="#discretization" title="Permalink to this headline">#</a></h3>
 <p>So far the algorithm has been defined in terms of a finite number of arms (even if the <span class="math notranslate nohighlight">\(\operatorname{UCB}_t(\cdot)\)</span> on which the mixed strategy is computed is in fact continuous).
 This does not help solve the non-convex infinite arm setting which we set out for originally.
-One trivial solution to this taken in <span id="id5">Sessa <em>et al.</em> [<a class="reference internal" href="#id21" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span> is to discretize the space.</p>
+One trivial solution to this taken in <span id="id5">Sessa <em>et al.</em> [<a class="reference internal" href="#id22" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span> is to discretize the space.</p>
 <p>For this we just have to be careful to cover our space densely enough so that the regret will not suffer.
 The Lipschitz assumption on <span class="math notranslate nohighlight">\(\ell_t(\cdot)\)</span> will ensure this, i.e. if points are close to the discretization their loss will also be close.</p>
 <p>To make this precise:</p>
@@ -531,15 +532,15 @@ First, how do we even define regret? After all we can do arbitrarily bad since i
 Two recent papers deals with these questions .</p>
 <!-- TODO: add papers -->
 <p>I have intentionally left out some details of the canonical BO/GP part to keep distractions to a minimum – but with the obvious danger of being imprecise.
-For precisely specified assumptions of each lemma and statement please see <span id="id6">Sessa <em>et al.</em> [<a class="reference internal" href="#id21" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span>.</p>
+For precisely specified assumptions of each lemma and statement please see <span id="id6">Sessa <em>et al.</em> [<a class="reference internal" href="#id22" title="Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, Advances in Neural Information Processing Systems 32, pages 13602–13611. Curran Associates, Inc., 2019. URL: http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf.">2019</a>]</span>.</p>
 <!-- Make summary table of settings -->
 <hr class="docutils" />
 <div class="docutils container" id="id7">
 <dl class="citation">
-<dt class="label" id="id22"><span class="brackets"><a class="fn-backref" href="#id34">CdCBG19</a></span></dt>
+<dt class="label" id="id23"><span class="brackets"><a class="fn-backref" href="#id48">CdCBG19</a></span></dt>
 <dd><p>Ching-An Cheng, Remi Tachet des Combes, Byron Boots, and Geoff Gordon. A reduction from reinforcement learning to no-regret online learning. 2019. <a class="reference external" href="https://arxiv.org/abs/1911.05873">arXiv:1911.05873</a>.</p>
 </dd>
-<dt class="label" id="id21"><span class="brackets">SBKK19</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id5">2</a>,<a href="#id6">3</a>)</span></dt>
+<dt class="label" id="id22"><span class="brackets">SBKK19</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id5">2</a>,<a href="#id6">3</a>)</span></dt>
 <dd><p>Pier Giuseppe Sessa, Ilija Bogunovic, Maryam Kamgarpour, and Andreas Krause. No-regret learning in unknown games with correlated payoffs. In H. Wallach, H. Larochelle, A. Beygelzimer, F. d\textquotesingle  Alché-Buc, E. Fox, and R. Garnett, editors, <em>Advances in Neural Information Processing Systems 32</em>, pages 13602–13611. Curran Associates, Inc., 2019. URL: <a class="reference external" href="http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf">http://papers.nips.cc/paper/9514-no-regret-learning-in-unknown-games-with-correlated-payoffs.pdf</a>.</p>
 </dd>
 </dl>

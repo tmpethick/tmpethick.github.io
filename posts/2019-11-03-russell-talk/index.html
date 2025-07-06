@@ -206,6 +206,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../">Posts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
@@ -419,7 +420,7 @@ Imagine an agent optimizing for a group of principals who have different utility
 Usually we are interested in a Pareto optimal policy.
 That is, a policy where no principal can improve without making sacrifices for one of the others.
 Harsanyi’s theorem shows that when the principals share a common prior of the environment dynamics then the Pareto optimal strategy for the agent is a fixed linear combination of all the principals utilities.
-What Russell and his colleges shows in <span id="id8">Desai <em>et al.</em> [<a class="reference internal" href="#id22" title="Nishant Desai, Andrew Critch, and Stuart J Russell. Negotiable Reinforcement Learning for Pareto Optimal Sequential Decision-Making. In S. Bengio, H. Wallach, H. Larochelle, K. Grauman, N. Cesa-Bianchi, and R. Garnett, editors, Advances in Neural Information Processing Systems 31, pages 4712–4720. Curran Associates, Inc., 2018. URL: http://papers.nips.cc/paper/7721-negotiable-reinforcement-learning-for-pareto-optimal-sequential-decision-making.pdf (visited on 2019-11-03).">2018</a>]</span> is that in the more general setting more weight should be given to the principle that turns out to be right.
+What Russell and his colleges shows in <span id="id8">Desai <em>et al.</em> [<a class="reference internal" href="#id23" title="Nishant Desai, Andrew Critch, and Stuart J Russell. Negotiable Reinforcement Learning for Pareto Optimal Sequential Decision-Making. In S. Bengio, H. Wallach, H. Larochelle, K. Grauman, N. Cesa-Bianchi, and R. Garnett, editors, Advances in Neural Information Processing Systems 31, pages 4712–4720. Curran Associates, Inc., 2018. URL: http://papers.nips.cc/paper/7721-negotiable-reinforcement-learning-for-pareto-optimal-sequential-decision-making.pdf (visited on 2019-11-03).">2018</a>]</span> is that in the more general setting more weight should be given to the principle that turns out to be right.
 Exactly what to make of this theoretical result is a little unsure.</p>
 <p><strong>Sadism</strong>
 Assume that Alice’s utility can be described by a linear combination of her own satisfaction <span class="math notranslate nohighlight">\(w_A\)</span> and her friends, Bob’s, satisfaction <span class="math notranslate nohighlight">\(w_B\)</span>,</p>
@@ -451,7 +452,7 @@ Even more broadly these concerns apply just as much to any far-reaching decision
 <hr class="docutils" />
 <div class="docutils container" id="id10">
 <dl class="citation">
-<dt class="label" id="id22"><span class="brackets"><a class="fn-backref" href="#id8">DCR18</a></span></dt>
+<dt class="label" id="id23"><span class="brackets"><a class="fn-backref" href="#id8">DCR18</a></span></dt>
 <dd><p>Nishant Desai, Andrew Critch, and Stuart J Russell. Negotiable Reinforcement Learning for Pareto Optimal Sequential Decision-Making. In S. Bengio, H. Wallach, H. Larochelle, K. Grauman, N. Cesa-Bianchi, and R. Garnett, editors, <em>Advances in Neural Information Processing Systems 31</em>, pages 4712–4720. Curran Associates, Inc., 2018. URL: <a class="reference external" href="http://papers.nips.cc/paper/7721-negotiable-reinforcement-learning-for-pareto-optimal-sequential-decision-making.pdf">http://papers.nips.cc/paper/7721-negotiable-reinforcement-learning-for-pareto-optimal-sequential-decision-making.pdf</a> (visited on 2019-11-03).</p>
 </dd>
 </dl>
