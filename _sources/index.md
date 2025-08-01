@@ -22,8 +22,7 @@ See [publications](/publications/) for other publications and [Google Scholar](h
 <a href="{{p.paper}}"><b>{{p.title}}</b></a><br/>
 {{p.authors}}<br/>
 <em>{{p.conference}}</em><br/>
-{% if p.paper %}<a href="{{p.paper}}">paper</a>{% endif %}
-{% if p.code %}<a href="{{p.code}}">code</a>{% endif %}
+{% if p.paper %}<a href="{{p.paper}}">paper</a>{% endif %} {% if p.code %}<a href="{{p.code}}">code</a>{% endif %} {% if p.tweet %}<a href="{{p.tweet}}">tweet</a>{% endif %}
 {% if not loop.last %}<hr/>{% endif %}
 {% endif %}
 {% endfor %}
