@@ -13,8 +13,11 @@ myst:
 \DeclareMathOperator*{\argmin}{arg\,min}
 ```
 
+
 # Polyak stepsize through a hyperplane projection interpretation
 _Posted on {{ date }}_
+
+_See this related [tweet thread](https://x.com/tmpethick/status/1944806835871211991) on hyperplane projections._
 
 The gradient method can obtain a $\mathcal O(1/\sqrt{T})$ rate for nonsmooth problems
 and a $\mathcal O(1/T)$ for smooth problems.

@@ -13,7 +13,9 @@ myst:
 ```
 
 # One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?
-_Posted on {{ date }}_
+_Posted on {{ date }}_ 
+
+_This post has an accompanying [tweet thread](https://x.com/tmpethick/status/1941930397815714281)_.
 
 <!-- 
 Two commonly used methods in ML are:
