@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Understanding Dion &#8212; Thomas Pethick</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Serif/cmun-serif.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/font/cm/Sans/cmun-sans.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/custom.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'posts/2025-08-18-understanding-dion';</script>
+    <link rel="index" title="Index" href="../../genindex/" />
+    <link rel="search" title="Search" href="../../search/" />
+    <link rel="next" title="One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?" href="../2025-07-06-one-change-at-a-time/" />
+    <link rel="prev" title="Posts" href="../" /> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/> 
+<link
+  rel="alternate"
+  type="application/atom+xml"
+  href="../../posts/atom.xml"
+  title="Thomas Pethick's blog"
+/>
+ 
+<style type="text/css">
+  ul.ablog-archive {
+    list-style: none;
+    overflow: auto;
+    margin-left: 0px;
+  }
+  ul.ablog-archive li {
+    float: left;
+    margin-right: 5px;
+    font-size: 80%;
+  }
+  ul.postlist a {
+    font-style: italic;
+  }
+  ul.postlist-style-disc {
+    list-style-type: disc;
+  }
+  ul.postlist-style-none {
+    list-style-type: none;
+  }
+  ul.postlist-style-circle {
+    list-style-type: circle;
+  }
+</style>
+
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../../">
+  
+  
+  
+  
+  
+    <p class="title logo__title">Thomas Pethick</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+<form class="bd-search d-flex align-items-center"
+      action="../../search/"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../publications/">Publications</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../online-learning/">Online learning</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../2019-11-02-FTRL/">Online convex optimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-01-06-hedge-and-bandit/">Hedge and bandits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-01-07-gp-mw/">Gaussian processes and Hedge for infinite armed bandits</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../">Posts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Understanding Dion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-05-15-gradientboosting/">Gradient boosting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">Bayesian logistic regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2019-11-03-russell-talk/">Provably beneficial artificial intelligence by Stuart Russell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2019-11-16-caroline-uhler/">From causal inference to autoencoders and gene regulation by Caroline Uhler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2018-05-22-io-model/">The I/O Model</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Understanding Dion</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-approximation">SVD approximation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                   <div class="math notranslate nohighlight">
+\[\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}\]</div>
+<section class="tex2jax_ignore mathjax_ignore" id="understanding-dion">
+<h1>Understanding Dion<a class="headerlink" href="#understanding-dion" title="Permalink to this headline">#</a></h1>
+<p><em>Posted on 2025-08-18</em></p>
+<p>Here are some notes for better understanding Dion in terms of the changes made from PowerSGD.</p>
+<p>Let us focus on the centralized setting and ignore momentum for simplicity.
+PowerSGD has the following structure:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\Delta &amp;\leftarrow g + e  \\
+e &amp;\leftarrow \Delta - \sum_{i=1}^r \sigma_i u_iv^\top_i \\
+x &amp;\leftarrow x - \gamma \sum_{i=1}^r \sigma_i u_iv^\top_i
+\end{aligned}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\gamma &gt; 0\)</span> and <span class="math notranslate nohighlight">\(\sum_{i=1}^r \sigma_i u_iv^\top_i\)</span> is the rank-<span class="math notranslate nohighlight">\(r\)</span> truncated SVD of <span class="math notranslate nohighlight">\(\Delta \in \mathbb{R}^{n \times m}\)</span>.</p>
+<p>Let us break the steps down:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\Delta\)</span> constitutes both of the gradient <span class="math notranslate nohighlight">\(g\)</span> and the remaining residual <span class="math notranslate nohighlight">\(e\)</span> (the unprocessed parts of previous gradients)</p></li>
+<li><p>the residual <span class="math notranslate nohighlight">\(e\)</span> is updated by subtracting the current low rank approximation from the gradient</p></li>
+<li><p>the iterate <span class="math notranslate nohighlight">\(x\)</span> is updated by using the low rank approximation</p></li>
+</ol>
+<p>Instead Dion proceeds as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\Delta &amp;\leftarrow g + e  \\
+e &amp;\leftarrow \Delta - \sum_{i=1}^r \sigma_i u_iv^\top_i \\
+x &amp;\leftarrow x - \gamma \sum_{i=1}^r u_iv^\top_i
+\end{aligned}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\sum_{i=1}^r \sigma_i u_iv^\top_i\)</span> is still the truncated SVD of <span class="math notranslate nohighlight">\(\Delta\)</span>.
+When <span class="math notranslate nohighlight">\(r = \min\{n,m\}\)</span>, then <span class="math notranslate nohighlight">\(\sum_{i=1}^r u_iv^\top_i\)</span> is simply the solution to the linear minimization oracle over the spectral norm ball.</p>
+<p>The only difference with PowerSGD is the fact that Dion <em>sets all singular values to 1</em> in the update of <span class="math notranslate nohighlight">\(x\)</span>.
+Importantly, the update of <span class="math notranslate nohighlight">\(e\)</span> still involves the singular values <span class="math notranslate nohighlight">\(\sigma_i\)</span>.
+This ensures that the residual indeed goes to zero if the same gradient <span class="math notranslate nohighlight">\(g\)</span> was fed repeatedly over multiple iterations.
+Specifically, in the above case where the SVD is exact, it will take <span class="math notranslate nohighlight">\(\operatorname{ceil}(r/n)\)</span> iterations where <span class="math notranslate nohighlight">\(n\)</span> is the rank of <span class="math notranslate nohighlight">\(\Delta\)</span> for the residual to become exactly zero.</p>
+<section id="svd-approximation">
+<h2>SVD approximation<a class="headerlink" href="#svd-approximation" title="Permalink to this headline">#</a></h2>
+<p>Dion adopts the <em>power iteration</em> used in PowerSGD in order to approximate the low-rank approximation.</p>
+<div class="proof algorithm admonition" id="algorithm-0">
+<p class="admonition-title"><span class="caption-number">Algorithm 8 </span> (PowerIter1(<span class="math notranslate nohighlight">\(B;Q\)</span>))</p>
+<section class="algorithm-content" id="proof-content">
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+&amp; P \leftarrow BQ \\
+&amp; P \leftarrow \operatorname{orthogonalize}(P) &amp;&amp; \text{with QR decomposition} \\ 
+&amp; R \leftarrow B^\top P \\
+&amp; Q \leftarrow \operatorname{ColumnNormalize}(R) \\
+&amp; \textbf{return } P,R,Q
+\end{aligned}\end{split}\]</div>
+</section>
+</div><p>The above procedure computes one step of power iteration on the matrix <span class="math notranslate nohighlight">\(B\)</span> using <span class="math notranslate nohighlight">\(Q\)</span> as the initial guess for the orthonormal basis.
+The output of the algorithm provides a way to compute the two quantities that Dion relies on:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(PR^\top = \sum_{i=1}^r \tilde{\sigma}_i \tilde{u}_i\tilde{v}^\top_i\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(PQ^\top = \sum_{i=1}^r \tilde{u}_i\tilde{v}^\top_i\)</span></p></li>
+</ul>
+<p>where the tilde notation is simply to indicate that the truncated SVD is not exact but rather an approximation.</p>
+<p>In both PowerSGD and Dion the power iteration is warmstarted with the <span class="math notranslate nohighlight">\(Q\)</span> from the previous iteration, so the update for e.g., Dion, becomes</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\Delta &amp;\leftarrow g + e  \\
+P,R,Q &amp;\leftarrow \operatorname{PowerIter1}(\Delta;Q) \\
+e &amp;\leftarrow \Delta - PR^\top \\
+x &amp;\leftarrow x - \gamma PQ^\top
+\end{aligned}
+\end{split}\]</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+<div class="section">
+    
+  
+</div>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Posts</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../2025-07-06-one-change-at-a-time/"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#svd-approximation">SVD approximation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Thomas Pethick
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

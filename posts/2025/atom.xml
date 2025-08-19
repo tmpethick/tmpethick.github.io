@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://pethick.dk/</id>
   <title>Thomas Pethick's blog - Posted in 2025</title>
-  <updated>2025-08-01T08:35:37.955317+00:00</updated>
+  <updated>2025-08-19T10:57:28.472919+00:00</updated>
   <link href="https://pethick.dk/"/>
   <link href="https://pethick.dk/posts/2025/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
@@ -34,5 +34,34 @@
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2025-07-06-one-change-at-a-time/" rel="alternate"/>
     <published>2025-07-06T00:00:00+02:00</published>
+  </entry>
+  <entry>
+    <id>https://pethick.dk/posts/2025-08-18-understanding-dion/</id>
+    <title>Understanding Dion</title>
+    <updated>2025-08-18T00:00:00+02:00</updated>
+    <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
+&lt;/div&gt;
+
+    &lt;script type="text/x-thebe-config"&gt;
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./posts"
+        },
+        predefinedOutput: true
+    }
+    &lt;/script&gt;
+    &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
+    <link href="https://pethick.dk/posts/2025-08-18-understanding-dion/" rel="alternate"/>
+    <published>2025-08-18T00:00:00+02:00</published>
   </entry>
 </feed>
