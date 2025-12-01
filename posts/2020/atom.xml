@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://pethick.dk/</id>
   <title>Thomas Pethick's blog - Posted in 2020</title>
-  <updated>2025-11-27T15:05:34.250821+00:00</updated>
+  <updated>2025-12-01T21:42:43.368955+00:00</updated>
   <link href="https://pethick.dk/"/>
   <link href="https://pethick.dk/posts/2020/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
   <entry>
     <id>https://pethick.dk/posts/2020-01-06-hedge-and-bandit/</id>
     <title>Hedge and bandits</title>
-    <updated>2020-01-06T00:00:00+01:00</updated>
+    <updated>2020-01-06T00:00:00-05:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -34,12 +34,12 @@
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2020-01-06-hedge-and-bandit/" rel="alternate"/>
     <category term="online-learning" label="online-learning"/>
-    <published>2020-01-06T00:00:00+01:00</published>
+    <published>2020-01-06T00:00:00-05:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-01-07-gp-mw/</id>
     <title>Gaussian processes and Hedge for infinite armed bandits</title>
-    <updated>2020-01-07T00:00:00+01:00</updated>
+    <updated>2020-01-07T00:00:00-05:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -64,12 +64,12 @@
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2020-01-07-gp-mw/" rel="alternate"/>
     <category term="online-learning" label="online-learning"/>
-    <published>2020-01-07T00:00:00+01:00</published>
+    <published>2020-01-07T00:00:00-05:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-05-26-bayesian-logistic-regression/</id>
     <title>Bayesian logistic regression</title>
-    <updated>2020-05-15T00:00:00+02:00</updated>
+    <updated>2020-05-15T00:00:00-04:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -93,12 +93,12 @@
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2020-05-26-bayesian-logistic-regression/" rel="alternate"/>
-    <published>2020-05-15T00:00:00+02:00</published>
+    <published>2020-05-15T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-05-15-gradientboosting/</id>
     <title>Gradient boosting</title>
-    <updated>2020-05-15T00:00:00+02:00</updated>
+    <updated>2020-05-15T00:00:00-04:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -122,12 +122,12 @@
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2020-05-15-gradientboosting/" rel="alternate"/>
-    <published>2020-05-15T00:00:00+02:00</published>
+    <published>2020-05-15T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-06-04-acceleration-with-potential-function/</id>
     <title>Acceleration convergence using a potential function</title>
-    <updated>2020-06-04T00:00:00+02:00</updated>
+    <updated>2020-06-04T00:00:00-04:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -152,12 +152,12 @@
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2020-06-04-acceleration-with-potential-function/" rel="alternate"/>
     <category term="acceleration" label="acceleration"/>
-    <published>2020-06-04T00:00:00+02:00</published>
+    <published>2020-06-04T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-06-04-acceleration-perspectives/</id>
     <title>Various ways of writing Nesterov’s acceleration</title>
-    <updated>2020-06-04T00:00:00+02:00</updated>
+    <updated>2020-06-04T00:00:00-04:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -182,6 +182,6 @@
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2020-06-04-acceleration-perspectives/" rel="alternate"/>
     <category term="acceleration" label="acceleration"/>
-    <published>2020-06-04T00:00:00+02:00</published>
+    <published>2020-06-04T00:00:00-04:00</published>
   </entry>
 </feed>

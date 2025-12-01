@@ -1,17 +1,12 @@
 # Short bio
 
-I did my PhD at EPFL in the [LIONS][lions] lab with Prof. Volkan Cevher, where I was broadly interested in optimization for machine learning with a focus on stable training of deep learning models.
+I am interested in understanding the structure underlying deep learning models and use this to build algorithms that learn efficiently and robustly. Of particular importance to me is how to make these systems learn continuously under changed environments and in multi-agent settings. In my work, I am typically on the look-out for where and why training instabilities occur, since these often help identify the barriers to both efficiency and robustness.
+
+I strongly believe that deep learning does not need to be an art, but that it can be made into a scientific discipline through both theoretical and empirical work. Interestingly, in recent years we have seen a closing of the theory-practice gap in optimization for deep learning that is slowly leading to a unification across both training paradigms and model families such as RNNs, GANs, Transformers, and diffusion models. These developments leave many opportunities, which I am excited to explore and exploit.
+
+I received my PhD from EPFL under Prof. Volkan Cevher, where I was broadly interested in optimization for machine learning with a focus on stable training of deep learning models.
 During my studies, I interned with Amazon and ETH Zürich.
 
-I am interested in understanding and shaping the structure underlying the optimization landscape of deep learning models in order to build algorithms and architectures that learn efficiently, are robust, and can learn continuously in multi-agent settings.
-Two major parts of my thesis have evolved around:
-
-- Large-scale pre-training that exploits the structure of neural networks and is agnostic to scale, with a focus on time- and memory efficiency.
-- Developing algorithms for fixed-point problems, which can be used to capture, for instance, multi-player games, robust training, and recurrent architectures, where divergent and cycling dynamics are common.
-
-I strongly believe that deep learning does not need to be an art, but that it can be made into a scientific discipline through both theoretical and empirical work.
-Interestingly, in recent years we have seen a closing of the theory-practice gap in optimization for deep learning and a unification in how we train otherwise distinct models such as RNNs, GANs, Transformers, and diffusion models.
-These developments leave many opportunities, which I am excited to explore and exploit.
 
 [lions]: https://lions.epfl.ch/
 

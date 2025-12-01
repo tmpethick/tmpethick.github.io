@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://pethick.dk/</id>
   <title>Thomas Pethick's blog - Posts tagged acceleration</title>
-  <updated>2025-11-27T15:05:34.263243+00:00</updated>
+  <updated>2025-12-01T21:42:43.386401+00:00</updated>
   <link href="https://pethick.dk/"/>
   <link href="https://pethick.dk/posts/tag/acceleration/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
   <entry>
     <id>https://pethick.dk/posts/2020-06-04-acceleration-with-potential-function/</id>
     <title>Acceleration convergence using a potential function</title>
-    <updated>2020-06-04T00:00:00+02:00</updated>
+    <updated>2020-06-04T00:00:00-04:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -34,12 +34,12 @@
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2020-06-04-acceleration-with-potential-function/" rel="alternate"/>
     <category term="acceleration" label="acceleration"/>
-    <published>2020-06-04T00:00:00+02:00</published>
+    <published>2020-06-04T00:00:00-04:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-06-04-acceleration-perspectives/</id>
     <title>Various ways of writing Nesterov’s acceleration</title>
-    <updated>2020-06-04T00:00:00+02:00</updated>
+    <updated>2020-06-04T00:00:00-04:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -64,6 +64,6 @@
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
     <link href="https://pethick.dk/posts/2020-06-04-acceleration-perspectives/" rel="alternate"/>
     <category term="acceleration" label="acceleration"/>
-    <published>2020-06-04T00:00:00+02:00</published>
+    <published>2020-06-04T00:00:00-04:00</published>
   </entry>
 </feed>
