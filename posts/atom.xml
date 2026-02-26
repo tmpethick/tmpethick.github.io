@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://pethick.dk/</id>
   <title>Thomas Pethick's blog</title>
-  <updated>2025-12-01T21:42:43.339239+00:00</updated>
+  <updated>2026-02-26T11:03:55.419912+00:00</updated>
   <link href="https://pethick.dk/"/>
   <link href="https://pethick.dk/posts/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
   <entry>
     <id>https://pethick.dk/posts/2018-05-22-io-model/</id>
     <title>The I/O Model</title>
-    <updated>2018-05-22T00:00:00-04:00</updated>
+    <updated>2018-05-22T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -32,13 +32,13 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2018-05-22-io-model/" rel="alternate"/>
-    <published>2018-05-22T00:00:00-04:00</published>
+    <link href="https://pethick.dk/posts/2018-05-22-io-model/"/>
+    <published>2018-05-22T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2019-11-02-FTRL/</id>
     <title>Online convex optimization</title>
-    <updated>2019-11-02T00:00:00-04:00</updated>
+    <updated>2019-11-02T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -61,14 +61,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2019-11-02-FTRL/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2019-11-02-FTRL/"/>
     <category term="online-learning" label="online-learning"/>
-    <published>2019-11-02T00:00:00-04:00</published>
+    <published>2019-11-02T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2019-11-03-russell-talk/</id>
     <title>Provably beneficial artificial intelligence by Stuart Russell</title>
-    <updated>2019-11-03T00:00:00-04:00</updated>
+    <updated>2019-11-03T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -91,14 +91,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2019-11-03-russell-talk/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2019-11-03-russell-talk/"/>
     <category term="talk" label="talk"/>
-    <published>2019-11-03T00:00:00-04:00</published>
+    <published>2019-11-03T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2019-11-16-caroline-uhler/</id>
     <title>From causal inference to autoencoders and gene regulation by Caroline Uhler</title>
-    <updated>2019-11-16T00:00:00-05:00</updated>
+    <updated>2019-11-16T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -121,14 +121,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2019-11-16-caroline-uhler/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2019-11-16-caroline-uhler/"/>
     <category term="talk" label="talk"/>
-    <published>2019-11-16T00:00:00-05:00</published>
+    <published>2019-11-16T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-01-06-hedge-and-bandit/</id>
     <title>Hedge and bandits</title>
-    <updated>2020-01-06T00:00:00-05:00</updated>
+    <updated>2020-01-06T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -151,14 +151,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2020-01-06-hedge-and-bandit/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2020-01-06-hedge-and-bandit/"/>
     <category term="online-learning" label="online-learning"/>
-    <published>2020-01-06T00:00:00-05:00</published>
+    <published>2020-01-06T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-01-07-gp-mw/</id>
     <title>Gaussian processes and Hedge for infinite armed bandits</title>
-    <updated>2020-01-07T00:00:00-05:00</updated>
+    <updated>2020-01-07T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -181,14 +181,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2020-01-07-gp-mw/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2020-01-07-gp-mw/"/>
     <category term="online-learning" label="online-learning"/>
-    <published>2020-01-07T00:00:00-05:00</published>
+    <published>2020-01-07T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-05-26-bayesian-logistic-regression/</id>
     <title>Bayesian logistic regression</title>
-    <updated>2020-05-15T00:00:00-04:00</updated>
+    <updated>2020-05-15T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -211,13 +211,13 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2020-05-26-bayesian-logistic-regression/" rel="alternate"/>
-    <published>2020-05-15T00:00:00-04:00</published>
+    <link href="https://pethick.dk/posts/2020-05-26-bayesian-logistic-regression/"/>
+    <published>2020-05-15T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-05-15-gradientboosting/</id>
     <title>Gradient boosting</title>
-    <updated>2020-05-15T00:00:00-04:00</updated>
+    <updated>2020-05-15T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -240,13 +240,13 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2020-05-15-gradientboosting/" rel="alternate"/>
-    <published>2020-05-15T00:00:00-04:00</published>
+    <link href="https://pethick.dk/posts/2020-05-15-gradientboosting/"/>
+    <published>2020-05-15T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-06-04-acceleration-with-potential-function/</id>
     <title>Acceleration convergence using a potential function</title>
-    <updated>2020-06-04T00:00:00-04:00</updated>
+    <updated>2020-06-04T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -269,14 +269,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2020-06-04-acceleration-with-potential-function/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2020-06-04-acceleration-with-potential-function/"/>
     <category term="acceleration" label="acceleration"/>
-    <published>2020-06-04T00:00:00-04:00</published>
+    <published>2020-06-04T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-06-04-acceleration-perspectives/</id>
     <title>Various ways of writing Nesterov’s acceleration</title>
-    <updated>2020-06-04T00:00:00-04:00</updated>
+    <updated>2020-06-04T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -299,14 +299,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2020-06-04-acceleration-perspectives/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2020-06-04-acceleration-perspectives/"/>
     <category term="acceleration" label="acceleration"/>
-    <published>2020-06-04T00:00:00-04:00</published>
+    <published>2020-06-04T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2024-06-10-polyak-stepsize/</id>
     <title>Polyak stepsize through a hyperplane projection interpretation</title>
-    <updated>2024-06-10T00:00:00-04:00</updated>
+    <updated>2024-06-10T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -329,14 +329,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2024-06-10-polyak-stepsize/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2024-06-10-polyak-stepsize/"/>
     <category term="adaptivity" label="adaptivity"/>
-    <published>2024-06-10T00:00:00-04:00</published>
+    <published>2024-06-10T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2025-07-06-one-change-at-a-time/</id>
     <title>One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</title>
-    <updated>2025-07-06T00:00:00-04:00</updated>
+    <updated>2025-07-06T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -359,13 +359,13 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2025-07-06-one-change-at-a-time/" rel="alternate"/>
-    <published>2025-07-06T00:00:00-04:00</published>
+    <link href="https://pethick.dk/posts/2025-07-06-one-change-at-a-time/"/>
+    <published>2025-07-06T00:00:00+02:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2025-08-18-understanding-dion/</id>
     <title>Understanding Dion</title>
-    <updated>2025-08-18T00:00:00-04:00</updated>
+    <updated>2025-08-18T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -388,7 +388,7 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2025-08-18-understanding-dion/" rel="alternate"/>
-    <published>2025-08-18T00:00:00-04:00</published>
+    <link href="https://pethick.dk/posts/2025-08-18-understanding-dion/"/>
+    <published>2025-08-18T00:00:00+02:00</published>
   </entry>
 </feed>

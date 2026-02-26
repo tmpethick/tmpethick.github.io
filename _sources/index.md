@@ -11,9 +11,6 @@ During my studies, I interned with Amazon and ETH Zürich.
 [lions]: https://lions.epfl.ch/
 
 
-<!-- ### News -->
-
-
 ### Selected publications
 
 See [publications](/publications/) for other publications and [Google Scholar](https://scholar.google.com/citations?user=l99LRFkAAAAJ&hl=en) for the most up to date version.

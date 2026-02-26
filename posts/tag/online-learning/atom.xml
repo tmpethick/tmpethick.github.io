@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://pethick.dk/</id>
   <title>Thomas Pethick's blog - Posts tagged online-learning</title>
-  <updated>2025-12-01T21:42:43.392910+00:00</updated>
+  <updated>2026-02-26T11:03:55.433362+00:00</updated>
   <link href="https://pethick.dk/"/>
   <link href="https://pethick.dk/posts/tag/online-learning/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
   <entry>
     <id>https://pethick.dk/posts/2019-11-02-FTRL/</id>
     <title>Online convex optimization</title>
-    <updated>2019-11-02T00:00:00-04:00</updated>
+    <updated>2019-11-02T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -32,14 +32,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2019-11-02-FTRL/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2019-11-02-FTRL/"/>
     <category term="online-learning" label="online-learning"/>
-    <published>2019-11-02T00:00:00-04:00</published>
+    <published>2019-11-02T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-01-06-hedge-and-bandit/</id>
     <title>Hedge and bandits</title>
-    <updated>2020-01-06T00:00:00-05:00</updated>
+    <updated>2020-01-06T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -62,14 +62,14 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2020-01-06-hedge-and-bandit/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2020-01-06-hedge-and-bandit/"/>
     <category term="online-learning" label="online-learning"/>
-    <published>2020-01-06T00:00:00-05:00</published>
+    <published>2020-01-06T00:00:00+01:00</published>
   </entry>
   <entry>
     <id>https://pethick.dk/posts/2020-01-07-gp-mw/</id>
     <title>Gaussian processes and Hedge for infinite armed bandits</title>
-    <updated>2020-01-07T00:00:00-05:00</updated>
+    <updated>2020-01-07T00:00:00+01:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;
 
@@ -92,8 +92,8 @@
     }
     &lt;/script&gt;
     &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
-    <link href="https://pethick.dk/posts/2020-01-07-gp-mw/" rel="alternate"/>
+    <link href="https://pethick.dk/posts/2020-01-07-gp-mw/"/>
     <category term="online-learning" label="online-learning"/>
-    <published>2020-01-07T00:00:00-05:00</published>
+    <published>2020-01-07T00:00:00+01:00</published>
   </entry>
 </feed>
