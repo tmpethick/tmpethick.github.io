@@ -68,8 +68,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'talks';</script>
     <link rel="index" title="Index" href="../genindex/" />
     <link rel="search" title="Search" href="../search/" />
-    <link rel="next" title="Provably beneficial artificial intelligence by Stuart Russell" href="../posts/2019-11-03-russell-talk/" />
-    <link rel="prev" title="Gaussian processes and Hedge for infinite armed bandits" href="../posts/2020-01-07-gp-mw/" /> 
+    <link rel="next" title="Online learning" href="../online-learning/" />
+    <link rel="prev" title="Publications" href="../publications/" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/> 
 <link
@@ -197,23 +197,23 @@ const thebe_selector_output = ".output, .cell_output"
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../publications/">Publications</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Talks</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../online-learning/">Online learning</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2019-11-02-FTRL/">Online convex optimization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2020-01-06-hedge-and-bandit/">Hedge and bandits</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2020-01-07-gp-mw/">Gaussian processes and Hedge for infinite armed bandits</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Talks</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="../posts/2019-11-03-russell-talk/">Provably beneficial artificial intelligence by Stuart Russell</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../posts/2019-11-16-caroline-uhler/">From causal inference to autoencoders and gene regulation by Caroline Uhler</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../posts/">Posts</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../posts/">Posts</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../posts/2025-08-18-understanding-dion/">Understanding Dion</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../posts/2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2020-05-15-gradientboosting/">Gradient boosting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2020-05-26-bayesian-logistic-regression/">Bayesian logistic regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../posts/2019-11-03-russell-talk/">Provably beneficial artificial intelligence by Stuart Russell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../posts/2019-11-16-caroline-uhler/">From causal inference to autoencoders and gene regulation by Caroline Uhler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../posts/2018-05-22-io-model/">The I/O Model</a></li>
 </ul>
 </li>
@@ -302,11 +302,59 @@ document.write(`
                 <article class="bd-article" role="main">
                    <section class="tex2jax_ignore mathjax_ignore" id="talks">
 <h1>Talks<a class="headerlink" href="#talks" title="Permalink to this headline">#</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../posts/2019-11-03-russell-talk/">Provably beneficial artificial intelligence by Stuart Russell</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../posts/2019-11-16-caroline-uhler/">From causal inference to autoencoders and gene regulation by Caroline Uhler</a></li>
-</ul>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 talks-grid docutils">
+<div class="sd-row sd-row-cols-1 sd-row-cols-xs-1 sd-row-cols-sm-2 sd-row-cols-md-3 sd-row-cols-lg-3 sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover talk-card docutils">
+<img alt="card-img-top" class="sd-card-img-top" src="../_images/2024_EUROPT_Hydrid.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+EUROPT 2024 — Hydrid</div>
+<p class="sd-card-text"><span class="xref myst">Open slides (PDF)</span></p>
+</div>
+<a class="sd-stretched-link reference external" href="/talks/2024_EUROPT_Hydrid.pdf"></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover talk-card docutils">
+<img alt="card-img-top" class="sd-card-img-top" src="../_images/2024_MBZUAI_Weak_MVI.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+MBZUAI 2024 — Weak MVI</div>
+<p class="sd-card-text"><span class="xref myst">Open slides (PDF)</span></p>
+</div>
+<a class="sd-stretched-link reference external" href="/talks/2024_MBZUAI_Weak_MVI.pdf"></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover talk-card docutils">
+<img alt="card-img-top" class="sd-card-img-top" src="../_images/2025_Meta_Scion.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Meta 2025 — Scion</div>
+<p class="sd-card-text"><span class="xref myst">Open slides (PDF)</span></p>
+</div>
+<a class="sd-stretched-link reference external" href="/talks/2025_Meta_Scion.pdf"></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover talk-card docutils">
+<img alt="card-img-top" class="sd-card-img-top" src="../_images/2025_NeurIPS_Oral_ClippedScion.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+NeurIPS 2025 (Oral) — Clipped Scion</div>
+<p class="sd-card-text"><span class="xref myst">Open slides (PDF)</span></p>
+</div>
+<a class="sd-stretched-link reference external" href="/talks/2025_NeurIPS_Oral_ClippedScion.pdf"></a></div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm sd-card-hover talk-card docutils">
+<img alt="card-img-top" class="sd-card-img-top" src="../_images/2026_Flatiron.png" />
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Flatiron 2026</div>
+<p class="sd-card-text"><span class="xref myst">Open slides (PDF)</span></p>
+</div>
+<a class="sd-stretched-link reference external" href="/talks/2026_Flatiron.pdf"></a></div>
+</div>
+</div>
 </div>
 </section>
 
@@ -342,20 +390,20 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../posts/2020-01-07-gp-mw/"
+       href="../publications/"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Gaussian processes and Hedge for infinite armed bandits</p>
+        <p class="prev-next-title">Publications</p>
       </div>
     </a>
     <a class="right-next"
-       href="../posts/2019-11-03-russell-talk/"
+       href="../online-learning/"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Provably beneficial artificial intelligence by Stuart Russell</p>
+        <p class="prev-next-title">Online learning</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
