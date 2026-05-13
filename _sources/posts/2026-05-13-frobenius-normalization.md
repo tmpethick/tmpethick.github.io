@@ -10,7 +10,7 @@ myst:
 # Why Frobenius weight normalization is ok
 _Posted on {{ date }}_
 
-It has been proposed to normalize weights by the Frobenious norm even when the underlying optimizer is a non-Euclidean methods such as Muon.
+It has been proposed to normalize weights by the Frobenius norm even when the underlying optimizer is a non-Euclidean method such as Muon.
 Is this justified? Do we preserve convergence guarantees?
 
 **TL;DR**: If a matrix weight is immediately followed by RMSNorm, then globally rescaling that matrix does not change the function value. Frobenius normalization only performs such a global rescaling, so the descent inequality is preserved.
@@ -39,15 +39,15 @@ and define the projection onto the Frobenius sphere $\mathcal S_F(\rho)=\{S:\|S\
 
 $$
 \Pi_{\mathcal S_F(\rho)}(W)
-\in
+:=
 \operatorname*{arg\,min}_{S\in\mathcal S_F(\rho)}
 \|S-W\|_F^2
 =
-\tfrac{\rho}{\|W\|_F}W.
+\tfrac{\rho}{\|W\|_F}W,
 $$
-for $W\neq0$.
+where the last line holds for $W\neq0$.
 
-Then we can write steepest descent (in the possibly non-Euclidean norm $\|\cdot\|$) followed by an Euclidean projection as:
+Then we can write steepest descent (in the possibly non-Euclidean norm $\|\cdot\|$) followed by a Euclidean projection as:
 
 $$
 \begin{aligned}
@@ -62,7 +62,7 @@ $$
 
 For any positive scalar $c>0$,
 $
-\operatorname{RMSNorm}(c Wx)
+\operatorname{RMSNorm}(c\,Wx)
 = \operatorname{RMSNorm}(Wx).
 $
 Taking $c=\rho/\|\widetilde W^{k+1}\|_F$, the normalized layer output is thus unchanged:
@@ -85,7 +85,7 @@ $$
 f(\widetilde W^{k+1}) < f(W^k).
 $$
 
-Since the subsequent Frobenius projection does not change the function value, then the projected iterate $W^{k+1}=\Pi_{\mathcal S_F(\rho)}(\widetilde W^{k+1})$ satisfies
+Since the subsequent Frobenius projection does not change the function value, the projected iterate $W^{k+1}=\Pi_{\mathcal S_F(\rho)}(\widetilde W^{k+1})$ satisfies
 
 $$
 f(W^{k+1})

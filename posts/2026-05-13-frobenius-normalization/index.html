@@ -317,7 +317,7 @@ document.write(`
                    <section class="tex2jax_ignore mathjax_ignore" id="why-frobenius-weight-normalization-is-ok">
 <h1>Why Frobenius weight normalization is ok<a class="headerlink" href="#why-frobenius-weight-normalization-is-ok" title="Permalink to this headline">#</a></h1>
 <p><em>Posted on 2026-05-13</em></p>
-<p>It has been proposed to normalize weights by the Frobenious norm even when the underlying optimizer is a non-Euclidean methods such as Muon.
+<p>It has been proposed to normalize weights by the Frobenius norm even when the underlying optimizer is a non-Euclidean method such as Muon.
 Is this justified? Do we preserve convergence guarantees?</p>
 <p><strong>TL;DR</strong>: If a matrix weight is immediately followed by RMSNorm, then globally rescaling that matrix does not change the function value. Frobenius normalization only performs such a global rescaling, so the descent inequality is preserved.</p>
 <p>To make this precise, consider a matrix weight <span class="math notranslate nohighlight">\(W\)</span> followed by RMSNorm, so the layer output depends on
@@ -342,14 +342,14 @@ G^\#
 <div class="math notranslate nohighlight">
 \[
 \Pi_{\mathcal S_F(\rho)}(W)
-\in
+:=
 \operatorname*{arg\,min}_{S\in\mathcal S_F(\rho)}
 \|S-W\|_F^2
 =
-\tfrac{\rho}{\|W\|_F}W.
+\tfrac{\rho}{\|W\|_F}W,
 \]</div>
-<p>for <span class="math notranslate nohighlight">\(W\neq0\)</span>.</p>
-<p>Then we can write steepest descent (in the possibly non-Euclidean norm <span class="math notranslate nohighlight">\(\|\cdot\|\)</span>) followed by an Euclidean projection as:</p>
+<p>where the last line holds for <span class="math notranslate nohighlight">\(W\neq0\)</span>.</p>
+<p>Then we can write steepest descent (in the possibly non-Euclidean norm <span class="math notranslate nohighlight">\(\|\cdot\|\)</span>) followed by a Euclidean projection as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
@@ -363,7 +363,7 @@ W^{k+1}
 \end{split}\]</div>
 <p>For any positive scalar <span class="math notranslate nohighlight">\(c&gt;0\)</span>,
 <span class="math notranslate nohighlight">\(
-\operatorname{RMSNorm}(c Wx)
+\operatorname{RMSNorm}(c\,Wx)
 = \operatorname{RMSNorm}(Wx).
 \)</span>
 Taking <span class="math notranslate nohighlight">\(c=\rho/\|\widetilde W^{k+1}\|_F\)</span>, the normalized layer output is thus unchanged:</p>
@@ -383,7 +383,7 @@ f(W^{k+1}) = f(\widetilde W^{k+1}).
 \[
 f(\widetilde W^{k+1}) &lt; f(W^k).
 \]</div>
-<p>Since the subsequent Frobenius projection does not change the function value, then the projected iterate <span class="math notranslate nohighlight">\(W^{k+1}=\Pi_{\mathcal S_F(\rho)}(\widetilde W^{k+1})\)</span> satisfies</p>
+<p>Since the subsequent Frobenius projection does not change the function value, the projected iterate <span class="math notranslate nohighlight">\(W^{k+1}=\Pi_{\mathcal S_F(\rho)}(\widetilde W^{k+1})\)</span> satisfies</p>
 <div class="math notranslate nohighlight">
 \[
 f(W^{k+1})
