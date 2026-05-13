@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Why not use weight decay for the last layer? &#8212; Thomas Pethick</title>
+    <title>Why not use weight decay on the last layer? &#8212; Thomas Pethick</title>
   
   
   
@@ -71,7 +71,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex/" />
     <link rel="search" title="Search" href="../../search/" />
     <link rel="next" title="Understanding Dion" href="../2025-08-18-understanding-dion/" />
-    <link rel="prev" title="Posts" href="../" /> 
+    <link rel="prev" title="Why Frobenius weight normalization is ok" href="../2026-05-13-frobenius-normalization/" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/> 
 <link
@@ -207,7 +207,8 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../">Posts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Why not use weight decay for the last layer?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2026-05-13-frobenius-normalization/">Why Frobenius weight normalization is ok</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Why not use weight decay on the last layer?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2025-08-18-understanding-dion/">Understanding Dion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
@@ -292,7 +293,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Why not use weight decay for the last layer?</h1>
+    <h1>Why not use weight decay on the last layer?</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -313,11 +314,11 @@ document.write(`
                 
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
-                   <section class="tex2jax_ignore mathjax_ignore" id="why-not-use-weight-decay-for-the-last-layer">
-<h1>Why not use weight decay for the last layer?<a class="headerlink" href="#why-not-use-weight-decay-for-the-last-layer" title="Permalink to this headline">#</a></h1>
+                   <section class="tex2jax_ignore mathjax_ignore" id="why-not-use-weight-decay-on-the-last-layer">
+<h1>Why not use weight decay on the last layer?<a class="headerlink" href="#why-not-use-weight-decay-on-the-last-layer" title="Permalink to this headline">#</a></h1>
 <p><em>Posted on 2026-05-13</em></p>
-<p>It is common to exclude the unembedding layer from using weight decay, but why?</p>
-<p><strong>TL;DR</strong>: Applying weight decay to the last layer will constrain the logits of the model and consequently prevent high-confident output.</p>
+<p>It is common to exclude the unembedding/output layer from weight decay, but why?</p>
+<p><strong>TL;DR</strong>: Applying weight decay to the last layer will constrain the logits of the model and consequently prevent highly confident output.</p>
 <p>To make this statement precise, let <span class="math notranslate nohighlight">\(h \in \mathbb{R}^d\)</span> denote the hidden state before the final linear layer.
 Modern architectures often apply normalization before the last layer.
 Ignoring the small numerical <span class="math notranslate nohighlight">\(\epsilon\)</span> and any learned gain, the RMS-normalized state <span class="math notranslate nohighlight">\(\hat h := \operatorname{RMSNorm}(h)\)</span> satisfies</p>
@@ -405,7 +406,7 @@ However, it is worth being aware that the constraint radius in Frank-Wolfe will 
 <h2>Cite this post<a class="headerlink" href="#cite-this-post" title="Permalink to this headline">#</a></h2>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pethick2026weightdecaylastlayer</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Thomas Pethick}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Why not use weight decay for the last layer?}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Why not use weight decay on the last layer?}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">year</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">month</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{05}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">day</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{13}</span><span class="p">,</span>
@@ -450,12 +451,12 @@ However, it is worth being aware that the constraint radius in Frank-Wolfe will 
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../"
+       href="../2026-05-13-frobenius-normalization/"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Posts</p>
+        <p class="prev-next-title">Why Frobenius weight normalization is ok</p>
       </div>
     </a>
     <a class="right-next"

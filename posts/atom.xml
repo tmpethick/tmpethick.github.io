@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
   <id>https://pethick.dk/</id>
   <title>Thomas Pethick's blog</title>
-  <updated>2026-05-13T10:05:41.113343+00:00</updated>
+  <updated>2026-05-13T13:17:20.847272+00:00</updated>
   <link href="https://pethick.dk/"/>
   <link href="https://pethick.dk/posts/atom.xml" rel="self"/>
   <generator uri="https://ablog.readthedocs.org/" version="0.10.33">ABlog</generator>
@@ -392,8 +392,37 @@
     <published>2025-08-18T00:00:00+02:00</published>
   </entry>
   <entry>
+    <id>https://pethick.dk/posts/2026-05-13-frobenius-normalization/</id>
+    <title>Why Frobenius weight normalization is ok</title>
+    <updated>2026-05-13T00:00:00+02:00</updated>
+    <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
+&lt;/div&gt;
+
+    &lt;script type="text/x-thebe-config"&gt;
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    &lt;/script&gt;
+    &lt;script&gt;kernelName = 'python3'&lt;/script&gt;</content>
+    <link href="https://pethick.dk/posts/2026-05-13-frobenius-normalization/"/>
+    <published>2026-05-13T00:00:00+02:00</published>
+  </entry>
+  <entry>
     <id>https://pethick.dk/posts/2026-05-13-weight-decay-last-layer/</id>
-    <title>Why not use weight decay for the last layer?</title>
+    <title>Why not use weight decay on the last layer?</title>
     <updated>2026-05-13T00:00:00+02:00</updated>
     <content type="html">&lt;div class="ablog-post-excerpt docutils container"&gt;
 &lt;/div&gt;

@@ -7,12 +7,12 @@ myst:
 :excerpt: 0
 ```
 
-# Why not use weight decay for the last layer?
+# Why not use weight decay on the last layer?
 _Posted on {{ date }}_
 
-It is common to exclude the unembedding layer from using weight decay, but why?
+It is common to exclude the unembedding/output layer from weight decay, but why?
 
-**TL;DR**: Applying weight decay to the last layer will constrain the logits of the model and consequently prevent high-confident output.
+**TL;DR**: Applying weight decay to the last layer will constrain the logits of the model and consequently prevent highly confident output.
 
 To make this statement precise, let $h \in \mathbb{R}^d$ denote the hidden state before the final linear layer.
 Modern architectures often apply normalization before the last layer.
