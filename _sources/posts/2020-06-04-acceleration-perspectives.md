@@ -38,7 +38,7 @@ x_{t+1} &\leftarrow\left(1-\tau_{t+1}\right) y_{t+1}+\tau_{t+1} z_{t+1}
 \end{aligned}
 $$
 
-where $f$ is $\beta$-smooth, $\eta_{t}=\frac{t+1}{2 \beta}$ and $\tau_{t}=\frac{2}{t+2}$.
+where $f$ is $\beta$-smooth, $\eta_{t}=\frac{t+2}{2 \beta}$ and $\tau_{t}=\frac{2}{t+2}$.
 This is a linear coupling of a small step size update ($y_{t+1}$) and a large step size update ($z_{t+1}$).
 
 **Derivation**
@@ -92,10 +92,8 @@ $$
 What is $\frac{\lambda_{t}}{\beta}$? If it is $\frac{\lambda_{t}}{\beta}=\eta_{t}$ then we are done. 
 
 $$
-\frac{\lambda_t}{\beta} = \frac{1}{\tau_t\beta} = \frac{t+2}{2\beta} = \eta_{t+1}
+\frac{\lambda_t}{\beta} = \frac{1}{\tau_t\beta} = \frac{t+2}{2\beta} = \eta_t.
 $$
-
-So we are weirdly enough off by one since it should be $\eta_t$...
 
 Source: {cite:t}`bansal2017potential` and 
 p. 468 of {cite:t}`drori2014performance`.

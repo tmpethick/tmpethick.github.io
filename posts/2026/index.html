@@ -7,9 +7,8 @@
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-
-    <title>Gradient boosting &#8212; Thomas Pethick</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Posted in 2026 &#8212; Thomas Pethick</title>
   
   
   
@@ -65,20 +64,16 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'posts/2020-05-15-gradientboosting';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'posts/2026';</script>
     <link rel="index" title="Index" href="../../genindex/" />
-    <link rel="search" title="Search" href="../../search/" />
-    <link rel="next" title="Bayesian logistic regression" href="../2020-05-26-bayesian-logistic-regression/" />
-    <link rel="prev" title="Various ways of writing Nesterov’s acceleration" href="../2020-06-04-acceleration-perspectives/" /> 
+    <link rel="search" title="Search" href="../../search/" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/> 
 <link
   rel="alternate"
   type="application/atom+xml"
-  href="../../posts/atom.xml"
-  title="Thomas Pethick's blog"
+  href="../2026/atom.xml"
+  title="Posted in 2026"
 />
  
 <style type="text/css">
@@ -197,7 +192,7 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <ul class="current nav bd-sidenav">
+        <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../publications/">Publications</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../talks/">Talks</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../online-learning/">Online learning</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -206,14 +201,14 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../2020-01-07-gp-mw/">Gaussian processes and Hedge for infinite armed bandits</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../">Posts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../">Posts</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../2026-05-13-weight-decay-last-layer/">Why not use weight decay for the last layer?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2025-08-18-understanding-dion/">Understanding Dion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gradient boosting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-05-15-gradientboosting/">Gradient boosting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">Bayesian logistic regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2019-11-03-russell-talk/">Provably beneficial artificial intelligence by Stuart Russell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2019-11-16-caroline-uhler/">From causal inference to autoencoders and gene regulation by Caroline Uhler</a></li>
@@ -279,9 +274,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -292,19 +285,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Gradient boosting</h1>
+    <h1></h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cite-this-post">Cite this post</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -313,50 +298,30 @@ document.write(`
                 
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
-                   <section class="tex2jax_ignore mathjax_ignore" id="gradient-boosting">
-<h1>Gradient boosting<a class="headerlink" href="#gradient-boosting" title="Permalink to this headline">#</a></h1>
-<p><em>Posted on 2020-05-15</em></p>
-<p>When going over Gradient boosting I got confused why there was a discrepancy between the residual and the weak learner.
-So here is an attempt in clearing up that confusion.</p>
-<p>We assume we are given an imperfect model <span class="math notranslate nohighlight">\(F_i(x)\)</span> and we want to improve it by only by additive changes <span class="math notranslate nohighlight">\(h_t(x)\)</span>, i.e.</p>
-<div class="math notranslate nohighlight">
-\[F_{t+1}(x) = F_t(x) + h_t(x).\]</div>
-<p>If we chose the perfect <span class="math notranslate nohighlight">\(h_t(x)\)</span> this would simply be</p>
-<div class="math notranslate nohighlight">
-\[y_i = F_t(x_i) + h_t(x_i) \Leftrightarrow h_t(x_i) = y_i - F_t(x_i) \text{ for all } i=1..N.\]</div>
-<p>For the square loss</p>
-<div class="math notranslate nohighlight">
-\[
-J = \sum_{i=1}^N (y_i-F_t(x_i))^{2} / 2,
-\]</div>
-<p>this turns out to simply be equivalent to the negative gradient of the loss, i.e.</p>
-<div class="math notranslate nohighlight">
-\[
--\frac{\partial J}{\partial F_t\left(x_{i}\right)}=y_{i} - F_t\left(x_{i}\right).
-\]</div>
-<p>Now the crucial observation is that the class of weak learners that we allow are in general not expressive enough to capture the residual <span class="math notranslate nohighlight">\(h_t(x)\)</span> perfectly.
-So instead we choose the model <span class="math notranslate nohighlight">\(\tilde{h}_t(x)\)</span> which minimizes this difference with this residual.</p>
-<p>The algorithm then proceeds by updating the model</p>
-<div class="math notranslate nohighlight">
-\[
-F_{t+1}(x) = F_t(x) + \tilde{h}_t(x).
-\]</div>
-<p>It is thus an iterative scheme that at every step more generally <em>uses the negative gradient of the loss</em> to build the estimator <span class="math notranslate nohighlight">\(\tilde{h}_t(x)\)</span>.</p>
-<section id="cite-this-post">
-<h2>Cite this post<a class="headerlink" href="#cite-this-post" title="Permalink to this headline">#</a></h2>
-<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pethick2020gradientboosting</span><span class="p">,</span>
-<span class="w">  </span><span class="na">author</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Thomas Pethick}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Gradient boosting}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2020}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">month</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{05}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">day</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{15}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">url</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{https://pethick.dk/posts/2020-05-15-gradientboosting/}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">note</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Blog post}</span>
-<span class="p">}</span>
-</pre></div>
+                  
+
+<div class="section">
+  <h1>
+    
+    <a href="../2026/atom.xml"
+      ><i class="fa fa-rss fa-rotate-270"></i></a
+    > Posted in  2026 
+  </h1>
+   
+
+  <div class="section ablog-post">
+    <h2 class="ablog-post-title">
+      <a href="../2026-05-13-weight-decay-last-layer/">Why not use weight decay for the last layer?</a>
+    </h2>
+
+    <ul class="ablog-archive">
+      <li>
+         <i class="fa fa-calendar"></i> 13 May 2026 
+      </li>
+            
+    </ul>
+    <div class="ablog-post-excerpt docutils container">
 </div>
-</section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -377,9 +342,10 @@ F_{t+1}(x) = F_t(x) + \tilde{h}_t(x).
     }
     </script>
     <script>kernelName = 'python3'</script>
-<div class="section">
-    
-  
+    <p class="ablog-post-expand"><a href="../2026-05-13-weight-decay-last-layer/"><em>Read more ...</em></a></p>
+    <hr/>
+  </div>
+   
 </div>
 
                 </article>
@@ -390,44 +356,12 @@ F_{t+1}(x) = F_t(x) + \tilde{h}_t(x).
                 <footer class="bd-footer-article">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../2020-06-04-acceleration-perspectives/"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Various ways of writing Nesterov’s acceleration</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../2020-05-26-bayesian-logistic-regression/"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Bayesian logistic regression</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cite-this-post">Cite this post</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

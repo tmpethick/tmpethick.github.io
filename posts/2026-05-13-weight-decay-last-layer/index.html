@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Gradient boosting &#8212; Thomas Pethick</title>
+    <title>Why not use weight decay for the last layer? &#8212; Thomas Pethick</title>
   
   
   
@@ -67,11 +67,11 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'posts/2020-05-15-gradientboosting';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'posts/2026-05-13-weight-decay-last-layer';</script>
     <link rel="index" title="Index" href="../../genindex/" />
     <link rel="search" title="Search" href="../../search/" />
-    <link rel="next" title="Bayesian logistic regression" href="../2020-05-26-bayesian-logistic-regression/" />
-    <link rel="prev" title="Various ways of writing Nesterov’s acceleration" href="../2020-06-04-acceleration-perspectives/" /> 
+    <link rel="next" title="Understanding Dion" href="../2025-08-18-understanding-dion/" />
+    <link rel="prev" title="Posts" href="../" /> 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/> 
 <link
@@ -207,13 +207,13 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../">Posts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../2026-05-13-weight-decay-last-layer/">Why not use weight decay for the last layer?</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Why not use weight decay for the last layer?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2025-08-18-understanding-dion/">Understanding Dion</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2025-07-06-one-change-at-a-time/">One change at a time: how to compare SGD, signSGD, spectral descent, LARS, etc?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2024-06-10-polyak-stepsize/">Polyak stepsize through a hyperplane projection interpretation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-with-potential-function/">Acceleration convergence using a potential function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-06-04-acceleration-perspectives/">Various ways of writing Nesterov’s acceleration</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Gradient boosting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../2020-05-15-gradientboosting/">Gradient boosting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2020-05-26-bayesian-logistic-regression/">Bayesian logistic regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2019-11-03-russell-talk/">Provably beneficial artificial intelligence by Stuart Russell</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2019-11-16-caroline-uhler/">From causal inference to autoencoders and gene regulation by Caroline Uhler</a></li>
@@ -292,7 +292,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Gradient boosting</h1>
+    <h1>Why not use weight decay for the last layer?</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -313,44 +313,103 @@ document.write(`
                 
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
-                   <section class="tex2jax_ignore mathjax_ignore" id="gradient-boosting">
-<h1>Gradient boosting<a class="headerlink" href="#gradient-boosting" title="Permalink to this headline">#</a></h1>
-<p><em>Posted on 2020-05-15</em></p>
-<p>When going over Gradient boosting I got confused why there was a discrepancy between the residual and the weak learner.
-So here is an attempt in clearing up that confusion.</p>
-<p>We assume we are given an imperfect model <span class="math notranslate nohighlight">\(F_i(x)\)</span> and we want to improve it by only by additive changes <span class="math notranslate nohighlight">\(h_t(x)\)</span>, i.e.</p>
-<div class="math notranslate nohighlight">
-\[F_{t+1}(x) = F_t(x) + h_t(x).\]</div>
-<p>If we chose the perfect <span class="math notranslate nohighlight">\(h_t(x)\)</span> this would simply be</p>
-<div class="math notranslate nohighlight">
-\[y_i = F_t(x_i) + h_t(x_i) \Leftrightarrow h_t(x_i) = y_i - F_t(x_i) \text{ for all } i=1..N.\]</div>
-<p>For the square loss</p>
+                   <section class="tex2jax_ignore mathjax_ignore" id="why-not-use-weight-decay-for-the-last-layer">
+<h1>Why not use weight decay for the last layer?<a class="headerlink" href="#why-not-use-weight-decay-for-the-last-layer" title="Permalink to this headline">#</a></h1>
+<p><em>Posted on 2026-05-13</em></p>
+<p>It is common to exclude the unembedding layer from using weight decay, but why?</p>
+<p><strong>TL;DR</strong>: Applying weight decay to the last layer will constrain the logits of the model and consequently prevent high-confident output.</p>
+<p>To make this statement precise, let <span class="math notranslate nohighlight">\(h \in \mathbb{R}^d\)</span> denote the hidden state before the final linear layer.
+Modern architectures often apply normalization before the last layer.
+Ignoring the small numerical <span class="math notranslate nohighlight">\(\epsilon\)</span> and any learned gain, the RMS-normalized state <span class="math notranslate nohighlight">\(\hat h := \operatorname{RMSNorm}(h)\)</span> satisfies</p>
 <div class="math notranslate nohighlight">
 \[
-J = \sum_{i=1}^N (y_i-F_t(x_i))^{2} / 2,
+\|\hat h\|_2 = \sqrt d.
 \]</div>
-<p>this turns out to simply be equivalent to the negative gradient of the loss, i.e.</p>
+<p>Let <span class="math notranslate nohighlight">\(m\)</span> be the output dimension, e.g., the number of classes or vocabulary size.
+The output matrix is <span class="math notranslate nohighlight">\(W \in \mathbb{R}^{m \times d}\)</span>, with rows <span class="math notranslate nohighlight">\(w_1, \dots, w_m\)</span>, and logits</p>
 <div class="math notranslate nohighlight">
 \[
--\frac{\partial J}{\partial F_t\left(x_{i}\right)}=y_{i} - F_t\left(x_{i}\right).
+z_i = \langle w_i, \hat h \rangle.
 \]</div>
-<p>Now the crucial observation is that the class of weak learners that we allow are in general not expressive enough to capture the residual <span class="math notranslate nohighlight">\(h_t(x)\)</span> perfectly.
-So instead we choose the model <span class="math notranslate nohighlight">\(\tilde{h}_t(x)\)</span> which minimizes this difference with this residual.</p>
-<p>The algorithm then proceeds by updating the model</p>
+<p>If we take a Frank-Wolfe perspective on weight decay <span id="id1">[<a class="reference internal" href="#id42" title="Thomas Pethick, Wanyun Xie, Kimon Antonakopoulos, Zhenyu Zhu, Antonio Silveti-Falls, and Volkan Cevher. Training deep learning models with norm-constrained LMOs. In Forty-second International Conference on Machine Learning. 2025. URL: https://openreview.net/forum?id=2Oqm2IzTy9.">Pethick <em>et al.</em>, 2025</a>]</span>, the effect is to keep <span class="math notranslate nohighlight">\(W\)</span> in a norm ball of radius <span class="math notranslate nohighlight">\(\rho&gt;0\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
-F_{t+1}(x) = F_t(x) + \tilde{h}_t(x).
+S^k \in \operatorname*{arg\,min}_{S : \|S\|\leq \rho} \langle \nabla f(W^k), S \rangle,
+\qquad
+W^{k+1} = (1 - \gamma_k) W^k + \gamma_k S^k.
 \]</div>
-<p>It is thus an iterative scheme that at every step more generally <em>uses the negative gradient of the loss</em> to build the estimator <span class="math notranslate nohighlight">\(\tilde{h}_t(x)\)</span>.</p>
+<p>For simplicity, choose <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> to be the <span class="math notranslate nohighlight">\(\mathrm{RMS} \to \infty\)</span> operator norm,</p>
+<div class="math notranslate nohighlight">
+\[
+\|W\|_{\mathrm{RMS}\to\infty}
+:=
+\sup_{\|x\|_2/\sqrt d \leq 1} \|Wx\|_\infty.
+\]</div>
+<p>The radius-<span class="math notranslate nohighlight">\(\rho\)</span> ball for this norm is equivalent to the row-wise constraints <span class="math notranslate nohighlight">\(\|w_i\|_2 \leq \rho/\sqrt d\)</span>.
+Hence the linear minimization oracle separates across rows and reduces to</p>
+<div class="math notranslate nohighlight">
+\[
+s_i^\star
+\in
+\operatorname*{arg\,min}_{\|s\|_2 \le \rho/\sqrt d} \langle g_i, s \rangle
+=
+- \frac{\rho}{\sqrt d} \frac{g_i}{\|g_i\|_2},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(g_i\)</span> is the <span class="math notranslate nohighlight">\(i\)</span>-th row of <span class="math notranslate nohighlight">\(\nabla f(W^k)\)</span>.
+Thus, each update direction lies on the Euclidean sphere of radius <span class="math notranslate nohighlight">\(\rho/\sqrt d\)</span>.</p>
+<p>For any normalized hidden state, the logits satisfy</p>
+<div class="math notranslate nohighlight">
+\[
+z_i = \langle w_i, \hat h \rangle
+= \|w_i\|_2 \|\hat h\|_2 \cos \theta_i
+= \sqrt d\, \|w_i\|_2 \cos \theta_i,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta_i\)</span> is the angle between <span class="math notranslate nohighlight">\(w_i\)</span> and <span class="math notranslate nohighlight">\(\hat h\)</span>.
+Since <span class="math notranslate nohighlight">\(\|w_i\|_2 \le \rho/\sqrt d\)</span> under the norm constraint,</p>
+<div class="math notranslate nohighlight">
+\[
+|z_i| \le \rho,
+\qquad
+z_i \in [-\rho,\rho].
+\]</div>
+<p>Equivalently, the logits are bounded, <span class="math notranslate nohighlight">\(\rho\)</span>-scaled cosine similarities.
+A similar argument can be made for other norm choices.</p>
+<p>This boundedness is restrictive for classification.
+Cross-entropy does not just require the correct class to have the largest logit, it also rewards increasing the margin.
+If <span class="math notranslate nohighlight">\(z_i \in [-\rho,\rho]\)</span>, then the largest possible gap between the correct logit and any incorrect logit is <span class="math notranslate nohighlight">\(2\rho\)</span>.
+Consequently, even in the best case the correct-class probability is bounded by</p>
+<div class="math notranslate nohighlight">
+\[
+p_y
+\le
+\frac{e^\rho}{e^\rho + (m-1)e^{-\rho}}
+=
+\frac{e^{2\rho}}{e^{2\rho} + m - 1}.
+\]</div>
+<p>For large vocabularies this upper bound is small unless <span class="math notranslate nohighlight">\(\rho\)</span> grows on the order of <span class="math notranslate nohighlight">\(\log m\)</span>.
+Thus, the final layer needs sufficiently large row norms to express highly confident predictions.</p>
+<p>From this perspective, the conclusion is not especially surprising.
+After all, in separable logistic regression, the unregularized cross-entropy objective has no finite minimizer: the direction of the classifier converges, while its norm grows without bound in order to keep increasing the margin.
+Some form of control is usually still needed in practice for numerical stability, e.g., through explicit regularization.
+However, it is worth being aware that the constraint radius in Frank-Wolfe will directly dictate the permitted confidence of the model.</p>
+<p><strong>Note</strong>: This observation came out of a conversation with Frederik Kunstner at the <a class="reference external" href="https://elliit.se/focus-period-lund-2026/">focus group in Lund</a>.</p>
+<hr class="docutils" />
+<div class="docutils container" id="id2">
+<dl class="citation">
+<dt class="label" id="id42"><span class="brackets"><a class="fn-backref" href="#id1">weight-decay-PXA+25</a></span></dt>
+<dd><p>Thomas Pethick, Wanyun Xie, Kimon Antonakopoulos, Zhenyu Zhu, Antonio Silveti-Falls, and Volkan Cevher. Training deep learning models with norm-constrained LMOs. In <em>Forty-second International Conference on Machine Learning</em>. 2025. URL: <a class="reference external" href="https://openreview.net/forum?id=2Oqm2IzTy9">https://openreview.net/forum?id=2Oqm2IzTy9</a>.</p>
+</dd>
+</dl>
+</div>
 <section id="cite-this-post">
 <h2>Cite this post<a class="headerlink" href="#cite-this-post" title="Permalink to this headline">#</a></h2>
-<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pethick2020gradientboosting</span><span class="p">,</span>
+<div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pethick2026weightdecaylastlayer</span><span class="p">,</span>
 <span class="w">  </span><span class="na">author</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Thomas Pethick}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Gradient boosting}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">year</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2020}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">title</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Why not use weight decay for the last layer?}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">year</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{2026}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">month</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{05}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">day</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{15}</span><span class="p">,</span>
-<span class="w">  </span><span class="na">url</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{https://pethick.dk/posts/2020-05-15-gradientboosting/}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">day</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{13}</span><span class="p">,</span>
+<span class="w">  </span><span class="na">url</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{https://pethick.dk/posts/2026-05-13-weight-decay-last-layer/}</span><span class="p">,</span>
 <span class="w">  </span><span class="na">note</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">{Blog post}</span>
 <span class="p">}</span>
 </pre></div>
@@ -391,20 +450,20 @@ F_{t+1}(x) = F_t(x) + \tilde{h}_t(x).
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../2020-06-04-acceleration-perspectives/"
+       href="../"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Various ways of writing Nesterov’s acceleration</p>
+        <p class="prev-next-title">Posts</p>
       </div>
     </a>
     <a class="right-next"
-       href="../2020-05-26-bayesian-logistic-regression/"
+       href="../2025-08-18-understanding-dion/"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Bayesian logistic regression</p>
+        <p class="prev-next-title">Understanding Dion</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
