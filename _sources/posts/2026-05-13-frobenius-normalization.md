@@ -65,7 +65,7 @@ $
 \operatorname{RMSNorm}(c\,Wx)
 = \operatorname{RMSNorm}(Wx).
 $
-Taking $c=\rho/\|\widetilde W^{k+1}\|_F$, the normalized layer output is thus unchanged:
+Taking $c=\rho/\|\widetilde W^{k+1}\|_F$, the normalized layer output is thus unchanged:[^scale-invariance]
 
 $$
 \operatorname{RMSNorm}(W^{k+1}x)
@@ -74,6 +74,8 @@ $$
 $$
 
 So the Frobenius projection preserves the function value of a normalized layer:
+
+[^scale-invariance]: The same invariance can also hold for weights that are not immediately followed by RMSNorm. For example, in an MLP block of the form $\operatorname{RMSNorm}(W_2 \sigma(W_1x))$, scaling $W_1$ by a positive constant leaves the mapping unchanged as long as the activation function $\sigma$ is positively homogeneous, as is the case for ReLU and ReLU$^2$.
 
 $$
 f(W^{k+1}) = f(\widetilde W^{k+1}).
@@ -97,3 +99,4 @@ $$
 
 So, at least in the scale-invariant setting due to layer normalization, the Frobenius projection does not break the descent lemma.
 It just chooses a representative of the same function with controlled Frobenius norm.
+In fact, there is nothing special about Frobenious weight normalization - the same argument holds true for any kind of normalization.

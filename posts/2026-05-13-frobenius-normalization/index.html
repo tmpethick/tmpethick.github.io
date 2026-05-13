@@ -366,7 +366,10 @@ W^{k+1}
 \operatorname{RMSNorm}(c\,Wx)
 = \operatorname{RMSNorm}(Wx).
 \)</span>
-Taking <span class="math notranslate nohighlight">\(c=\rho/\|\widetilde W^{k+1}\|_F\)</span>, the normalized layer output is thus unchanged:</p>
+Taking <span class="math notranslate nohighlight">\(c=\rho/\|\widetilde W^{k+1}\|_F\)</span>, the normalized layer output is thus unchanged:<label for='sidenote-role-1' class='margin-toggle'><span id="id1">
+<sup>1</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>The same invariance can also hold for weights that are not immediately followed by RMSNorm. For example, in an MLP block of the form <span class="math notranslate nohighlight">\(\operatorname{RMSNorm}(W_2 \sigma(W_1x))\)</span>, scaling <span class="math notranslate nohighlight">\(W_1\)</span> by a positive constant leaves the mapping unchanged as long as the activation function <span class="math notranslate nohighlight">\(\sigma\)</span> is positively homogeneous, as is the case for ReLU and ReLU<span class="math notranslate nohighlight">\(^2\)</span>.</span></p>
 <div class="math notranslate nohighlight">
 \[
 \operatorname{RMSNorm}(W^{k+1}x)
@@ -393,7 +396,8 @@ f(\widetilde W^{k+1})
 f(W^k).
 \]</div>
 <p>So, at least in the scale-invariant setting due to layer normalization, the Frobenius projection does not break the descent lemma.
-It just chooses a representative of the same function with controlled Frobenius norm.</p>
+It just chooses a representative of the same function with controlled Frobenius norm.
+In fact, there is nothing special about Frobenious weight normalization - the same argument holds true for any kind of normalization.</p>
 <section id="cite-this-post">
 <h2>Cite this post<a class="headerlink" href="#cite-this-post" title="Permalink to this headline">#</a></h2>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pethick2026frobeniusnormalization</span><span class="p">,</span>
@@ -407,6 +411,7 @@ It just chooses a representative of the same function with controlled Frobenius 
 <span class="p">}</span>
 </pre></div>
 </div>
+<hr class="footnotes docutils" />
 </section>
 </section>
 
