@@ -47,16 +47,19 @@ $$
 $$
 where the last line holds for $W\neq0$.
 
-Then we can write steepest descent (in the possibly non-Euclidean norm $\|\cdot\|$) followed by a Euclidean projection as:
+Then we can write Frobenius normalization followed by steepest descent in the possibly non-Euclidean norm $\|\cdot\|$ as:
 
 $$
 \begin{aligned}
-\widetilde W^{k+1}
+\widetilde W^k
 &=
-W^k - \eta_k \left[\nabla_W f(W^k)\right]^\#,\\
+\Pi_{\mathcal S_F(\rho)}(W^k),\\
 W^{k+1}
 &=
-\Pi_{\mathcal S_F(\rho)}(\widetilde W^{k+1}).
+W^k - \eta_k \left[\nabla_W f(\widetilde W^k)\right]^\#,\\
+\widetilde W^{k+1}
+&=
+\Pi_{\mathcal S_F(\rho)}(W^{k+1}).
 \end{aligned}
 $$
 
@@ -65,38 +68,107 @@ $
 \operatorname{RMSNorm}(c\,Wx)
 = \operatorname{RMSNorm}(Wx).
 $
-Taking $c=\rho/\|\widetilde W^{k+1}\|_F$, the normalized layer output is thus unchanged:[^scale-invariance]
-
-$$
-\operatorname{RMSNorm}(W^{k+1}x)
-=
-\operatorname{RMSNorm}(\widetilde W^{k+1}x).
-$$
-
-So the Frobenius projection preserves the function value of a normalized layer:
+Thus Frobenius normalization leaves the normalized layer output unchanged. [^scale-invariance] 
+This property propagates to the loss $f$:
 
 [^scale-invariance]: The same invariance can also hold for weights that are not immediately followed by RMSNorm. For example, in an MLP block of the form $\operatorname{RMSNorm}(W_2 \sigma(W_1x))$, scaling $W_1$ by a positive constant leaves the mapping unchanged as long as the activation function $\sigma$ is positively homogeneous, as is the case for ReLU and ReLU$^2$.
 
-$$
-f(W^{k+1}) = f(\widetilde W^{k+1}).
-$$
-
-The descent analyses of steepest descent reason through function values by showing that
+**Scale invariance.** For every $a>0$ and $W\neq0$,
 
 $$
-f(\widetilde W^{k+1}) < f(W^k).
+f(aW)=f(W).
 $$
 
-Since the subsequent Frobenius projection does not change the function value, the projected iterate $W^{k+1}=\Pi_{\mathcal S_F(\rho)}(\widetilde W^{k+1})$ satisfies
+Also assume smoothness in the norm used to define the sharp operator:
+
+**Smoothness.** The objective $f$ is $L$-smooth with respect to $\|\cdot\|$, meaning, for all $X,Y$,
+
+$$
+f(Y)
+\le
+f(X)
++
+\langle \nabla f(X),Y-X\rangle
++
+\tfrac{L}{2}\|Y-X\|^2
+$$
+
+```{prf:theorem}
+Suppose scale invariance and $L$-smoothness hold.
+Let $\bar\eta_k=\eta_k\tfrac{\rho}{\|W^k\|_F}$.
+If $0<\bar\eta_k<2/L$, then
+
+$$
+f(\widetilde W^{k+1})
+\le
+f(\widetilde W^k)
+-
+\bar\eta_k
+\left(1-\tfrac{L\bar\eta_k}{2}\right)
+\left\|
+\nabla_W f(\widetilde W^k)
+\right\|_*^2.
+$$
+```
+
+```{prf:proof}
+We can write $W^k=\alpha_k\widetilde W^k$ with $\alpha_k=\|W^k\|_F/\rho>0$.
+The update rule can be factored as
+
+$$
+W^{k+1}
+=
+\alpha_k\left(
+\widetilde W^k
+-
+\bar\eta_k
+\left[\nabla_W f(\widetilde W^k)\right]^\#
+\right),
+\qquad
+\bar\eta_k=\tfrac{\eta_k}{\alpha_k}.
+$$
+
+This is only an algebraic rewriting of the actual update, not a different algorithm.
+By scale invariance,
 
 $$
 f(W^{k+1})
 =
-f(\widetilde W^{k+1})
-<
-f(W^k).
+f\left(
+\widetilde W^k
+-
+\bar\eta_k
+\left[\nabla_W f(\widetilde W^k)\right]^\#
+\right).
 $$
 
-So, at least in the scale-invariant setting due to layer normalization, the Frobenius projection does not break the descent lemma.
+Apply $L$-smoothness with
+$X=\widetilde W^k$ and
+$Y=\widetilde W^k-\bar\eta_k[\nabla_W f(\widetilde W^k)]^\#$.
+Writing $G_k=\nabla_W f(\widetilde W^k)$, we get
+
+$$
+f(W^{k+1})
+\le
+f(\widetilde W^k)
+-
+\bar\eta_k
+\left(1-\tfrac{L\bar\eta_k}{2}\right)
+\left\|
+\nabla_W f(\widetilde W^k)
+\right\|_*^2,
+$$
+
+where we used
+$\langle G_k,G_k^\#\rangle=\|G_k^\#\|^2=\|G_k\|_*^2$, which follows from the optimality condition defining the sharp operator.
+Finally, scale invariance also gives
+$f(\widetilde W^{k+1})=f(W^{k+1})$, and the result follows.
+```
+
+The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the effective stepsize satisfies $0<\bar\eta_k<2/L$ and the gradient is nonzero.
+
+Interestingly, the stepsize condition is on the effective stepsize $\bar\eta_k$ which normalizes the stepsize $\eta_k$ by $\|W^k\|_F$ instead of $\|\text{BaseUpdate}\|_F$ as in e.g., MuonH.
+
+So, at least in the scale-invariant setting due to layer normalization, Frobenius normalization does not break the descent lemma.
 It just chooses a representative of the same function with controlled Frobenius norm.
-In fact, there is nothing special about Frobenious weight normalization - the same argument holds true for any kind of normalization.
+The argument is not specific to the Frobenius norm, but it does rely on the normalization being a global positive rescaling, so that $W^k=\alpha_k\widetilde W^k$ and the actual update can be compared to a step from $\widetilde W^k$ by changing only the effective stepsize.
