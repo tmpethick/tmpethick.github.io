@@ -355,13 +355,10 @@ G^\#
 \begin{aligned}
 \widetilde W^k
 &amp;=
-\Pi_{\mathcal S_F(\rho)}(W^k),\\
+\Pi_{\mathcal S_F(\rho)}(W^k)\\
 W^{k+1}
 &amp;=
-W^k - \eta_k \left[\nabla_W f(\widetilde W^k)\right]^\#,\\
-\widetilde W^{k+1}
-&amp;=
-\Pi_{\mathcal S_F(\rho)}(W^{k+1}).
+W^k - \eta_k \left[\nabla_W f(\widetilde W^k)\right]^\#
 \end{aligned}
 \end{split}\]</div>
 <p>For any positive scalar <span class="math notranslate nohighlight">\(c&gt;0\)</span>,
@@ -461,10 +458,25 @@ Finally, scale invariance also gives
 <span class="math notranslate nohighlight">\(f(\widetilde W^{k+1})=f(W^{k+1})\)</span>, and the result follows.</p>
 </div>
 <p>The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the effective stepsize satisfies <span class="math notranslate nohighlight">\(0&lt;\bar\eta_k&lt;2/L\)</span>.</p>
-<p>Interestingly, the stepsize condition is on the effective stepsize <span class="math notranslate nohighlight">\(\bar\eta_k\)</span> which normalizes the stepsize <span class="math notranslate nohighlight">\(\eta_k\)</span> by <span class="math notranslate nohighlight">\(\|W^k\|_F\)</span> instead of using <span class="math notranslate nohighlight">\(\|\text{BaseUpdate}\|_F\)</span> as in e.g., MuonH.</p>
 <p>So, at least in the scale-invariant setting due to layer normalization, Frobenius normalization does not break the descent lemma.
 It just chooses a representative of the same function with controlled Frobenius norm.
 The argument is not specific to the Frobenius norm, but it does rely on the normalization being a global positive rescaling, so that <span class="math notranslate nohighlight">\(W^k=\alpha_k\widetilde W^k\)</span> and the actual update can be compared to a step from <span class="math notranslate nohighlight">\(\widetilde W^k\)</span> by changing only the effective stepsize.</p>
+<p>Interestingly, the stepsize condition is on the effective stepsize <span class="math notranslate nohighlight">\(\bar\eta_k\)</span> which normalizes the stepsize <span class="math notranslate nohighlight">\(\eta_k\)</span> by <span class="math notranslate nohighlight">\(\|W^k\|_F\)</span> instead of using <span class="math notranslate nohighlight">\(\|\text{BaseUpdate}\|_F\)</span> as in e.g., MuonH.
+Let <span class="math notranslate nohighlight">\(G_k=\nabla_W f(\widetilde W^k)\)</span> and let
+<span class="math notranslate nohighlight">\(\operatorname{lmo}(G_k)\in\operatorname*{arg\,min}_{\|S\|\le1}\langle G_k,S\rangle\)</span>, so that <span class="math notranslate nohighlight">\(G_k^\#=-\|G_k\|_*\operatorname{lmo}(G_k)\)</span>.
+Keeping the effective stepsize fixed as <span class="math notranslate nohighlight">\(\bar\eta_k\equiv \bar\eta\)</span> corresponds to running the descent step with</p>
+<div class="math notranslate nohighlight">
+\[
+W^{k+1}
+=
+W^k
++
+\bar\eta
+\|W^k\|_F
+\|G_k\|_*
+\operatorname{lmo}(G_k),
+\]</div>
+<p>followed by the projection.</p>
 <section id="cite-this-post">
 <h2>Cite this post<a class="headerlink" href="#cite-this-post" title="Permalink to this headline">#</a></h2>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pethick2026frobeniusnormalization</span><span class="p">,</span>

@@ -53,13 +53,10 @@ $$
 \begin{aligned}
 \widetilde W^k
 &=
-\Pi_{\mathcal S_F(\rho)}(W^k),\\
+\Pi_{\mathcal S_F(\rho)}(W^k)\\
 W^{k+1}
 &=
-W^k - \eta_k \left[\nabla_W f(\widetilde W^k)\right]^\#,\\
-\widetilde W^{k+1}
-&=
-\Pi_{\mathcal S_F(\rho)}(W^{k+1}).
+W^k - \eta_k \left[\nabla_W f(\widetilde W^k)\right]^\#
 \end{aligned}
 $$
 
@@ -167,8 +164,23 @@ $f(\widetilde W^{k+1})=f(W^{k+1})$, and the result follows.
 
 The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the effective stepsize satisfies $0<\bar\eta_k<2/L$.
 
-Interestingly, the stepsize condition is on the effective stepsize $\bar\eta_k$ which normalizes the stepsize $\eta_k$ by $\|W^k\|_F$ instead of using $\|\text{BaseUpdate}\|_F$ as in e.g., MuonH.
-
 So, at least in the scale-invariant setting due to layer normalization, Frobenius normalization does not break the descent lemma.
 It just chooses a representative of the same function with controlled Frobenius norm.
 The argument is not specific to the Frobenius norm, but it does rely on the normalization being a global positive rescaling, so that $W^k=\alpha_k\widetilde W^k$ and the actual update can be compared to a step from $\widetilde W^k$ by changing only the effective stepsize.
+
+Interestingly, the stepsize condition is on the effective stepsize $\bar\eta_k$ which normalizes the stepsize $\eta_k$ by $\|W^k\|_F$ instead of using $\|\text{BaseUpdate}\|_F$ as in e.g., MuonH.
+Let $G_k=\nabla_W f(\widetilde W^k)$ and let
+$\operatorname{lmo}(G_k)\in\operatorname*{arg\,min}_{\|S\|\le1}\langle G_k,S\rangle$, so that $G_k^\#=-\|G_k\|_*\operatorname{lmo}(G_k)$. 
+Keeping the effective stepsize fixed as $\bar\eta_k\equiv \bar\eta$ corresponds to running the descent step with
+
+$$
+W^{k+1}
+=
+W^k
++
+\bar\eta
+\|W^k\|_F
+\|G_k\|_*
+\operatorname{lmo}(G_k),
+$$
+followed by the projection.
