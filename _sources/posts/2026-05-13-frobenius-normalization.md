@@ -73,7 +73,7 @@ This property propagates to the loss $f$:
 
 [^scale-invariance]: The same invariance can also hold for weights that are not immediately followed by RMSNorm. For example, in an MLP block of the form $\operatorname{RMSNorm}(W_2 \sigma(W_1x))$, scaling $W_1$ by a positive constant leaves the mapping unchanged as long as the activation function $\sigma$ is positively homogeneous, as is the case for ReLU and ReLU$^2$.
 
-**Scale invariance.** For every $a>0$ and $W\neq0$,
+**Scale invariance.** For every $a>0$,
 
 $$
 f(aW)=f(W).
@@ -165,9 +165,9 @@ Finally, scale invariance also gives
 $f(\widetilde W^{k+1})=f(W^{k+1})$, and the result follows.
 ```
 
-The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the effective stepsize satisfies $0<\bar\eta_k<2/L$ and the gradient is nonzero.
+The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the effective stepsize satisfies $0<\bar\eta_k<2/L$.
 
-Interestingly, the stepsize condition is on the effective stepsize $\bar\eta_k$ which normalizes the stepsize $\eta_k$ by $\|W^k\|_F$ instead of $\|\text{BaseUpdate}\|_F$ as in e.g., MuonH.
+Interestingly, the stepsize condition is on the effective stepsize $\bar\eta_k$ which normalizes the stepsize $\eta_k$ by $\|W^k\|_F$ instead of using $\|\text{BaseUpdate}\|_F$ as in e.g., MuonH.
 
 So, at least in the scale-invariant setting due to layer normalization, Frobenius normalization does not break the descent lemma.
 It just chooses a representative of the same function with controlled Frobenius norm.
