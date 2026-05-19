@@ -47,7 +47,7 @@ $$
 $$
 where the last line holds for $W\neq0$.
 
-Then we can write Frobenius normalization followed by steepest descent in the possibly non-Euclidean norm $\|\cdot\|$ as:
+Then we can write Frobenius normalization followed by steepest descent in the possibly non-Euclidean norm $\|\cdot\|$ as [^lmo]:
 
 $$
 \begin{aligned}
@@ -56,9 +56,14 @@ $$
 \Pi_{\mathcal S_F(\rho)}(W^k)\\
 W^{k+1}
 &=
-W^k - \eta_k \left[\nabla_W f(\widetilde W^k)\right]^\#
+\widetilde W^k - \eta_k \left[\nabla f(\widetilde W^k)\right]^\#
 \end{aligned}
 $$
+
+[^lmo]: We could also write the update in terms of the linear minimization oracle (LMO).
+Let $G_k=\nabla f(\widetilde W^k)$ and let
+$\operatorname{lmo}(G_k)\in\operatorname*{arg\,min}_{\|S\|\le1}\langle G_k,S\rangle$. Then, $G_k^\#=-\|G_k\|_*\operatorname{lmo}(G_k)$.
+
 
 For any positive scalar $c>0$,
 $
@@ -92,67 +97,36 @@ $$
 
 ```{prf:theorem}
 Suppose scale invariance and $L$-smoothness hold.
-Let $\bar\eta_k=\eta_k\tfrac{\rho}{\|W^k\|_F}$.
-If $0<\bar\eta_k<2/L$, then
+If $0<\eta_k<2/L$, then the sequence $(\widetilde W^{k})_{k\in \mathbb N}$ satisfies
 
 $$
 f(\widetilde W^{k+1})
 \le
 f(\widetilde W^k)
 -
-\bar\eta_k
-\left(1-\tfrac{L\bar\eta_k}{2}\right)
+\eta_k
+\left(1-\tfrac{L\eta_k}{2}\right)
 \left\|
-\nabla_W f(\widetilde W^k)
+\nabla f(\widetilde W^k)
 \right\|_*^2.
 $$
 ```
 
 ```{prf:proof}
-We can write $W^k=\alpha_k\widetilde W^k$ with $\alpha_k=\|W^k\|_F/\rho>0$.
-The update rule can be factored as
-
-$$
-W^{k+1}
-=
-\alpha_k\left(
-\widetilde W^k
--
-\bar\eta_k
-\left[\nabla_W f(\widetilde W^k)\right]^\#
-\right),
-\qquad
-\bar\eta_k=\tfrac{\eta_k}{\alpha_k}.
-$$
-
-This is only an algebraic rewriting of the actual update, not a different algorithm.
-By scale invariance,
-
-$$
-f(W^{k+1})
-=
-f\left(
-\widetilde W^k
--
-\bar\eta_k
-\left[\nabla_W f(\widetilde W^k)\right]^\#
-\right).
-$$
-
 Apply $L$-smoothness with
 $X=\widetilde W^k$ and
-$Y=\widetilde W^k-\bar\eta_k[\nabla_W f(\widetilde W^k)]^\#$.
-Writing $G_k=\nabla_W f(\widetilde W^k)$, we get
+$Y=W^{k+1}=\widetilde W^k-\eta_k[\nabla f(\widetilde W^k)]^\#$.
+Writing $G_k=\nabla f(\widetilde W^k)$, we get
 
 $$
 f(W^{k+1})
 \le
 f(\widetilde W^k)
 -
-\bar\eta_k
-\left(1-\tfrac{L\bar\eta_k}{2}\right)
+\eta_k
+\left(1-\tfrac{L\eta_k}{2}\right)
 \left\|
-\nabla_W f(\widetilde W^k)
+\nabla f(\widetilde W^k)
 \right\|_*^2,
 $$
 
@@ -162,25 +136,9 @@ Finally, scale invariance also gives
 $f(\widetilde W^{k+1})=f(W^{k+1})$, and the result follows.
 ```
 
-The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the effective stepsize satisfies $0<\bar\eta_k<2/L$.
+The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the stepsize satisfies $0<\eta_k<2/L$.
 
 So, at least in the scale-invariant setting due to layer normalization, Frobenius normalization does not break the descent lemma.
 It just chooses a representative of the same function with controlled Frobenius norm.
-The argument is not specific to the Frobenius norm, but it does rely on the normalization being a global positive rescaling, so that $W^k=\alpha_k\widetilde W^k$ and the actual update can be compared to a step from $\widetilde W^k$ by changing only the effective stepsize.
+The argument is not specific to the Frobenius norm, but it does rely on the normalization being a global positive rescaling, so that replacing $W^k$ by $\widetilde W^k$ does not change the function value.
 
-Interestingly, the stepsize condition is on the effective stepsize $\bar\eta_k$ which normalizes the stepsize $\eta_k$ by $\|W^k\|_F$ instead of using $\|\text{BaseUpdate}\|_F$ as in e.g., MuonH.
-Let $G_k=\nabla_W f(\widetilde W^k)$ and let
-$\operatorname{lmo}(G_k)\in\operatorname*{arg\,min}_{\|S\|\le1}\langle G_k,S\rangle$, so that $G_k^\#=-\|G_k\|_*\operatorname{lmo}(G_k)$. 
-Keeping the effective stepsize fixed as $\bar\eta_k\equiv \bar\eta$ corresponds to running the descent step with
-
-$$
-W^{k+1}
-=
-W^k
-+
-\bar\eta
-\|W^k\|_F
-\|G_k\|_*
-\operatorname{lmo}(G_k),
-$$
-followed by the projection.

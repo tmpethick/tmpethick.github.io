@@ -349,7 +349,12 @@ G^\#
 \tfrac{\rho}{\|W\|_F}W,
 \]</div>
 <p>where the last line holds for <span class="math notranslate nohighlight">\(W\neq0\)</span>.</p>
-<p>Then we can write Frobenius normalization followed by steepest descent in the possibly non-Euclidean norm <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> as:</p>
+<p>Then we can write Frobenius normalization followed by steepest descent in the possibly non-Euclidean norm <span class="math notranslate nohighlight">\(\|\cdot\|\)</span> as <label for='sidenote-role-1' class='margin-toggle'><span id="id1">
+<sup>1</sup></span>
+
+</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>We could also write the update in terms of the linear minimization oracle (LMO).
+Let <span class="math notranslate nohighlight">\(G_k=\nabla f(\widetilde W^k)\)</span> and let
+<span class="math notranslate nohighlight">\(\operatorname{lmo}(G_k)\in\operatorname*{arg\,min}_{\|S\|\le1}\langle G_k,S\rangle\)</span>. Then, <span class="math notranslate nohighlight">\(G_k^\#=-\|G_k\|_*\operatorname{lmo}(G_k)\)</span>.</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
@@ -358,7 +363,7 @@ G^\#
 \Pi_{\mathcal S_F(\rho)}(W^k)\\
 W^{k+1}
 &amp;=
-W^k - \eta_k \left[\nabla_W f(\widetilde W^k)\right]^\#
+\widetilde W^k - \eta_k \left[\nabla f(\widetilde W^k)\right]^\#
 \end{aligned}
 \end{split}\]</div>
 <p>For any positive scalar <span class="math notranslate nohighlight">\(c&gt;0\)</span>,
@@ -366,10 +371,10 @@ W^k - \eta_k \left[\nabla_W f(\widetilde W^k)\right]^\#
 \operatorname{RMSNorm}(c\,Wx)
 = \operatorname{RMSNorm}(Wx).
 \)</span>
-Thus Frobenius normalization leaves the normalized layer output unchanged. <label for='sidenote-role-1' class='margin-toggle'><span id="id1">
-<sup>1</sup></span>
+Thus Frobenius normalization leaves the normalized layer output unchanged. <label for='sidenote-role-2' class='margin-toggle'><span id="id2">
+<sup>2</sup></span>
 
-</label><input type='checkbox' id='sidenote-role-1' name='sidenote-role-1' class='margin-toggle'><span class="sidenote"><sup>1</sup>The same invariance can also hold for weights that are not immediately followed by RMSNorm. For example, in an MLP block of the form <span class="math notranslate nohighlight">\(\operatorname{RMSNorm}(W_2 \sigma(W_1x))\)</span>, scaling <span class="math notranslate nohighlight">\(W_1\)</span> by a positive constant leaves the mapping unchanged as long as the activation function <span class="math notranslate nohighlight">\(\sigma\)</span> is positively homogeneous, as is the case for ReLU and ReLU<span class="math notranslate nohighlight">\(^2\)</span>.</span>
+</label><input type='checkbox' id='sidenote-role-2' name='sidenote-role-2' class='margin-toggle'><span class="sidenote"><sup>2</sup>The same invariance can also hold for weights that are not immediately followed by RMSNorm. For example, in an MLP block of the form <span class="math notranslate nohighlight">\(\operatorname{RMSNorm}(W_2 \sigma(W_1x))\)</span>, scaling <span class="math notranslate nohighlight">\(W_1\)</span> by a positive constant leaves the mapping unchanged as long as the activation function <span class="math notranslate nohighlight">\(\sigma\)</span> is positively homogeneous, as is the case for ReLU and ReLU<span class="math notranslate nohighlight">\(^2\)</span>.</span>
 This property propagates to the loss <span class="math notranslate nohighlight">\(f\)</span>:</p>
 <p><strong>Scale invariance.</strong> For every <span class="math notranslate nohighlight">\(a&gt;0\)</span>,</p>
 <div class="math notranslate nohighlight">
@@ -392,64 +397,35 @@ f(X)
 <p class="admonition-title"><span class="caption-number">Theorem 4 </span></p>
 <section class="theorem-content" id="proof-content">
 <p>Suppose scale invariance and <span class="math notranslate nohighlight">\(L\)</span>-smoothness hold.
-Let <span class="math notranslate nohighlight">\(\bar\eta_k=\eta_k\tfrac{\rho}{\|W^k\|_F}\)</span>.
-If <span class="math notranslate nohighlight">\(0&lt;\bar\eta_k&lt;2/L\)</span>, then</p>
+If <span class="math notranslate nohighlight">\(0&lt;\eta_k&lt;2/L\)</span>, then the sequence <span class="math notranslate nohighlight">\((\widetilde W^{k})_{k\in \mathbb N}\)</span> satisfies</p>
 <div class="math notranslate nohighlight">
 \[
 f(\widetilde W^{k+1})
 \le
 f(\widetilde W^k)
 -
-\bar\eta_k
-\left(1-\tfrac{L\bar\eta_k}{2}\right)
+\eta_k
+\left(1-\tfrac{L\eta_k}{2}\right)
 \left\|
-\nabla_W f(\widetilde W^k)
+\nabla f(\widetilde W^k)
 \right\|_*^2.
 \]</div>
 </section>
 </div><div class="proof admonition" id="proof">
-<p>Proof. We can write <span class="math notranslate nohighlight">\(W^k=\alpha_k\widetilde W^k\)</span> with <span class="math notranslate nohighlight">\(\alpha_k=\|W^k\|_F/\rho&gt;0\)</span>.
-The update rule can be factored as</p>
-<div class="math notranslate nohighlight">
-\[
-W^{k+1}
-=
-\alpha_k\left(
-\widetilde W^k
--
-\bar\eta_k
-\left[\nabla_W f(\widetilde W^k)\right]^\#
-\right),
-\qquad
-\bar\eta_k=\tfrac{\eta_k}{\alpha_k}.
-\]</div>
-<p>This is only an algebraic rewriting of the actual update, not a different algorithm.
-By scale invariance,</p>
-<div class="math notranslate nohighlight">
-\[
-f(W^{k+1})
-=
-f\left(
-\widetilde W^k
--
-\bar\eta_k
-\left[\nabla_W f(\widetilde W^k)\right]^\#
-\right).
-\]</div>
-<p>Apply <span class="math notranslate nohighlight">\(L\)</span>-smoothness with
+<p>Proof. Apply <span class="math notranslate nohighlight">\(L\)</span>-smoothness with
 <span class="math notranslate nohighlight">\(X=\widetilde W^k\)</span> and
-<span class="math notranslate nohighlight">\(Y=\widetilde W^k-\bar\eta_k[\nabla_W f(\widetilde W^k)]^\#\)</span>.
-Writing <span class="math notranslate nohighlight">\(G_k=\nabla_W f(\widetilde W^k)\)</span>, we get</p>
+<span class="math notranslate nohighlight">\(Y=W^{k+1}=\widetilde W^k-\eta_k[\nabla f(\widetilde W^k)]^\#\)</span>.
+Writing <span class="math notranslate nohighlight">\(G_k=\nabla f(\widetilde W^k)\)</span>, we get</p>
 <div class="math notranslate nohighlight">
 \[
 f(W^{k+1})
 \le
 f(\widetilde W^k)
 -
-\bar\eta_k
-\left(1-\tfrac{L\bar\eta_k}{2}\right)
+\eta_k
+\left(1-\tfrac{L\eta_k}{2}\right)
 \left\|
-\nabla_W f(\widetilde W^k)
+\nabla f(\widetilde W^k)
 \right\|_*^2,
 \]</div>
 <p>where we used
@@ -457,26 +433,10 @@ f(\widetilde W^k)
 Finally, scale invariance also gives
 <span class="math notranslate nohighlight">\(f(\widetilde W^{k+1})=f(W^{k+1})\)</span>, and the result follows.</p>
 </div>
-<p>The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the effective stepsize satisfies <span class="math notranslate nohighlight">\(0&lt;\bar\eta_k&lt;2/L\)</span>.</p>
+<p>The theorem gives a descent inequality in the normalized iterates, which can then be telescoped in the usual way, whenever the stepsize satisfies <span class="math notranslate nohighlight">\(0&lt;\eta_k&lt;2/L\)</span>.</p>
 <p>So, at least in the scale-invariant setting due to layer normalization, Frobenius normalization does not break the descent lemma.
 It just chooses a representative of the same function with controlled Frobenius norm.
-The argument is not specific to the Frobenius norm, but it does rely on the normalization being a global positive rescaling, so that <span class="math notranslate nohighlight">\(W^k=\alpha_k\widetilde W^k\)</span> and the actual update can be compared to a step from <span class="math notranslate nohighlight">\(\widetilde W^k\)</span> by changing only the effective stepsize.</p>
-<p>Interestingly, the stepsize condition is on the effective stepsize <span class="math notranslate nohighlight">\(\bar\eta_k\)</span> which normalizes the stepsize <span class="math notranslate nohighlight">\(\eta_k\)</span> by <span class="math notranslate nohighlight">\(\|W^k\|_F\)</span> instead of using <span class="math notranslate nohighlight">\(\|\text{BaseUpdate}\|_F\)</span> as in e.g., MuonH.
-Let <span class="math notranslate nohighlight">\(G_k=\nabla_W f(\widetilde W^k)\)</span> and let
-<span class="math notranslate nohighlight">\(\operatorname{lmo}(G_k)\in\operatorname*{arg\,min}_{\|S\|\le1}\langle G_k,S\rangle\)</span>, so that <span class="math notranslate nohighlight">\(G_k^\#=-\|G_k\|_*\operatorname{lmo}(G_k)\)</span>.
-Keeping the effective stepsize fixed as <span class="math notranslate nohighlight">\(\bar\eta_k\equiv \bar\eta\)</span> corresponds to running the descent step with</p>
-<div class="math notranslate nohighlight">
-\[
-W^{k+1}
-=
-W^k
-+
-\bar\eta
-\|W^k\|_F
-\|G_k\|_*
-\operatorname{lmo}(G_k),
-\]</div>
-<p>followed by the projection.</p>
+The argument is not specific to the Frobenius norm, but it does rely on the normalization being a global positive rescaling, so that replacing <span class="math notranslate nohighlight">\(W^k\)</span> by <span class="math notranslate nohighlight">\(\widetilde W^k\)</span> does not change the function value.</p>
 <section id="cite-this-post">
 <h2>Cite this post<a class="headerlink" href="#cite-this-post" title="Permalink to this headline">#</a></h2>
 <div class="highlight-bibtex notranslate"><div class="highlight"><pre><span></span><span class="nc">@misc</span><span class="p">{</span><span class="nl">pethick2026frobeniusnormalization</span><span class="p">,</span>
