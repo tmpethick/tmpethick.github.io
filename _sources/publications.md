@@ -5,7 +5,7 @@
 
 <div class="disable-hyphens">
 {% for p in publications %}
-<a href="{{p.paper}}"><b>{{p.title}}</b></a><br/>
+{% if p.paper %}<a href="{{p.paper}}"><b>{{p.title}}</b></a>{% else %}<b>{{p.title}}</b>{% endif %}<br/>
 {{p.authors}}<br/>{% if p.conference %}<em>{{p.conference}}</em><br/>{% endif %}
 {% if p.paper %}<a href="{{p.paper}}">paper</a>{% endif %} {% if p.code %}<a href="{{p.code}}">code</a>{% endif %} {% if p.tweet %}<a href="{{p.tweet}}">tweet</a>{% endif %}
 {% if not loop.last %}<hr/>{% endif %}

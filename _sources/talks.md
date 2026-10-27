@@ -52,4 +52,12 @@
 [Open slides (PDF)](/talks/2026_Inria_what_schatten.pdf)
 :::
 
+:::{grid-item-card} Tübingen 2026
+:img-top: /assets/talks/thumbnails/2026_Tubingen_what_optimizer.png
+:link: /talks/2026_Tubingen_what_optimizer.pdf
+:class-card: talk-card
+
+[Open slides (PDF)](/talks/2026_Tubingen_what_optimizer.pdf)
+:::
+
 ::::

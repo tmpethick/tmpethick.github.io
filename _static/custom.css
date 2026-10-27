@@ -257,3 +257,22 @@ html[data-theme="dark"] .talk-card {
 html[data-theme="dark"] .talk-card .sd-card-img-top {
   border-color: #2c2c2c;
 }
+
+/*************************************************/
+/* Sidebar contact links */
+
+.sidebar-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+}
+
+.sidebar-links a {
+  color: var(--pst-color-text-muted);
+}
+
+.sidebar-links a:hover {
+  color: var(--pst-color-primary);
+}
